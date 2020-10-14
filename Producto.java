@@ -20,4 +20,10 @@ public class Producto{
 		this.noBodega = noB;
 		this.activo = 1;
 	}
+	public getCodigo(){
+		return this.codigo;
+	}
+	public getPrecio(){
+		return this.precio;
+	}
 }

@@ -22,7 +22,7 @@ public class Producto{
         this.bodega = b; 
         this.activo = a; 
     }
-
+    //getCampos()
     public String getCodigo(){
         return this.codigo; 
     }
@@ -53,5 +53,35 @@ public class Producto{
     public boolean getActivo(){
         return this.activo; 
     }
-
+    //setCampos()
+    public void setCodigo(String c){
+        this.codigo = c; 
+    }
+    public void setPrecio(double p){
+        this.precio = p; 
+    }
+    public void setMarca(String m){
+        this.marca = m; 
+    }
+    public void setModelo(String m){
+        this.modelo = m; 
+    }
+    public void setNombre(String n){
+        this.nombre = n; 
+    }
+    public void setMaterial(String m){
+        this.material = m; 
+    }
+    public void setPeso(int p){
+        this.peso = p; 
+    }
+    public void setCantodad(int c){
+        this.cantidad = c; 
+    }
+    public void setBodega(int b){
+        this.bodega = b; 
+    }
+    public void setActivo(boolean a){
+        this.activo = a; 
+    }
 }

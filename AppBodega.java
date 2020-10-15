@@ -110,15 +110,18 @@ public class AppBodega {
         });
         //-----------------------------------------------------------
         //--------------------agrego las cosas a los paneles---------
+        //contraseña.setLayout(null);
+        //pinicio.setLayout(null);
+        //pdeBodegas.setLayout(null);
         contraseña.add(usuario); contraseña.add(contrase); contraseña.add(iniciodesesion);
         pinicio.add(barradeMenuBar, BorderLayout.NORTH);
         pdeBodegas.add(new JScrollPane(tabladebodega));
         pdeBodegas.add(listado);pdeBodegas.add(producNuevo);pdeBodegas.add(producExist);pdeBodegas.add(comprar);
         //-----------------------------------------------------------
         //------------agregar los paneles al app frame---------------
+        //app.setLayout(null); 
         app.add(pinicio); app.add(pdeBodegas); app.add(contraseña);
-        app.setSize(contraseña.getWidth(),contraseña.getHeight());
-        app.setLayout(null);    
+        app.setSize(contraseña.getWidth(),contraseña.getHeight());   
         app.setVisible(true);   
     }
     

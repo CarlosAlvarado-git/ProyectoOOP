@@ -26,7 +26,7 @@ public class AppBodega {
         usuario.setBounds(100,100, 20, 60);
         contrase.setBounds(100,190, 20, 60);
         JButton iniciodesesion = new JButton("Iniciar Sesión");
-        iniciodesesion.setBounds(100,250,30,30);  
+        iniciodesesion.setBounds(100,250,30,30);
         iniciodesesion.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 usu = usuario.getText();
@@ -74,7 +74,8 @@ public class AppBodega {
             Utilizando NoBodega. Luego recorrer la tabla y asigarle los valors de los encabezados a la variable que corresponte y añadir por medio de un 
             ciclo los valores que tenga cada uno en la variable de datos. 
         */
-        String datos[][] = { {"101","Amit","670000"},    
+        String datos[][] = { 
+        {"101","Amit","670000"},    
         {"102","Jai","780000"},    
         {"101","Sachin","700000"},{"101","Amit","670000"},    
         {"102","Jai","780000"},    
@@ -82,9 +83,9 @@ public class AppBodega {
                                     }; 
         String encabezados[] = {"ID","NAME","SALARY"};
         JTable tabladebodega = new JTable(datos, encabezados);
-        tabladebodega.setBounds(30,40,200,300); 
+        tabladebodega.setBounds(30,40,400,300); 
         JButton producNuevo = new JButton("Añadir un producto nuevo");
-        JButton producExist = new JButton("Aumentas la cantidad de un produto existente");
+        JButton producExist = new JButton("Aumentar la cantidad de un produto existente");
         JButton comprar = new JButton("Realizar compra");
         String productos[] = {"15324 Guitarra", "13213546 Piano", "10215 Clarinete"};
         final JComboBox listado = new JComboBox(productos);

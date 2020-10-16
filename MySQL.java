@@ -39,7 +39,7 @@ public class MySQL {
             connect.close();
             condicion = true;
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return condicion;
     }

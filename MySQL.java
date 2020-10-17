@@ -131,6 +131,103 @@ public class MySQL {
         closeConnection(connect);
     }
 
+    public void asignar_producto(int codigo_bodega, String codigo_producto, int cantidad) //si
+    {
+        int compras_existentes =0;
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+codigo_bodega+"', '"+codigo_producto+"', '"+cantidad+"')");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("SELECT `no_compras` FROM `bodega1` WHERE `codigo` = '"+codigo_bodega+"' ");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            compras_existentes = rs.getInt("no_compras");
+            compras_existentes = compras_existentes + cantidad;
+            stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_compras` = '"+compras_existentes+"' WHERE `bodega1`.`codigo` = '"+codigo_bodega+"'");
+            stmt.executeUpdate();
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+
+
+    public void comprarProducto(int codigo_cantidad, int cantidad) //si
+    {
+        int cantidad_existente =0;
+        int compras_existentes = 0;
+        int codigo_bodega = 0;
+        ResultSet rs;
+
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("SELECT `codigo_bodega` FROM `cantidad` WHERE `codigo` = '"+codigo_cantidad+"' ");
+        rs = stmt.executeQuery();
+        rs.next();
+        codigo_bodega = rs.getInt("codigo_bodega");
+        stmt = connect.prepareStatement("SELECT `cantidad` FROM `cantidad` WHERE `codigo` = '"+codigo_cantidad+"'");
+        rs = stmt.executeQuery();
+        rs.next();
+        cantidad_existente = rs.getInt("cantidad");
+        cantidad_existente = cantidad_existente + cantidad;
+        stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+cantidad_existente+"' WHERE `cantidad`.`codigo` = '"+codigo_cantidad+"'");
+        stmt.executeUpdate();
+        stmt = connect.prepareStatement("SELECT `no_compras` FROM `bodega1` INNER JOIN `cantidad` ON `bodega1`.`codigo` = `cantidad`.`codigo_bodega` WHERE `cantidad`.`codigo` = '"+codigo_cantidad+"'");
+        rs = stmt.executeQuery();
+        rs.next();
+        compras_existentes = rs.getInt("no_compras");
+        compras_existentes = compras_existentes + cantidad;
+        stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_compras` = '"+compras_existentes+"' WHERE `bodega1`.`codigo` = '"+codigo_bodega+"'");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public void venderProducto(int codigo_cantidad, int cantidad) // es lo mismo que crear la tabla de cantidad
+    {
+        int cantidad_existente =0;
+        int compras_existentes = 0;
+        int codigo_bodega = 0;
+        ResultSet rs;
+
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("SELECT `codigo_bodega` FROM `cantidad` WHERE `codigo` = '"+codigo_cantidad+"' ");
+        rs = stmt.executeQuery();
+        rs.next();
+        codigo_bodega = rs.getInt("codigo_bodega");
+        stmt = connect.prepareStatement("SELECT `cantidad` FROM `cantidad` WHERE `codigo` = '"+codigo_cantidad+"'");
+        rs = stmt.executeQuery();
+        rs.next();
+        cantidad_existente = rs.getInt("cantidad");
+        cantidad_existente = cantidad_existente - cantidad;
+        stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+cantidad_existente+"' WHERE `cantidad`.`codigo` = '"+codigo_cantidad+"'");
+        stmt.executeUpdate();
+        stmt = connect.prepareStatement("SELECT `no_compras` FROM `bodega1` INNER JOIN `cantidad` ON `bodega1`.`codigo` = `cantidad`.`codigo_bodega` WHERE `cantidad`.`codigo` = '"+codigo_cantidad+"'");
+        rs = stmt.executeQuery();
+        rs.next();
+        compras_existentes = rs.getInt("no_compras");
+        compras_existentes = compras_existentes - cantidad;
+        stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_compras` = '"+compras_existentes+"' WHERE `bodega1`.`codigo` = '"+codigo_bodega+"'");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
     public void eliminar_producto(String codigo_producto) // si
     {
         openConnection();
@@ -369,7 +466,121 @@ public class MySQL {
         return peso;
     }
 
+
+    public String getcuerdas_tipocuerda(String codigo_producto) //si
+    {
+        String tipo_cuerda = "";
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT `tipo_cuerda` FROM `instrumento_cuerda` WHERE `codigo_producto` = '"+codigo_producto+"' ");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            tipo_cuerda = rs.getString("tipo_cuerda");
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return tipo_cuerda;
+    }
+
+    public int getcuerdas_cantidad_cuerdas(String codigo_producto) //si
+    {
+        int cantidad_cuerdas = 0;
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT `cantidad_cuerdas` FROM `instrumento_cuerda` WHERE `codigo_producto` = '"+codigo_producto+"' ");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            cantidad_cuerdas = rs.getInt("cantidad_cuerdas");
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return cantidad_cuerdas;
+    }
+
+    public void setCuerdas_tipo_cuerda(String codigo_producto, String tipo_cuerda) //si
+    {
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("UPDATE `instrumento_cuerda` SET `tipo_cuerda` = '"+tipo_cuerda+"' WHERE `instrumento_cuerda`.`codigo_producto` = '"+codigo_producto+"' ");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public void setCuerdas_cantidad_cuerda(String codigo_producto, int cantidad) //si
+    {
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("UPDATE `instrumento_cuerda` SET `cantidad_cuerdas` = '"+cantidad+"' WHERE `instrumento_cuerda`.`codigo_producto` = '"+codigo_producto+"' ");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public String getviento_largo(String codigo_producto) //si
+    {
+        String largo = "";
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT `largo` FROM `instrumento_viento` WHERE `codigo_producto` = '"+codigo_producto+"' ");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            largo = rs.getString("largo");
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return largo;
+    }
+
+    public void setviento_largo(String codigo_producto, String largo) //si
+    {
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("UPDATE `instrumento_viento` SET `largo` = '"+largo+"' WHERE `instrumento_viento`.`codigo` = '"+codigo_producto+"' ");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+
+
     
+
+
+
+
+
+
 
 /*
     public LinkedList<String[]> cargarProductos() //si

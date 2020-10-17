@@ -12,10 +12,10 @@ public class MySQL {
     public Connection connect = null;
     PreparedStatement stmt;
     public String stringuso = "";
-    public String[] productos = new String[10];
+    public String[] productos = new String[7];
     public LinkedList<String[]> Linked_Productos = new LinkedList<String[]>();
-    public LinkedList<String> Linked_Bodegas = new LinkedList<String>();
-    public String[] bodegas = new String[3];
+    public String[] bodegas = new String[4];
+    public LinkedList<String[]> Linked_Bodegas = new LinkedList<String[]>();
     public LinkedList<String> Linked_Instrumentos_cuerdas = new LinkedList<String>();
     public String[] instrumentos_cuerdas = new String[4];
     public LinkedList<String> Linked_Instrumentos_viento = new LinkedList<String>();
@@ -44,7 +44,7 @@ public class MySQL {
         return condicion;
     }
 
-    public void crear_bodega(String nombre)
+    public void crear_bodega(String nombre) //si
     {
         openConnection();
         try{
@@ -59,13 +59,11 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void crear_producto(String codigo, int no_bodega, double precio, String marca, String modelo, String nombre, String tipo_material, int peso, int cantidad)
+    public void crear_producto(String codigo, double precio, String marca, String modelo, String nombre, String tipo_material, int peso) //si
     {
         openConnection();
         try{
-        stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `codigo_bodega`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `cantidad`) VALUES ('"+ codigo +"', '"+ no_bodega +"', '"+ precio +"', '"+ marca +"', '"+ modelo +"', '" + nombre +"', '" + tipo_material +"', '" + peso +"', '" + cantidad +"')");
-        stmt.executeUpdate();
-        stmt = connect.prepareStatement("INSERT INTO `activo` (`codigo`, `codigo_producto`, `no.activo`) VALUES (NULL, '"+ codigo +"', '1')");
+        stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('"+codigo+"', '"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+tipo_material+"', '"+peso+"', '1')");
         stmt.executeUpdate();
         stmt.close();
         }
@@ -76,7 +74,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void crear_instrumento_cuerda(String codigo_producto, String tipo_cuerda, int cantidad_cuerda, int no_resonancia)
+    public void crear_instrumento_cuerda(String codigo_producto, String tipo_cuerda, int cantidad_cuerda, int no_resonancia) //si
     {
         openConnection();
         try{
@@ -103,7 +101,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void crear_instrumento_percusion(String codigo_producto, String elemento_percutor, String elemento_vibrante)
+    public void crear_instrumento_percusion(String codigo_producto, String elemento_percutor, String elemento_vibrante) //si
     {
         openConnection();
         try{
@@ -118,7 +116,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void crear_instrumento_viento(String codigo_producto, String largo)
+    public void crear_instrumento_viento(String codigo_producto, String largo) //si
     {
         openConnection();
         try{
@@ -133,11 +131,11 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void eliminar_producto(String codigo_producto)
+    public void eliminar_producto(String codigo_producto) // si
     {
         openConnection();
         try{
-        stmt = connect.prepareStatement("UPDATE `activo` SET `no.activo` = '0' WHERE `activo`.`codigo_producto` = "+codigo_producto+"");
+        stmt = connect.prepareStatement("UPDATE `producto` SET `activo` = '0' WHERE `producto`.`codigo` = "+codigo_producto+"");
         stmt.executeUpdate();
         stmt.close();
         }
@@ -148,7 +146,22 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void setProducto_precio(String codigo , double precio)
+    public void aparecer_producto(String codigo_producto) // si
+    {
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("UPDATE `producto` SET `activo` = '1' WHERE `producto`.`codigo` = "+codigo_producto+"");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public void setProducto_precio(String codigo , double precio) //si
     {
         openConnection();
         try{
@@ -163,7 +176,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void setProducto_marca(String codigo , String marca)
+    public void setProducto_marca(String codigo , String marca) //si
     {
         openConnection();
         try{
@@ -178,7 +191,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void setProducto_modelo(String codigo , String modelo)
+    public void setProducto_modelo(String codigo , String modelo) //si
     {
         openConnection();
         try{
@@ -193,7 +206,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void setProducto_nombre(String codigo , String nombre)
+    public void setProducto_nombre(String codigo , String nombre) //si
     {
         openConnection();
         try{
@@ -208,7 +221,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void setProducto_tipo_material(String codigo , String tipo_material)
+    public void setProducto_tipo_material(String codigo , String tipo_material) //si
     {
         openConnection();
         try{
@@ -223,7 +236,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void setProducto_peso(String codigo , int peso)
+    public void setProducto_peso(String codigo , int peso) //si
     {
         openConnection();
         try{
@@ -238,22 +251,9 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void setProducto_cantidad(String codigo , int cantidad)
-    {
-        openConnection();
-        try{
-        stmt = connect.prepareStatement("UPDATE `producto` SET `cantidad` = '"+cantidad+"' WHERE `producto`.`codigo` = '"+codigo+"'");
-        stmt.executeUpdate();
-        stmt.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-        closeConnection(connect);
-    }
 
-    public Double getProducto_precio(String codigo)
+
+    public Double getProducto_precio(String codigo) //si
     {
         Double numero = 0.0;
         openConnection();
@@ -273,7 +273,7 @@ public class MySQL {
         return numero;
     }
 
-    public String getProducto_marca(String codigo)
+    public String getProducto_marca(String codigo) //si
     {
         openConnection();
         try{
@@ -292,7 +292,7 @@ public class MySQL {
         return stringuso;
     }
 
-    public String getProducto_modelo(String codigo)
+    public String getProducto_modelo(String codigo) //si
     {
         openConnection();
         try{
@@ -311,7 +311,7 @@ public class MySQL {
         return stringuso;
     }
 
-    public String getProducto_nombre(String codigo)
+    public String getProducto_nombre(String codigo) //si
     {
         openConnection();
         try{
@@ -330,7 +330,7 @@ public class MySQL {
         return stringuso;
     }
 
-    public String getProducto_tipo_material(String codigo)
+    public String getProducto_tipo_material(String codigo) //si
     {
         openConnection();
         try{
@@ -349,7 +349,7 @@ public class MySQL {
         return stringuso;
     }
 
-    public int getProducto_peso(String codigo)
+    public int getProducto_peso(String codigo) //si
     {
         int peso = 0;
         openConnection();
@@ -369,64 +369,40 @@ public class MySQL {
         return peso;
     }
 
-    public int getProducto_cantidad(String codigo)
+    
+
+/*
+    public LinkedList<String[]> cargarProductos() //si
     {
-        int cantidad = 0;
+        String[] s = new String[10]; //------
         openConnection();
         try{
-            stmt = connect.prepareStatement("SELECT `cantidad` FROM `producto` WHERE `producto`.`codigo` = '"+codigo+"'");
-            ResultSet rs = stmt.executeQuery();
-            rs.next();
-            cantidad = rs.getInt("cantidad");
-            stmt.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-        closeConnection(connect);
-
-        return cantidad;
-    }
-
-    public int getProducto_codigo_bodega(String codigo)
-    {
-        int bodega = 0;
-        openConnection();
-        try{
-            stmt = connect.prepareStatement("SELECT `codigo_bodega` FROM `producto` WHERE `producto`.`codigo` = '"+codigo+"'");
-            ResultSet rs = stmt.executeQuery();
-            rs.next();
-            bodega = rs.getInt("codigo_bodega");
-            stmt.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-        closeConnection(connect);
-
-        return bodega;
-    }
-
-    public LinkedList<String[]> cargarProductos() //hacer la funcion cargar productos
-    {
-        openConnection();
-        try{
-            stmt = connect.prepareStatement("SELECT * FROM `producto` INNER JOIN `activo` ON `producto`.`codigo` = `activo`.`codigo_producto` WHERE `activo`.`no_activo` = 1");
+            stmt = connect.prepareStatement("SELECT * FROM `producto` WHERE `activo` = 1");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
                 productos[0] = rs.getString("codigo");
-                productos[1] = String.valueOf(rs.getInt("codigo_bodega"));
-                productos[2] = String.valueOf(rs.getInt("precio"));
-                productos[3] = rs.getString("marca");
-                productos[4] = rs.getString("modelo");
-                productos[5] = rs.getString("nombre");
-                productos[6] = rs.getString("tipo_material");
-                productos[7] = String.valueOf(rs.getInt("peso"));
-                productos[8] = String.valueOf(rs.getString("cantidad"));
+                //System.out.println(productos[0]);
+                productos[1] = String.valueOf(rs.getInt("precio"));
+                //System.out.println(productos[1]);
+                productos[2] = rs.getString("marca");
+                //System.out.println(productos[2]);
+                productos[3] = rs.getString("modelo");
+                //System.out.println(productos[3]);
+                productos[4] = rs.getString("nombre");  
+                //System.out.println(productos[4]);
+                productos[5] = rs.getString("tipo_material");
+                //System.out.println(productos[5]);
+                productos[6] = String.valueOf(rs.getInt("peso"));
+                //System.out.println(productos[6]);
                 Linked_Productos.add(productos);
+                //System.out.println("El size es: "+ Linked_Productos.size());
+                s = Linked_Productos.getLast();
+                //System.out.println(connect.cargarProductos());
+                System.out.println();
+                
+                System.out.println(s);
+                
             }
             
             stmt.close();
@@ -436,11 +412,10 @@ public class MySQL {
             System.out.println(e);
         }
         closeConnection(connect);
+        System.out.println(s);
 
         return Linked_Productos;
     }  
-
-
-
+    */
 
 }

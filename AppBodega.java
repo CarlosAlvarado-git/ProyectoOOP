@@ -7,13 +7,16 @@ public class AppBodega {
     static String CualProducto = "";
     static int cantidadcomprada = 0;
     public static void main(String [] arg){
+        
         //---------- Creación de paneles y frame
         JFrame app = new JFrame("Control de Bodegas");
         app.getContentPane();
-        JPanel contraseña = new JPanel();
+        JPanel contrasena = new JPanel();
         JPanel pinicio = new JPanel();
         JPanel pdeBodegas = new JPanel();
-        contraseña.setBounds(0, 0, 1240, 820);
+        contrasena.setLayout(null);
+        pinicio.setLayout(null);
+        contrasena.setBounds(0, 0, 1240, 820);
         pinicio.setBounds(0, 0, 1240, 820);
         pdeBodegas.setBounds(0, 0, 1240, 820);
         pdeBodegas.setVisible(false);
@@ -23,15 +26,15 @@ public class AppBodega {
         JTextField usuario, contrase;
         usuario = new JTextField();
         contrase = new JTextField();
-        usuario.setBounds(100,100, 20, 60);
-        contrase.setBounds(100,190, 20, 60);
-        JButton iniciodesesion = new JButton("Iniciar Sesión");
-        iniciodesesion.setBounds(100,250,30,30);
+        usuario.setBounds(500,100, 200, 30);
+        contrase.setBounds(500,150, 200, 30);
+        JButton iniciodesesion = new JButton("Iniciar Sesion");
+        iniciodesesion.setBounds(500,200,200,30);
         iniciodesesion.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 usu = usuario.getText();
                 cont = contrase.getText(); 
-                contraseña.setVisible(false);
+                contrasena.setVisible(false);
                 pinicio.setVisible(true);
             }  
         });
@@ -46,6 +49,8 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){ 
                 pdeBodegas.setVisible(true);
                 pinicio.setVisible(false);
+                app.setContentPane(pdeBodegas);
+                pdeBodegas.setLayout(null);
                 NoBodega = 1;
             }  
         });
@@ -54,6 +59,8 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){ 
                 pdeBodegas.setVisible(true);
                 pinicio.setVisible(false);
+                app.setContentPane(pdeBodegas);
+                pdeBodegas.setLayout(null);
                 NoBodega = 2;
             }  
         });
@@ -62,6 +69,8 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){ 
                 pdeBodegas.setVisible(true);
                 pinicio.setVisible(false);
+                app.setContentPane(pdeBodegas);
+                pdeBodegas.setLayout(null);
                 NoBodega = 3;
             }  
         });
@@ -83,18 +92,18 @@ public class AppBodega {
                                     }; 
         String encabezados[] = {"ID","NAME","SALARY"};
         JTable tabladebodega = new JTable(datos, encabezados);
-        tabladebodega.setBounds(30,40,400,300); 
-        JButton producNuevo = new JButton("Añadir un producto nuevo");
-        JButton producExist = new JButton("Aumentar la cantidad de un produto existente");
+        JScrollPane scrollPane = new JScrollPane(tabladebodega);
+        tabladebodega.setBounds(0,0,400,300);
+        //tabladebodega.setVisible(true);
+        JButton producNuevo = new JButton("Comprar un producto nuevo");
+        JButton producExist = new JButton("Comprar productos existente");
         JButton comprar = new JButton("Realizar compra");
         String productos[] = {"15324 Guitarra", "13213546 Piano", "10215 Clarinete"};
         final JComboBox listado = new JComboBox(productos);
         listado.setVisible(false);
         comprar.setVisible(false);
-        listado.setBounds(50, 800, 100, 30);
-        producNuevo.setBounds(90, 800, 100, 30);
-        comprar.setBounds(90, 800, 100, 30);
-        producExist.setBounds(90, 800, 100, 30);
+        comprar.setBounds(150, 500, 200, 30);
+        listado.setBounds(150, 450, 400, 30);
         producExist.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 listado.setVisible(true);
@@ -105,6 +114,10 @@ public class AppBodega {
                     public void actionPerformed(ActionEvent e){
                         CualProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                         cantidadcomprada = 1;
+                        producExist.setVisible(true);
+                        producNuevo.setVisible(true);
+                        listado.setVisible(false);
+                        comprar.setVisible(false);
                     }  
                 });
             }  
@@ -114,16 +127,18 @@ public class AppBodega {
         //contraseña.setLayout(null);
         //pinicio.setLayout(null);
         //pdeBodegas.setLayout(null);
-        contraseña.add(usuario); contraseña.add(contrase); contraseña.add(iniciodesesion);
+        contrasena.add(usuario); contrasena.add(contrase); contrasena.add(iniciodesesion);
         pinicio.add(barradeMenuBar, BorderLayout.NORTH);
-        pdeBodegas.add(new JScrollPane(tabladebodega));
+        pdeBodegas.add(scrollPane, BorderLayout.CENTER);
         pdeBodegas.add(listado);pdeBodegas.add(producNuevo);pdeBodegas.add(producExist);pdeBodegas.add(comprar);
         //-----------------------------------------------------------
         //------------agregar los paneles al app frame---------------
         //app.setLayout(null); 
-        app.add(pinicio); app.add(pdeBodegas); app.add(contraseña);
-        app.setSize(contraseña.getWidth(),contraseña.getHeight());   
-        app.setVisible(true);   
+        app.add(pinicio); app.add(pdeBodegas); app.add(contrasena);
+        app.setSize(contrasena.getWidth(),contrasena.getHeight());   
+        app.setVisible(true);
+        //
+        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
     }
     
 

@@ -156,7 +156,7 @@ public class MySQL {
 
 
 
-    public void comprarProducto(int codigo_cantidad, int cantidad) //si
+    public void comprarProducto(int codigo_cantidad, int cantidad) //si //tiene que ser con el codigo_cantidad, porque no se sabe que producto de que bodega
     {
         int cantidad_existente =0;
         int compras_existentes = 0;
@@ -192,7 +192,7 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void venderProducto(int codigo_cantidad, int cantidad) // es lo mismo que crear la tabla de cantidad
+    public void venderProducto(int codigo_cantidad, int cantidad) // si
     {
         int cantidad_existente =0;
         int compras_existentes = 0;

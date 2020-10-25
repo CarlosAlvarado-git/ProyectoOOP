@@ -11,17 +11,14 @@ public class MySQL {
     public final String PASS = "";
     public Connection connect = null;
     PreparedStatement stmt;
+    PreparedStatement stmt2;
     public String stringuso = "";
-    public String[] productos = new String[7];
     public LinkedList<String[]> Linked_Productos = new LinkedList<String[]>();
-    public String[] bodegas = new String[4];
     public LinkedList<String[]> Linked_Bodegas = new LinkedList<String[]>();
-    public LinkedList<String> Linked_Instrumentos_cuerdas = new LinkedList<String>();
-    public String[] instrumentos_cuerdas = new String[4];
-    public LinkedList<String> Linked_Instrumentos_viento = new LinkedList<String>();
-    public String[] instrumentos_viento = new String[2];
-    public LinkedList<String> Linked_Instrumentos_percucion = new LinkedList<String>();
-    public String[] instrumentos_percucion = new String[3];
+    public LinkedList<String[]> Linked_Cantidad = new LinkedList<String[]>();
+    public LinkedList<String[]> Linked_Instrumentos_cuerdas = new LinkedList<String[]>();
+    public LinkedList<String[]> Linked_Instrumentos_viento = new LinkedList<String[]>();
+    public LinkedList<String[]> Linked_Instrumentos_percucion = new LinkedList<String[]>();
 
     public Connection openConnection() {
         try {
@@ -570,52 +567,26 @@ public class MySQL {
             System.out.println(e);
         }
         closeConnection(connect);
-    }
+    }   
 
-
-
-    
-
-
-
-
-
-
-
-/*
     public LinkedList<String[]> cargarProductos() //si
     {
-        String[] s = new String[10]; //------
         openConnection();
         try{
             stmt = connect.prepareStatement("SELECT * FROM `producto` WHERE `activo` = 1");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
+                String[] productos = new String[7];
                 productos[0] = rs.getString("codigo");
-                //System.out.println(productos[0]);
                 productos[1] = String.valueOf(rs.getInt("precio"));
-                //System.out.println(productos[1]);
                 productos[2] = rs.getString("marca");
-                //System.out.println(productos[2]);
                 productos[3] = rs.getString("modelo");
-                //System.out.println(productos[3]);
                 productos[4] = rs.getString("nombre");  
-                //System.out.println(productos[4]);
                 productos[5] = rs.getString("tipo_material");
-                //System.out.println(productos[5]);
                 productos[6] = String.valueOf(rs.getInt("peso"));
-                //System.out.println(productos[6]);
-                Linked_Productos.add(productos);
-                //System.out.println("El size es: "+ Linked_Productos.size());
-                s = Linked_Productos.getLast();
-                //System.out.println(connect.cargarProductos());
-                System.out.println();
-                
-                System.out.println(s);
-                
+                Linked_Productos.add(productos);                
             }
-            
             stmt.close();
         }
         catch(Exception e)
@@ -623,10 +594,143 @@ public class MySQL {
             System.out.println(e);
         }
         closeConnection(connect);
-        System.out.println(s);
 
         return Linked_Productos;
     }  
-    */
+
+    public LinkedList<String[]> cargarIntrumento_cuerdas() //si
+    {
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT * FROM `instrumento_cuerda` INNER JOIN `producto` ON `instrumento_cuerda`.`codigo_producto` = `producto`.`codigo` WHERE `producto`.`activo` = 1");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                String[] instrumentos_cuerdas = new String[5];
+                instrumentos_cuerdas[0] = rs.getString("codigo");
+                instrumentos_cuerdas[1] = String.valueOf(rs.getInt("codigo_producto"));
+                instrumentos_cuerdas[2] = rs.getString("tipo_cuerda");
+                stmt2 = connect.prepareStatement("SELECT * FROM `resonancia` INNER JOIN `instrumento_cuerda` ON `resonancia`.`codigo_instrumento_cuerda` = `instrumento_cuerda`.`codigo` WHERE `resonancia`.`codigo` = '"+ instrumentos_cuerdas[0]+"'");
+                ResultSet rs2 = stmt2.executeQuery();
+                rs2.next();
+                instrumentos_cuerdas[3] = String.valueOf(rs2.getInt("no_resonancia"));
+                instrumentos_cuerdas[4] = rs.getString("cantidad_cuerdas");
+                Linked_Instrumentos_cuerdas.add(instrumentos_cuerdas);                
+            }
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return Linked_Instrumentos_cuerdas;
+    }  
+
+    public LinkedList<String[]> cargarIntrumento_viento() //si
+    {
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT * FROM `instrumento_viento` INNER JOIN `producto` ON `instrumento_viento`.`codigo_producto` = `producto`.`codigo` WHERE `producto`.`activo` = 1");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                String[] instrumentos_viento = new String[3];
+                instrumentos_viento[0] = rs.getString("codigo");
+                instrumentos_viento[1] = String.valueOf(rs.getInt("codigo_producto"));
+                instrumentos_viento[2] = rs.getString("largo");
+                Linked_Instrumentos_viento.add(instrumentos_viento);                
+            }
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return Linked_Instrumentos_viento;
+    }
+
+    public LinkedList<String[]> cargarIntrumento_percucion() //si
+    {
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT * FROM `instrumento_percusion` INNER JOIN `producto` ON `instrumento_percusion`.`codigo_producto` = `producto`.`codigo` WHERE `producto`.`activo` = 1");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                String[] instrumentos_percucion = new String[4];
+                instrumentos_percucion[0] = rs.getString("codigo");
+                instrumentos_percucion[1] = String.valueOf(rs.getInt("codigo_producto"));
+                instrumentos_percucion[2] = rs.getString("elemento_percutor");
+                instrumentos_percucion[3] = rs.getString("elemento_vibrante");
+                Linked_Instrumentos_percucion.add(instrumentos_percucion);                
+            }
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return Linked_Instrumentos_percucion;
+    }
+
+    public LinkedList<String[]> cargarBodegas() //si
+    {
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT * FROM `bodega1`");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                String[] bodegas = new String[4];
+                bodegas[0] = rs.getString("codigo");
+                bodegas[1] = rs.getString("nombre");
+                bodegas[2] = rs.getString("no_ventas");
+                bodegas[3] = rs.getString("no_compras");
+                Linked_Bodegas.add(bodegas);                
+            }
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return Linked_Bodegas;
+    }
+
+    public LinkedList<String[]> cargarCantidad() //si
+    {
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT * FROM `cantidad` INNER JOIN `producto` ON `cantidad`.`codigo_producto` = `producto`.`codigo` WHERE `producto`.`activo` = 1");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                String[] cantidades = new String[4];
+                cantidades[0] = rs.getString("codigo");
+                cantidades[1] = rs.getString("codigo_bodega");
+                cantidades[2] = rs.getString("codigo_producto");
+                cantidades[3] = rs.getString("cantidad");
+                Linked_Cantidad.add(cantidades);                
+            }
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return Linked_Cantidad;
+    }
+
+
 
 }

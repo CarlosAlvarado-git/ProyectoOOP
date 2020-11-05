@@ -1,6 +1,7 @@
+import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*; 
-import java.awt.*;
+
 public class AppBodega {
     static String usu = ""; static String cont = "";
     static int NoBodega = 0;
@@ -99,7 +100,7 @@ public class AppBodega {
         JButton producExist = new JButton("Comprar productos existente");
         JButton comprar = new JButton("Realizar compra");
         String productos[] = {"15324 Guitarra", "13213546 Piano", "10215 Clarinete"};
-        final JComboBox listado = new JComboBox(productos);
+        JComboBox listado = new JComboBox(productos);
         listado.setVisible(false);
         comprar.setVisible(false);
         comprar.setBounds(150, 500, 200, 30);

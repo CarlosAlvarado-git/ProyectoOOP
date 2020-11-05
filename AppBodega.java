@@ -100,7 +100,7 @@ public class AppBodega {
         JButton producExist = new JButton("Comprar productos existente");
         JButton comprar = new JButton("Realizar compra");
         String productos[] = {"15324 Guitarra", "13213546 Piano", "10215 Clarinete"};
-        JComboBox listado = new JComboBox(productos);
+        JComboBox<String> listado = new JComboBox<String>(productos);
         listado.setVisible(false);
         comprar.setVisible(false);
         comprar.setBounds(150, 500, 200, 30);

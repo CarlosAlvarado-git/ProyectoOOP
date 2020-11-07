@@ -1,13 +1,18 @@
+import java.util.ArrayList;
+
 public class Bodega {
+    static Cantidad cant; 
     String nombre; 
-    Cantidad cantidad[];
-    //Array
+    ArrayList<Cantidad> productos; 
     //Traslados
 
     public Bodega(String nombre){
         this.nombre = nombre; 
+        this.productos = new ArrayList<Cantidad>();  
     }
-    public void newProducto(Cantidad ca){
+    public void newProducto(Producto p, int c){
+        cant = new Cantidad(p, c);
+        this.productos.add(cant); 
         
     }
     public void Ventas(int unidades){

@@ -6,6 +6,9 @@ public class Cantidad {
         this.producto = p; 
         this.cantidad = c; 
     }
+    public Producto getProducto(){
+        return this.producto; 
+    }
     public int getCantidad(){
         return this.cantidad; 
     }

@@ -1,5 +1,5 @@
 public class Producto{
-    String codigo; 
+    int id; 
     double precio; 
     String marca; 
     String modelo;  
@@ -9,8 +9,8 @@ public class Producto{
     int bodega; 
     boolean activo; 
 
-    public Producto(String c, double precio, String mar, String mo, String n, String mat, int p, int b, boolean a){
-        this.codigo = c;
+    public Producto(int id, double precio, String mar, String mo, String n, String mat, int p, int b, boolean a){
+        this.id = id;
         this.precio = precio; 
         this.marca = mar;
         this.modelo = mo; 
@@ -21,8 +21,8 @@ public class Producto{
         this.activo = a; 
     }
     //getCampos() ------------------------
-    public String getCodigo(){
-        return this.codigo; 
+    public int getId(){
+        return this.id; 
     }
     public double getPrecio(){
         return this.precio; 
@@ -49,8 +49,8 @@ public class Producto{
         return this.activo; 
     }
     //setCampos() -----------------------------
-    public void setCodigo(String c){
-        this.codigo = c; 
+    public void setId(int id){
+        this.id = id; 
     }
     public void setPrecio(double p){
         this.precio = p; 

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class AppBodega {
     static String usu = ""; static String contra = "";
     static int NoBodega = 0;
-    static String CualProducto = "";
+    static String IdProducto = "";
     static int cantidadcomprada = 0;
     static String datos[][] = new String[100][3];
     static String encabezados[] = new String[3];
@@ -38,6 +38,11 @@ public class AppBodega {
         //se recibe el linkedlist y se recorre y se hace addItem para agregarlo al listado. O en la variable productos[]
         //String productos[] = new String[100];
         JComboBox<String> listado = new JComboBox<String>();
+        JComboBox<Integer> cantidades = new JComboBox<Integer>();
+        cantidades.addItem(0);
+        for(int y = 1; y <= 100; y++){
+            cantidades.addItem(y); 
+        }
         JButton ACTIVAR = new JButton("Activar compras");
         JButton SalirBodegas = new JButton();
         //---------- Modificación de paneles y frame
@@ -164,25 +169,31 @@ public class AppBodega {
         BproducExist.setVisible(false);
         BproducNuevo.setVisible(false);
         listado.setVisible(false);
+        cantidades.setVisible(false);
         comprarN.setVisible(false);
         comprarE.setVisible(false);
-        comprarE.setBounds(1050, 250, 150, 30);
+        comprarE.setBounds(1008, 190, 150, 30);
+        listado.setBounds(745, 190, 130, 30);
+        cantidades.setBounds(878, 190, 130, 30);
         comprarN.setBounds(1050, 350, 150, 30);
-        listado.setBounds(650, 250, 400, 30);
         BproducExist.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 listado.setVisible(true);
+                listado.setSelectedItem(" ");
+                cantidades.setVisible(true);
+                cantidades.setSelectedItem(0);
                 comprarE.setVisible(true);
                 comprarN.setVisible(true);
                 BproducExist.setVisible(false);
                 BproducNuevo.setVisible(false);
                 comprarE.addActionListener(new ActionListener(){  
                     public void actionPerformed(ActionEvent e){
-                        CualProducto = "" + listado.getItemAt(listado.getSelectedIndex());
-                        cantidadcomprada = 1;
+                        IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
+                        cantidadcomprada = cantidades.getItemAt(cantidades.getSelectedIndex());
                         BproducExist.setVisible(true);
                         BproducNuevo.setVisible(true);
                         listado.setVisible(false);
+                        cantidades.setVisible(false);
                         comprarE.setVisible(false);
                     }  
                 });
@@ -210,6 +221,7 @@ public class AppBodega {
                 comprarE.setVisible(false);
                 comprarN.setVisible(false);
                 listado.setVisible(false);
+                cantidades.setVisible(false);
             }
         });
         
@@ -228,7 +240,7 @@ public class AppBodega {
         pinicio.add(barradeMenuBar, BorderLayout.NORTH);
         pdeBodegas.add(scrollPane);
         pdeBodegas.add(ACTIVAR, BorderLayout.CENTER);
-        pdeBodegas.add(SalirBodegas);
+        pdeBodegas.add(SalirBodegas);pdeBodegas.add(cantidades);
         pdeBodegas.add(listado);pdeBodegas.add(BproducNuevo);pdeBodegas.add(BproducExist);pdeBodegas.add(comprarE);pdeBodegas.add(comprarN);
         //-----------------------------------------------------------
         //------------agregar los paneles al app frame---------------

@@ -33,19 +33,15 @@ public class AppBodega {
         JScrollPane scrollPane = new JScrollPane(tabladebodega);
         JButton comprarE = new JButton("Realizar compra");
         JButton comprarN = new JButton("Realizar compra");
-        String productos[] = {"","15324 Guitarra", "13213546 Piano", 
-        "13213546 Piano","13213546 Piano","13213546 Piano","13213546 Piano","13213546 Piano",
-        "13213546 Piano","13213546 Piano","13213546 Piano","13213546 Piano","13213546 Piano",
-        "10215 Clarinete"};
+        
         //LinkedList<String[]> Linked_Productos = new LinkedList<String[]>();
         //se recibe el linkedlist y se recorre y se hace addItem para agregarlo al listado. O en la variable productos[]
-        JComboBox<String> listado = new JComboBox<String>(productos);
+        //String productos[] = new String[100];
+        JComboBox<String> listado = new JComboBox<String>();
         JButton ACTIVAR = new JButton("Activar compras");
         JButton SalirBodegas = new JButton();
-        //---------- Creación de paneles y frame
-        
+        //---------- Modificación de paneles y frame
         app.getContentPane();
-        
         contrasena.setLayout(null);
         pinicio.setLayout(null);
         contrasena.setBounds(0, 0, 1240, 820);
@@ -55,12 +51,10 @@ public class AppBodega {
         pinicio.setVisible(false);
         //----------------------------------------------------------
         //-------Parte de botones de incio de sesión----------------
-        
         usuario = new JTextField();
         contrase = new JTextField();
         usuario.setBounds(500,100, 200, 30);
         contrase.setBounds(500,150, 200, 30);
-        
         iniciodesesion.setBounds(500,200,200,30);
         iniciodesesion.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
@@ -77,7 +71,6 @@ public class AppBodega {
         });
         //-----------------------------------------------------------
         //---------Parte de pantalla de inicio-----------------------
-        
         pinicio.setLayout(new BorderLayout());
         Bodega1 = new JMenuItem("Bodega 1");
         Bodega1.addActionListener(new ActionListener(){  
@@ -97,6 +90,12 @@ public class AppBodega {
                     for(int x = 0; x < 3; x++){
                         datos[y][x] = "1 en y: "+y+" en x: " + x;
                     }
+                }
+                //Query para obtener los ID de los productos 
+                listado.removeAllItems();
+                listado.addItem(" ");
+                for(int y = 0; y < 30; y++){
+                    listado.addItem(datos[y][0]);
                 }
             }  
         });
@@ -119,6 +118,12 @@ public class AppBodega {
                         datos[y][x] = "2 en y: "+y+" en x: " + x;
                     }
                 }
+                listado.removeAllItems();
+                listado.addItem(" ");
+                //Query para obtener los ID de los productos 
+                for(int y = 0; y < 30; y++){
+                    listado.addItem(datos[y][0]);
+                }
             }  
         });
         Bodega3 = new JMenuItem("Bodega 3");
@@ -140,22 +145,24 @@ public class AppBodega {
                         datos[y][x] = "3 en y: "+y+" en x: " + x;
                     }
                 }
+                listado.removeAllItems();
+                listado.addItem(" ");
+                //Query para obtener los ID de los productos 
+                for(int y = 0; y < 30; y++){
+                    listado.addItem(datos[y][0]); 
+                }
             }  
         });
         TodasLasBodegas.add(Bodega1);TodasLasBodegas.add(Bodega2);TodasLasBodegas.add(Bodega3);
         barradeMenuBar.add(TodasLasBodegas);
         //-----------------------------------------------------------
         //---------------parte de bodegas----------------------------
-        
         scrollPane.setBounds(0,0,400,400);
         scrollPane.setVisible(false);
-        
-        BproducExist.setBounds(450, 150, 150, 30);
-        BproducNuevo.setBounds(450, 150, 150, 30);
+        BproducExist.setBounds(810, 150, 350, 30);
+        BproducNuevo.setBounds(450, 150, 350, 30);
         BproducExist.setVisible(false);
         BproducNuevo.setVisible(false);
-        
-        listado.addItem("Hola el ultimo");
         listado.setVisible(false);
         comprarN.setVisible(false);
         comprarE.setVisible(false);

@@ -16,13 +16,32 @@ public class AppBodega {
         JPanel contrasena = new JPanel();
         JPanel pinicio = new JPanel();
         JPanel pdeBodegas = new JPanel();
-        JTextField usuario, contrase;
+        JTextField usuario = new JTextField();
+        JTextField contrase = new JTextField();
+        //
+        JTextField Id_ = new JTextField();
+        JTextField Precio_ = new JTextField();
+        JTextField Marca_ = new JTextField();
+        JTextField Modelo_ = new JTextField();
+        JTextField Nombre_ = new JTextField();
+        JTextField Material_ = new JTextField();
+        JTextField Peso_ = new JTextField();
+        JLabel Id_Label = new JLabel("ID del producto: ");
+        JLabel Precio_Label = new JLabel("Precio del producto: ");
+        JLabel Marca_Label = new JLabel("Marca del producto: ");
+        JLabel Modelo_Label = new JLabel("Modelo del producto: ");
+        JLabel Nombre_Label = new JLabel("Nombre del producto: ");
+        JLabel Material_Label = new JLabel("Material del producto: ");
+        JLabel Peso_Label = new JLabel("Peso del producto: ");
+        JLabel Cantidad_Label = new JLabel("Cantidad a comprar: ");
+        //
         JButton iniciodesesion = new JButton("Iniciar Sesion");
         JMenuBar barradeMenuBar = new JMenuBar();
         JMenu TodasLasBodegas = new JMenu("Bodegas");
         JMenuItem Bodega1, Bodega2, Bodega3;
         JButton BproducNuevo = new JButton("Comprar un producto nuevo");
         JButton BproducExist = new JButton("Comprar productos existente");
+        JButton Cancelar = new JButton("Cancelar");
         //variable o instancia de la MySQL class
         
         //obtener los encabezados para las tablas con un ciclo y query
@@ -56,8 +75,6 @@ public class AppBodega {
         pinicio.setVisible(false);
         //----------------------------------------------------------
         //-------Parte de botones de incio de sesión----------------
-        usuario = new JTextField();
-        contrase = new JTextField();
         usuario.setBounds(500,100, 200, 30);
         contrase.setBounds(500,150, 200, 30);
         iniciodesesion.setBounds(500,200,200,30);
@@ -164,9 +181,11 @@ public class AppBodega {
         //---------------parte de bodegas----------------------------
         scrollPane.setBounds(0,0,400,400);
         scrollPane.setVisible(false);
+        //botones
         BproducExist.setBounds(810, 150, 350, 30);
         BproducNuevo.setBounds(450, 150, 350, 30);
         BproducExist.setVisible(false);
+        Cancelar.setVisible(false);
         BproducNuevo.setVisible(false);
         listado.setVisible(false);
         cantidades.setVisible(false);
@@ -174,18 +193,53 @@ public class AppBodega {
         comprarE.setVisible(false);
         comprarE.setBounds(1008, 190, 150, 30);
         listado.setBounds(745, 190, 130, 30);
-        cantidades.setBounds(878, 190, 130, 30);
-        comprarN.setBounds(1050, 350, 150, 30);
+        comprarN.setBounds(450, 500, 150, 30);
+        
+        //label
+        Id_Label.setBounds(450,190,150,30);
+        Nombre_Label.setBounds(450,225,150,30);
+        Precio_Label.setBounds(450,260,150,30);
+        Marca_Label.setBounds(450,295,150,30);
+        Modelo_Label.setBounds(450,330,150,30);
+        Material_Label.setBounds(450,365,150,30);
+        Peso_Label.setBounds(450,400,150,30);
+        Cantidad_Label.setBounds(450,435,150,30);
+        Id_Label.setVisible(false);
+        Nombre_Label.setVisible(false);
+        Precio_Label.setVisible(false);
+        Marca_Label.setVisible(false);
+        Modelo_Label.setVisible(false);
+        Material_Label.setVisible(false);
+        Peso_Label.setVisible(false);
+        Cantidad_Label.setVisible(false);
+        //text
+        Id_.setBounds(610,190,150,30);
+        Nombre_.setBounds(610,225,150,30);
+        Precio_.setBounds(610,260,150,30);
+        Marca_.setBounds(610,295,150,30);
+        Modelo_.setBounds(610,330,150,30);
+        Material_.setBounds(610,365,150,30);
+        Peso_.setBounds(610,400,150,30);
+        Id_.setVisible(false);
+        Nombre_.setVisible(false);
+        Precio_.setVisible(false);
+        Marca_.setVisible(false);
+        Modelo_.setVisible(false);
+        Material_.setVisible(false);
+        Peso_.setVisible(false);
+        //
         BproducExist.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 listado.setVisible(true);
                 listado.setSelectedItem(" ");
+                cantidades.setBounds(878, 190, 130, 30);
                 cantidades.setVisible(true);
                 cantidades.setSelectedItem(0);
                 comprarE.setVisible(true);
-                comprarN.setVisible(true);
                 BproducExist.setVisible(false);
                 BproducNuevo.setVisible(false);
+                Cancelar.setBounds(1008, 220, 150, 30);
+                Cancelar.setVisible(true);
                 comprarE.addActionListener(new ActionListener(){  
                     public void actionPerformed(ActionEvent e){
                         IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
@@ -195,17 +249,103 @@ public class AppBodega {
                         listado.setVisible(false);
                         cantidades.setVisible(false);
                         comprarE.setVisible(false);
+                        Cancelar.setVisible(false);
                     }  
                 });
             }  
         });
         BproducNuevo.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-
+                Cancelar.setBounds(610, 500, 150, 30);
+                Cancelar.setVisible(true);
+                Id_Label.setVisible(true);
+                Nombre_Label.setVisible(true);
+                Precio_Label.setVisible(true);
+                Marca_Label.setVisible(true);
+                Modelo_Label.setVisible(true);
+                Material_Label.setVisible(true);
+                Peso_Label.setVisible(true);
+                Cantidad_Label.setVisible(true);
+                Id_.setVisible(true);
+                Id_.setText("");
+                Nombre_.setVisible(true);
+                Nombre_.setText("");
+                Precio_.setVisible(true);
+                Precio_.setText("");
+                Marca_.setVisible(true);
+                Marca_.setText("");
+                Modelo_.setVisible(true);
+                Modelo_.setText("");
+                Material_.setVisible(true);
+                Material_.setText("");
+                Peso_.setVisible(true);
+                Peso_.setText("");
+                comprarN.setVisible(true);
+                BproducExist.setVisible(false);
+                BproducNuevo.setVisible(false);
+                cantidades.setBounds(610, 435, 150, 30);
+                cantidades.setVisible(true);
+                cantidades.setSelectedItem(0);
+                comprarN.addActionListener(new ActionListener(){  
+                    public void actionPerformed(ActionEvent e){
+                        BproducExist.setVisible(true);
+                        BproducNuevo.setVisible(true);
+                        comprarN.setVisible(false);
+                        Id_Label.setVisible(false);
+                        Nombre_Label.setVisible(false);
+                        Precio_Label.setVisible(false);
+                        Marca_Label.setVisible(false);
+                        Modelo_Label.setVisible(false);
+                        Material_Label.setVisible(false);
+                        Peso_Label.setVisible(false);
+                        Cantidad_Label.setVisible(false);
+                        Id_.setVisible(false);
+                        Nombre_.setVisible(false);
+                        Precio_.setVisible(false);
+                        Marca_.setVisible(false);
+                        Modelo_.setVisible(false);
+                        Material_.setVisible(false);
+                        Peso_.setVisible(false);
+                        cantidades.setVisible(false);
+                        Cancelar.setVisible(false);
+                    }  
+                });
             }
         });
-        
-        
+        Cancelar.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if(comprarE.isVisible()){
+                    comprarE.setVisible(false);
+                    listado.setVisible(false);
+                    cantidades.setVisible(false);
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    Cancelar.setVisible(false);
+                }
+                else{
+                    comprarN.setVisible(false);
+                    Id_Label.setVisible(false);
+                    Nombre_Label.setVisible(false);
+                    Precio_Label.setVisible(false);
+                    Marca_Label.setVisible(false);
+                    Modelo_Label.setVisible(false);
+                    Material_Label.setVisible(false);
+                    Peso_Label.setVisible(false);
+                    Cantidad_Label.setVisible(false);
+                    Id_.setVisible(false);
+                    Nombre_.setVisible(false);
+                    Precio_.setVisible(false);
+                    Marca_.setVisible(false);
+                    Modelo_.setVisible(false);
+                    Material_.setVisible(false);
+                    Peso_.setVisible(false);
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    cantidades.setVisible(false);
+                    Cancelar.setVisible(false);
+                }
+            }
+        });
         SalirBodegas.setVisible(false);
         SalirBodegas.setBounds(450, 10, 150,30);
         SalirBodegas.addActionListener(new ActionListener(){
@@ -222,9 +362,24 @@ public class AppBodega {
                 comprarN.setVisible(false);
                 listado.setVisible(false);
                 cantidades.setVisible(false);
+                Id_Label.setVisible(false);
+                Nombre_Label.setVisible(false);
+                Precio_Label.setVisible(false);
+                Marca_Label.setVisible(false);
+                Modelo_Label.setVisible(false);
+                Material_Label.setVisible(false);
+                Peso_Label.setVisible(false);
+                Cantidad_Label.setVisible(false);
+                Id_.setVisible(false);
+                Nombre_.setVisible(false);
+                Precio_.setVisible(false);
+                Marca_.setVisible(false);
+                Modelo_.setVisible(false);
+                Material_.setVisible(false);
+                Peso_.setVisible(false);
+                Cancelar.setVisible(false);
             }
         });
-        
         ACTIVAR.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 BproducExist.setVisible(true);
@@ -239,8 +394,12 @@ public class AppBodega {
         contrasena.add(usuario); contrasena.add(contrase); contrasena.add(iniciodesesion);
         pinicio.add(barradeMenuBar, BorderLayout.NORTH);
         pdeBodegas.add(scrollPane);
+        pdeBodegas.add(Id_);pdeBodegas.add(Precio_);pdeBodegas.add(Marca_);pdeBodegas.add(Modelo_);pdeBodegas.add(Nombre_);
+        pdeBodegas.add(Material_);pdeBodegas.add(Peso_);
+        pdeBodegas.add(Id_Label);pdeBodegas.add(Precio_Label);pdeBodegas.add(Marca_Label);pdeBodegas.add(Modelo_Label);pdeBodegas.add(Nombre_Label);
+        pdeBodegas.add(Material_Label);pdeBodegas.add(Peso_Label);pdeBodegas.add(Cantidad_Label);
         pdeBodegas.add(ACTIVAR, BorderLayout.CENTER);
-        pdeBodegas.add(SalirBodegas);pdeBodegas.add(cantidades);
+        pdeBodegas.add(SalirBodegas);pdeBodegas.add(cantidades);pdeBodegas.add(Cancelar);
         pdeBodegas.add(listado);pdeBodegas.add(BproducNuevo);pdeBodegas.add(BproducExist);pdeBodegas.add(comprarE);pdeBodegas.add(comprarN);
         //-----------------------------------------------------------
         //------------agregar los paneles al app frame---------------

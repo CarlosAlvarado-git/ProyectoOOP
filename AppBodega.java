@@ -8,6 +8,8 @@ public class AppBodega {
     static int NoBodega = 0;
     static String IdProducto = "";
     static int cantidadcomprada = 0;
+    static int cantidadventa = 0;
+    static int NoBodegaCambio = 0;
     static String datos[][] = new String[100][3];
     static String encabezados[] = new String[3];
     public static void main(String [] arg){
@@ -42,6 +44,8 @@ public class AppBodega {
         JButton BproducNuevo = new JButton("Comprar un producto nuevo");
         JButton BproducExist = new JButton("Comprar productos existente");
         JButton Cancelar = new JButton("Cancelar");
+        JButton VenderProduc = new JButton("Vender producto");
+        JButton MoverProduc = new JButton("Mover producto a otra bodega.");
         //variable o instancia de la MySQL class
         
         //obtener los encabezados para las tablas con un ciclo y query
@@ -57,6 +61,7 @@ public class AppBodega {
         //se recibe el linkedlist y se recorre y se hace addItem para agregarlo al listado. O en la variable productos[]
         //String productos[] = new String[100];
         JComboBox<String> listado = new JComboBox<String>();
+        JComboBox<Integer> bodegasList = new JComboBox<Integer>();
         JComboBox<Integer> cantidades = new JComboBox<Integer>();
         cantidades.addItem(0);
         for(int y = 1; y <= 100; y++){
@@ -113,6 +118,10 @@ public class AppBodega {
                         datos[y][x] = "1 en y: "+y+" en x: " + x;
                     }
                 }
+                bodegasList.removeAllItems();
+                bodegasList.addItem(0);
+                bodegasList.addItem(2);
+                bodegasList.addItem(3);
                 //Query para obtener los ID de los productos 
                 listado.removeAllItems();
                 listado.addItem(" ");
@@ -135,6 +144,10 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
+                bodegasList.removeAllItems();
+                bodegasList.addItem(0);
+                bodegasList.addItem(1);
+                bodegasList.addItem(3);
                 for(int y = 0; y < 30; y++){
                     for(int x = 0; x < 3; x++){
                         datos[y][x] = "2 en y: "+y+" en x: " + x;
@@ -167,6 +180,10 @@ public class AppBodega {
                         datos[y][x] = "3 en y: "+y+" en x: " + x;
                     }
                 }
+                bodegasList.removeAllItems();
+                bodegasList.addItem(0);
+                bodegasList.addItem(1);
+                bodegasList.addItem(2);
                 listado.removeAllItems();
                 listado.addItem(" ");
                 //Query para obtener los ID de los productos 
@@ -184,16 +201,23 @@ public class AppBodega {
         //botones
         BproducExist.setBounds(810, 150, 350, 30);
         BproducNuevo.setBounds(450, 150, 350, 30);
+        VenderProduc.setBounds(810, 185, 350,30);
+        MoverProduc.setBounds(450, 185, 350, 30);
         BproducExist.setVisible(false);
         Cancelar.setVisible(false);
         BproducNuevo.setVisible(false);
+        MoverProduc.setVisible(false);
+        VenderProduc.setVisible(false);
         listado.setVisible(false);
+        bodegasList.setVisible(false);
         cantidades.setVisible(false);
         comprarN.setVisible(false);
         comprarE.setVisible(false);
+        bodegasList.setBounds(1008,190,150,30);
         comprarE.setBounds(1008, 190, 150, 30);
         listado.setBounds(745, 190, 130, 30);
         comprarN.setBounds(450, 500, 150, 30);
+
         
         //label
         Id_Label.setBounds(450,190,150,30);
@@ -231,6 +255,7 @@ public class AppBodega {
         BproducExist.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 listado.setVisible(true);
+                listado.setBounds(745, 190, 130, 30);
                 listado.setSelectedItem(" ");
                 cantidades.setBounds(878, 190, 130, 30);
                 cantidades.setVisible(true);
@@ -238,14 +263,21 @@ public class AppBodega {
                 comprarE.setVisible(true);
                 BproducExist.setVisible(false);
                 BproducNuevo.setVisible(false);
+                VenderProduc.setVisible(false);
+                MoverProduc.setVisible(false);
                 Cancelar.setBounds(1008, 220, 150, 30);
                 Cancelar.setVisible(true);
+                comprarE.setBounds(1008, 190, 150, 30);
+                comprarE.setText("Realizar compra");
                 comprarE.addActionListener(new ActionListener(){  
                     public void actionPerformed(ActionEvent e){
                         IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                         cantidadcomprada = cantidades.getItemAt(cantidades.getSelectedIndex());
+                        //proceso de valdar y hacer el query. 
                         BproducExist.setVisible(true);
                         BproducNuevo.setVisible(true);
+                        VenderProduc.setVisible(true);
+                        MoverProduc.setVisible(true);
                         listado.setVisible(false);
                         cantidades.setVisible(false);
                         comprarE.setVisible(false);
@@ -283,13 +315,18 @@ public class AppBodega {
                 comprarN.setVisible(true);
                 BproducExist.setVisible(false);
                 BproducNuevo.setVisible(false);
+                MoverProduc.setVisible(false);
+                VenderProduc.setVisible(false);
                 cantidades.setBounds(610, 435, 150, 30);
                 cantidades.setVisible(true);
                 cantidades.setSelectedItem(0);
+                comprarN.setText("Realizar compra");
                 comprarN.addActionListener(new ActionListener(){  
                     public void actionPerformed(ActionEvent e){
                         BproducExist.setVisible(true);
                         BproducNuevo.setVisible(true);
+                        MoverProduc.setVisible(true);
+                        VenderProduc.setVisible(true);
                         comprarN.setVisible(false);
                         Id_Label.setVisible(false);
                         Nombre_Label.setVisible(false);
@@ -312,17 +349,90 @@ public class AppBodega {
                 });
             }
         });
+        VenderProduc.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                listado.setVisible(true);
+                listado.setSelectedItem(" ");
+                cantidades.setBounds(878, 190, 130, 30);
+                cantidades.setVisible(true);
+                cantidades.setSelectedItem(0);
+                comprarE.setVisible(true);
+                BproducExist.setVisible(false);
+                BproducNuevo.setVisible(false);
+                VenderProduc.setVisible(false);
+                MoverProduc.setVisible(false);
+                Cancelar.setBounds(1008, 220, 150, 30);
+                Cancelar.setVisible(true);
+                comprarE.setBounds(1008, 190, 150, 30);
+                comprarE.setText("Realizar venta");
+                comprarE.addActionListener(new ActionListener(){  
+                    public void actionPerformed(ActionEvent e){
+                        IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
+                        cantidadventa = cantidades.getItemAt(cantidades.getSelectedIndex());
+                        //proceso de valdar y hacer el query. 
+                        BproducExist.setVisible(true);
+                        BproducNuevo.setVisible(true);
+                        VenderProduc.setVisible(true);
+                        MoverProduc.setVisible(true);///// aqui nooooo
+                        listado.setVisible(false);
+                        cantidades.setVisible(false);
+                        comprarE.setVisible(false);
+                        Cancelar.setVisible(false);
+                    }  
+                });
+            }
+        });
+        MoverProduc.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                listado.setVisible(true);
+                listado.setSelectedItem(" ");
+                bodegasList.setSelectedItem(0);
+                bodegasList.setVisible(true);
+                cantidades.setBounds(878, 190, 130, 30);
+                cantidades.setVisible(true);
+                cantidades.setSelectedItem(0);
+                comprarE.setVisible(true);
+                comprarE.setBounds(1008, 220, 150, 30);
+                BproducExist.setVisible(false);
+                BproducNuevo.setVisible(false);
+                VenderProduc.setVisible(false);
+                MoverProduc.setVisible(false);
+                Cancelar.setBounds(1008, 250, 150, 30);
+                Cancelar.setVisible(true);
+                comprarE.setText("Mover de bodega");
+                comprarE.addActionListener(new ActionListener(){  
+                    public void actionPerformed(ActionEvent e){
+                        IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
+                        cantidadventa = cantidades.getItemAt(cantidades.getSelectedIndex());
+                        NoBodegaCambio = bodegasList.getItemAt(bodegasList.getSelectedIndex());
+                        //proceso de valdar y hacer el query. 
+                        BproducExist.setVisible(true);
+                        BproducNuevo.setVisible(true);
+                        VenderProduc.setVisible(true);
+                        MoverProduc.setVisible(true);///// aqui nooooo
+                        listado.setVisible(false);
+                        cantidades.setVisible(false);
+                        comprarE.setVisible(false);
+                        bodegasList.setVisible(false);
+                        Cancelar.setVisible(false);
+                    }  
+                });
+            } 
+        });
         Cancelar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if(comprarE.isVisible()){
                     comprarE.setVisible(false);
                     listado.setVisible(false);
+                    bodegasList.setVisible(false);
                     cantidades.setVisible(false);
                     BproducExist.setVisible(true);
                     BproducNuevo.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    VenderProduc.setVisible(true);
                     Cancelar.setVisible(false);
                 }
-                else{
+                else if(comprarN.isVisible()){
                     comprarN.setVisible(false);
                     Id_Label.setVisible(false);
                     Nombre_Label.setVisible(false);
@@ -341,6 +451,8 @@ public class AppBodega {
                     Peso_.setVisible(false);
                     BproducExist.setVisible(true);
                     BproducNuevo.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    VenderProduc.setVisible(true);
                     cantidades.setVisible(false);
                     Cancelar.setVisible(false);
                 }
@@ -356,11 +468,14 @@ public class AppBodega {
                 ACTIVAR.setVisible(true);
                 scrollPane.setVisible(false);
                 SalirBodegas.setVisible(false);
+                MoverProduc.setVisible(false);
+                VenderProduc.setVisible(false);
                 BproducNuevo.setVisible(false);
                 BproducExist.setVisible(false);
                 comprarE.setVisible(false);
                 comprarN.setVisible(false);
                 listado.setVisible(false);
+                bodegasList.setVisible(false);
                 cantidades.setVisible(false);
                 Id_Label.setVisible(false);
                 Nombre_Label.setVisible(false);
@@ -384,6 +499,8 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){
                 BproducExist.setVisible(true);
                 BproducNuevo.setVisible(true);
+                MoverProduc.setVisible(true);
+                VenderProduc.setVisible(true);
                 ACTIVAR.setVisible(false);
                 scrollPane.setVisible(true);
                 SalirBodegas.setVisible(true);
@@ -393,13 +510,14 @@ public class AppBodega {
         //--------------------agrego las cosas a los paneles---------
         contrasena.add(usuario); contrasena.add(contrase); contrasena.add(iniciodesesion);
         pinicio.add(barradeMenuBar, BorderLayout.NORTH);
+            //bodega
         pdeBodegas.add(scrollPane);
         pdeBodegas.add(Id_);pdeBodegas.add(Precio_);pdeBodegas.add(Marca_);pdeBodegas.add(Modelo_);pdeBodegas.add(Nombre_);
         pdeBodegas.add(Material_);pdeBodegas.add(Peso_);
         pdeBodegas.add(Id_Label);pdeBodegas.add(Precio_Label);pdeBodegas.add(Marca_Label);pdeBodegas.add(Modelo_Label);pdeBodegas.add(Nombre_Label);
         pdeBodegas.add(Material_Label);pdeBodegas.add(Peso_Label);pdeBodegas.add(Cantidad_Label);
-        pdeBodegas.add(ACTIVAR, BorderLayout.CENTER);
-        pdeBodegas.add(SalirBodegas);pdeBodegas.add(cantidades);pdeBodegas.add(Cancelar);
+        pdeBodegas.add(ACTIVAR, BorderLayout.CENTER);pdeBodegas.add(bodegasList);
+        pdeBodegas.add(SalirBodegas);pdeBodegas.add(cantidades);pdeBodegas.add(Cancelar);pdeBodegas.add(MoverProduc);pdeBodegas.add(VenderProduc);
         pdeBodegas.add(listado);pdeBodegas.add(BproducNuevo);pdeBodegas.add(BproducExist);pdeBodegas.add(comprarE);pdeBodegas.add(comprarN);
         //-----------------------------------------------------------
         //------------agregar los paneles al app frame---------------

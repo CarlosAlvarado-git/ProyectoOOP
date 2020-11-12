@@ -567,7 +567,134 @@ public class MySQL {
             System.out.println(e);
         }
         closeConnection(connect);
-    }   
+    }
+
+    public String getPercucion_elementoPercutor(String codigo_producto) //si
+    {
+        String percutor = "";
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT `elemento_percutor` FROM `instrumento_percusion` WHERE `codigo_producto` = '"+codigo_producto+"' ");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            percutor = rs.getString("elemento_percutor");
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return percutor;
+    }
+
+    public String getPercucion_elementoVibrante(String codigo_producto) //si
+    {
+        String vibrante = "";
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT `elemento_vibrante` FROM `instrumento_percusion` WHERE `codigo_producto` = '"+codigo_producto+"' ");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            vibrante = rs.getString("elemento_vibrante");
+            stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+
+        return vibrante;
+    }
+
+    public void setPercucion_elementoPercutor(String codigo_producto, String elemento_percutor) //si
+    {
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("UPDATE `instrumento_percusion` SET `elemento_percutor` = '"+elemento_percutor+"' WHERE `instrumento_percusion`.`codigo_producto` = '"+codigo_producto+"'");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public void setPercucion_elementoVibrante(String codigo_producto, String elemento_vibrante) //si
+    {
+        openConnection();
+        try{
+        stmt = connect.prepareStatement("UPDATE `instrumento_percusion` SET `elemento_vibrante` = '"+elemento_vibrante+"' WHERE `instrumento_percusion`.`codigo_producto` = '"+codigo_producto+"'");
+        stmt.executeUpdate();
+        stmt.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public void traslado_bodega(String codigo_producto, int no_bodegaActual, int no_bodegaDestino, int cantidad)
+    {
+        int cantidad_actual = 0;
+        openConnection();
+        try{
+            stmt = connect.prepareStatement("SELECT `cantidad` FROM `cantidad` WHERE `codigo_producto` = '"+codigo_producto+"' AND `codigo_bodega` = '"+no_bodegaActual+"' ");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            cantidad_actual = rs.getInt("cantidad");
+            if(cantidad < cantidad_actual)
+            {
+                cantidad_actual = cantidad_actual - cantidad;
+                stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+cantidad_actual+"' WHERE `cantidad`.`codigo_producto` = '"+codigo_producto+"' AND `cantidad`.`codigo_bodega` = '"+no_bodegaActual+"'");
+                stmt.executeUpdate();
+                stmt = connect.prepareStatement("SELECT `cantidad` FROM `cantidad` WHERE `codigo_producto` = '"+codigo_producto+"' AND `codigo_bodega` = '"+no_bodegaDestino+"' ");
+                rs = stmt.executeQuery();
+                if(rs.next() == false)
+                {
+                    stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+no_bodegaDestino+"', '"+codigo_producto+"', '"+cantidad+"')");
+                    stmt.executeUpdate();
+                }
+                else{
+                    cantidad_actual = rs.getInt("cantidad");
+                    cantidad_actual = cantidad_actual + cantidad;
+                    stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+cantidad_actual+"' WHERE `cantidad`.`codigo_producto` = '"+codigo_producto+"' AND `cantidad`.`codigo_bodega` = '"+no_bodegaDestino+"'");
+                    stmt.executeUpdate();
+                }
+                stmt.close();
+            }
+            else if(cantidad == cantidad_actual)
+            {
+                stmt = connect.prepareStatement("DELETE FROM `cantidad` WHERE `cantidad`.`codigo_bodega` = '"+no_bodegaActual+"' AND `cantidad`.`codigo_producto` = '"+codigo_producto+"' ");
+                stmt.executeUpdate();
+                stmt = connect.prepareStatement("SELECT `cantidad` FROM `cantidad` WHERE `codigo_producto` = '"+codigo_producto+"' AND `codigo_bodega` = '"+no_bodegaDestino+"' ");
+                rs = stmt.executeQuery();
+                if(rs.next() == false)
+                {
+                    stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+no_bodegaDestino+"', '"+codigo_producto+"', '"+cantidad+"')");
+                    stmt.executeUpdate();
+                }
+                else{
+                    cantidad_actual = rs.getInt("cantidad");
+                    cantidad_actual = cantidad_actual + cantidad;
+                    stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+cantidad_actual+"' WHERE `cantidad`.`codigo_producto` = '"+codigo_producto+"' AND `cantidad`.`codigo_bodega` = '"+no_bodegaDestino+"'");
+                    stmt.executeUpdate();
+                }
+                stmt.close();
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
 
     public LinkedList<String[]> cargarProductos() //si
     {

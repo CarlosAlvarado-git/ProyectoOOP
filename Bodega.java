@@ -25,16 +25,16 @@ public class Bodega {
         int direccion = -1; 
         for(int i = 0; i < this.Cantidades.size() && direccion == -1; i++){
             this.cant = this.Cantidades.get(i); 
-            this.pro = this.cant.getProducto(); 
-            if (id.equals(this.pro.getId())){
+            if (id.equals(this.cant.getIdProducto())){
                 direccion = i; 
             }
         }
         return direccion; 
     }
     public void newProducto(Producto p, int c){// comprar producto nuevo
-        this.cant = new Cantidad(p, c);
-        this.productos.add(cant); 
+        this.cant = new Cantidad(p.getId(), c,p.getBodega());
+        this.Cantidades.add(cant); 
+        this.Productos.add(p);
     }
     public void Venta(String id, int unidades){
         int direccion = buscar(id); 
@@ -42,13 +42,13 @@ public class Bodega {
             System.out.println("El producto con id " + id + "no existe."); 
         }
         else{
-            cant = productos.get(direccion); 
+            cant = Cantidades.get(direccion); 
             if (cant.getCantidad() < unidades){
                 System.out.println("No hay suficiente existencia para realizar la venta");
                 System.out.println("Existencia actual: " + cant.getCantidad());
             }
             else{
-                cant.setCantidad(cant.getCantidad() - unidades);
+                cant.changeCantidad(cant.getCantidad() - unidades);
             }
         }
     }
@@ -58,7 +58,7 @@ public class Bodega {
             System.out.println("El producto con id " + id + "no existe."); 
         }
         else{
-            cant.setCantidad(cant.getCantidad() + unidades);
+            cant.changeCantidad(cant.getCantidad() + unidades);
             System.out.println("Compra realizada con éxito.");
         }
     }

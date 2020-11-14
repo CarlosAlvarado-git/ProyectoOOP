@@ -3,28 +3,37 @@ import java.util.LinkedList;
 public class Bodega {
     static Cantidad cant; 
     static Producto pro;
-    String nombre; //nombre de la bodega 
-    LinkedList<Cantidad> productos = new LinkedList<Cantidad>(); 
+    int NoBodega; //nombre de la bodega 
+    LinkedList<Producto> Productos = new LinkedList<Producto>();// con id de la bodega
+    LinkedList<Cantidad> Cantidades = new LinkedList<Cantidad>();// con id de la bodega
     //Traslados
 
-    public Bodega(String nombre){
-        this.nombre = nombre; 
+    public Bodega(int id){
+        this.NoBodega = id; 
         //this.productos = new ArrayList<Cantidad>();  
+    }
+    public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Producto> ProMySQL){
+        for(int i = 0; i < CanMySQL.size(); i++){
+            if(CanMySQL.get(i).getBodega() == this.NoBodega){
+                this.Cantidades.add(CanMySQL.get(i));
+                this.Productos.add(ProMySQL.get(i));
+            }
+        }
     }
     // No sé si lo vamos a usar 
     public int buscar(String id){
         int direccion = -1; 
-        for(int i = 0; i < productos.size() && direccion == -1; i++){
-            cant = productos.get(i); 
-            pro = cant.getProducto(); 
-            if (id.equals(pro.getId())){
+        for(int i = 0; i < this.Cantidades.size() && direccion == -1; i++){
+            this.cant = this.Cantidades.get(i); 
+            this.pro = this.cant.getProducto(); 
+            if (id.equals(this.pro.getId())){
                 direccion = i; 
             }
         }
         return direccion; 
     }
-    public void newProducto(Producto p, int c){
-        cant = new Cantidad(p, c);
+    public void newProducto(Producto p, int c){// comprar producto nuevo
+        this.cant = new Cantidad(p, c);
         this.productos.add(cant); 
     }
     public void Venta(String id, int unidades){

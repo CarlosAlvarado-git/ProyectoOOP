@@ -1,18 +1,23 @@
 public class Cantidad {
-    Producto producto; 
+    String Idproducto; 
     int cantidad; 
+    int NoBodega;
 
-    public Cantidad(Producto p, int c){
-        this.producto = p; 
+    public Cantidad(String p, int c, int NoB){
+        this.Idproducto = p; 
         this.cantidad = c; 
+        this.NoBodega = NoB;
     }
-    public Producto getProducto(){
-        return this.producto; 
+    public String getIdProducto(){
+        return this.Idproducto; 
+    }
+    public int getBodega(){
+        return this.NoBodega; 
     }
     public int getCantidad(){
         return this.cantidad; 
     }
-    public void setCantidad(int c){
+    public void changeCantidad(int c){
         this.cantidad = c; 
     } 
 }

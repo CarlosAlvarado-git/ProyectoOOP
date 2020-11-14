@@ -9,16 +9,14 @@ public class Producto{
     int bodega; 
     int activo; 
 
-    public Producto(String id, double precio, String mar, String mo, String n, String mat, int p, int b, int a){
+    public Producto(String id, double precio, String mar, String mo, String n, String mat, int p){
         this.id = id;
         this.precio = precio; 
         this.marca = mar;
         this.modelo = mo; 
         this.nombre = n; 
         this.material = mat;
-        this.peso = p; 
-        this.bodega = b; 
-        this.activo = a; 
+        this.peso = p;
     }
     //getCampos() ------------------------
     public String getId(){

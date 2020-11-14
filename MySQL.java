@@ -14,8 +14,9 @@ public class MySQL {
     PreparedStatement stmt2;
     public String stringuso = "";
     public LinkedList<Producto> Linked_Productos = new LinkedList<Producto>();
-    public LinkedList<String[]> Linked_Bodegas = new LinkedList<String[]>();
+    public LinkedList<Bodega> Linked_Bodegas = new LinkedList<Bodega>();
     public LinkedList<Cantidad> Linked_Cantidad = new LinkedList<Cantidad>();
+    //despues
     public LinkedList<String[]> Linked_Instrumentos_cuerdas = new LinkedList<String[]>();
     public LinkedList<String[]> Linked_Instrumentos_viento = new LinkedList<String[]>();
     public LinkedList<String[]> Linked_Instrumentos_percucion = new LinkedList<String[]>();
@@ -696,7 +697,7 @@ public class MySQL {
     }
 
 
-    public LinkedList<String[]> cargarProductos() //si
+    public LinkedList<Producto> cargarProductos() //si
     {
         openConnection();
         try{
@@ -704,14 +705,7 @@ public class MySQL {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                String[] productos = new String[7];
-                productos[0] = rs.getString("codigo");
-                productos[1] = String.valueOf(rs.getInt("precio"));
-                productos[2] = rs.getString("marca");
-                productos[3] = rs.getString("modelo");
-                productos[4] = rs.getString("nombre");  
-                productos[5] = rs.getString("tipo_material");
-                productos[6] = String.valueOf(rs.getInt("peso"));
+                Producto productos = new Producto(rs.getString("codigo"), rs.getDouble("precio"),rs.getString("marca"),rs.getString("modelo"),rs.getString("nombre"),rs.getString("tipo_material"),rs.getInt("peso") );  
                 Linked_Productos.add(productos);                
             }
             stmt.close();
@@ -806,7 +800,7 @@ public class MySQL {
         return Linked_Instrumentos_percucion;
     }
 
-    public LinkedList<String[]> cargarBodegas() //si
+    public LinkedList<Bodega> cargarBodegas() //si
     {
         openConnection();
         try{
@@ -814,13 +808,10 @@ public class MySQL {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                String[] bodegas = new String[4];
-                bodegas[0] = rs.getString("codigo");
-                bodegas[1] = rs.getString("nombre");
-                bodegas[2] = rs.getString("no_ventas");
-                bodegas[3] = rs.getString("no_compras");
+                Bodega bodega = new Bodega(rs.getInt("codigo"));
                 Linked_Bodegas.add(bodegas);                
             }
+            //crear los objetos bodega
             stmt.close();
         }
         catch(Exception e)
@@ -832,7 +823,7 @@ public class MySQL {
         return Linked_Bodegas;
     }
 
-    public LinkedList<String[]> cargarCantidad() //si
+    public LinkedList<Cantidad> cargarCantidad() //si
     {
         openConnection();
         try{
@@ -840,11 +831,7 @@ public class MySQL {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                String[] cantidades = new String[4];
-                cantidades[0] = rs.getString("codigo");
-                cantidades[1] = rs.getString("codigo_bodega");
-                cantidades[2] = rs.getString("codigo_producto");
-                cantidades[3] = rs.getString("cantidad");
+                Cantidad cantidades = new Cantidad(rs.getString("codigo_producto"), rs.getInt("cantidad"), rs.getInt("codigo_bodega"));
                 Linked_Cantidad.add(cantidades);                
             }
             stmt.close();

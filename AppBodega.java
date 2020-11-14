@@ -12,7 +12,19 @@ public class AppBodega {
     static int NoBodegaCambio = 0;
     static String datos[][] = new String[100][3];
     static String encabezados[] = new String[3];
+    static LinkedList<Bodega> MisBodegas = new LinkedList<Bodega>();
     public static void main(String [] arg){
+        //Creo mis bodegas y las lleno
+        MySQL MiBaseDeDatos = new MySQL();
+        MiBaseDeDatos.cargarBodegas();
+        MiBaseDeDatos.cargarProductos();
+        MiBaseDeDatos.cargarCantidad();
+        for(int i = 0; i < MiBaseDeDatos.Linked_Bodegas.size(); i++){
+            MisBodegas.add(MiBaseDeDatos.Linked_Bodegas.get(i));
+        }
+        for(int i = 0; i < MisBodegas.size(); i++){
+            MisBodegas.get(i).LlenarBodega(MiBaseDeDatos.Linked_Cantidad,MiBaseDeDatos.Linked_Productos);
+        }
         //Creacion de todas las variables
         JFrame app = new JFrame("Control de Bodegas");
         JPanel contrasena = new JPanel();

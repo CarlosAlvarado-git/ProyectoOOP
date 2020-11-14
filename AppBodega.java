@@ -125,9 +125,20 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                for(int y = 0; y < 30; y++){
+                for(int y = 0; y < MisBodegas.get(0).getsizeProductos(); y++){
                     for(int x = 0; x < 3; x++){
-                        datos[y][x] = "1 en y: "+y+" en x: " + x;
+                        if(x == 0)
+                        {
+                            datos[y][x] = MisBodegas.get(0).getIdProducto(y);
+                        }
+                        else if(x == 1)
+                        {
+                            datos[y][x] = MisBodegas.get(0).getNombreProducto(y);
+                        }
+                        else
+                        {
+                            datos[y][x] = MisBodegas.get(0).getCantidadProducto(y);
+                        }
                     }
                 }
                 bodegasList.removeAllItems();
@@ -160,9 +171,20 @@ public class AppBodega {
                 bodegasList.addItem(0);
                 bodegasList.addItem(1);
                 bodegasList.addItem(3);
-                for(int y = 0; y < 30; y++){
+                for(int y = 0; y < MisBodegas.get(1).getsizeProductos(); y++){
                     for(int x = 0; x < 3; x++){
-                        datos[y][x] = "2 en y: "+y+" en x: " + x;
+                        if(x == 0)
+                        {
+                            datos[y][x] = MisBodegas.get(1).getIdProducto(y);
+                        }
+                        else if(x == 1)
+                        {
+                            datos[y][x] = MisBodegas.get(1).getNombreProducto(y);
+                        }
+                        else
+                        {
+                            datos[y][x] = MisBodegas.get(1).getCantidadProducto(y);
+                        }
                     }
                 }
                 listado.removeAllItems();
@@ -187,9 +209,20 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                for(int y = 0; y < 30; y++){
+                for(int y = 0; y < MisBodegas.get(2).getsizeProductos(); y++){
                     for(int x = 0; x < 3; x++){
-                        datos[y][x] = "3 en y: "+y+" en x: " + x;
+                        if(x == 0)
+                        {
+                            datos[y][x] = MisBodegas.get(2).getIdProducto(y);
+                        }
+                        else if(x == 1)
+                        {
+                            datos[y][x] = MisBodegas.get(2).getNombreProducto(y);
+                        }
+                        else
+                        {
+                            datos[y][x] = MisBodegas.get(2).getCantidadProducto(y);
+                        }
                     }
                 }
                 bodegasList.removeAllItems();

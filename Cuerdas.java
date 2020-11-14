@@ -3,11 +3,14 @@ public class Cuerdas extends Producto {
     boolean resonancia; 
     int noCuerdas; 
 
-    public Cuerdas(String c, double precio, String mar, String mo, String n, String mat, int p, int b, boolean a, String tiCuerda, boolean reso, int noCuerdas){
-        super(c, precio, mar, mo, n, mat, p, b, a); 
+    public Cuerdas(String c, double precio, String mar, String mo, String n, String mat, int p, String tiCuerda, boolean reso, int noCuerdas){
+        super(c, precio, mar, mo, n, mat, p); 
         this.tipoCuerdas = tiCuerda; 
         this.resonancia = reso; 
         this.noCuerdas =  noCuerdas; 
+    }
+    public void setBodega(int b){
+        super.bodega = b; 
     }
     //getCampos()
     public String getTipoCuerdas(){

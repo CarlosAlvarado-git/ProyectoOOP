@@ -2,10 +2,13 @@ public class Percusion extends Producto {
     String elementoPercutor; 
     String elementoVibrante;
 
-    public Percusion(String c, double precio, String mar, String mo, String n, String mat, int p, int b, boolean a, String percutor, String vibrante){
-        super(c, precio, mar, mo, n, mat, p, b, a); 
+    public Percusion(String c, double precio, String mar, String mo, String n, String mat, int p, String percutor, String vibrante){
+        super(c, precio, mar, mo, n, mat, p); 
         this.elementoPercutor = percutor; 
         this.elementoVibrante = vibrante; 
+    }
+    public void setBodega(int b){
+        super.bodega = b; 
     }
     //getCampos()
     public String getPercutor(){

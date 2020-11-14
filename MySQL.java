@@ -809,7 +809,7 @@ public class MySQL {
             while(rs.next())
             {
                 Bodega bodega = new Bodega(rs.getInt("codigo"));
-                Linked_Bodegas.add(bodegas);                
+                Linked_Bodegas.add(bodega);                
             }
             //crear los objetos bodega
             stmt.close();

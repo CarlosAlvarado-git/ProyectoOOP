@@ -67,7 +67,7 @@ public class AppBodega {
         for(int y = 1; y <= 100; y++){
             cantidades.addItem(y); 
         }
-        JButton ACTIVAR = new JButton("Activar compras");
+        JButton ACTIVAR = new JButton("Activar");
         JButton SalirBodegas = new JButton();
         //---------- Modificación de paneles y frame
         app.getContentPane();

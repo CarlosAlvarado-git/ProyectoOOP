@@ -1,19 +1,15 @@
 import java.sql.*;
-
-import java.sql.Connection;
-import java.sql.DriverManager; 
-import java.sql.ResultSet; 
-import java.sql.SQLException; 
-import java.sql.Statement; 
-import java.util.logging.Level; 
-import java.util.logging.Logger;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 public class MySQL {
-    //public final String DB = "proyectooop";
-    public String URL = "jdbc:mysql://localhost/proyectooop";
-    public String USER = "root";
-    public String PASS = "";
-    public Connection connect = null;
+    public final String DB = "proyectooop";
+    public final String URL = "jdbc:mysql://localhost:3306/" + DB;
+    public final String USER = "root";
+    public final String PASS = "";
+    public Connection connect;
     PreparedStatement stmt;
     PreparedStatement stmt2;
     public String stringuso = "";
@@ -28,11 +24,11 @@ public class MySQL {
     public Connection openConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connect = DriverManager.getConnection(URL, USER, PASS);
+            connect = DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("error HOLA " + ex.getMessage());
+            System.out.println("error " + ex.getMessage());
         }
-        return this.connect;
+        return connect;
     }
 
     public boolean closeConnection(Connection connect) {
@@ -50,7 +46,7 @@ public class MySQL {
     {
         openConnection();
         try{
-        stmt = this.connect.prepareStatement("INSERT INTO `bodega1` (`codigo`, `nombre`, `no_ventas`, `no_compras`) VALUES (NULL,'"+ nombre +"', '0', '0')");
+        stmt = connect.prepareStatement("INSERT INTO `bodega1` (`codigo`, `nombre`, `no_ventas`, `no_compras`) VALUES (NULL,'"+ nombre +"', '0', '0')");
         stmt.executeUpdate();
         stmt.close();
         }
@@ -58,14 +54,14 @@ public class MySQL {
         {
             System.out.println(e);
         }
-        closeConnection(this.connect);
+        closeConnection(connect);
     }
 
     public void crear_producto(String codigo, double precio, String marca, String modelo, String nombre, String tipo_material, int peso) //si
     {
         openConnection();
         try{
-        stmt = this.connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('"+codigo+"', '"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+tipo_material+"', '"+peso+"', '1')");
+        stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('"+codigo+"', '"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+tipo_material+"', '"+peso+"', '1')");
         stmt.executeUpdate();
         stmt.close();
         }
@@ -73,14 +69,14 @@ public class MySQL {
         {
             System.out.println(e);
         }
-        closeConnection(this.connect);
+        closeConnection(connect);
     }
 
     public void crear_instrumento_cuerda(String codigo_producto, String tipo_cuerda, int cantidad_cuerda, int no_resonancia) //si
     {
         openConnection();
         try{
-        stmt = this.connect.prepareStatement("INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `cantidad_cuerdas`) VALUES (NULL, '"+ codigo_producto +"', '"+ tipo_cuerda +"', '"+ cantidad_cuerda +"')");
+        stmt = connect.prepareStatement("INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `cantidad_cuerdas`) VALUES (NULL, '"+ codigo_producto +"', '"+ tipo_cuerda +"', '"+ cantidad_cuerda +"')");
         stmt.executeUpdate();
         
 
@@ -705,7 +701,7 @@ public class MySQL {
     {
         openConnection();
         try{
-            stmt = this.connect.prepareStatement("SELECT * FROM `producto` WHERE `activo` = 1");
+            stmt = connect.prepareStatement("SELECT * FROM `producto` WHERE `activo` = 1");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
@@ -718,7 +714,7 @@ public class MySQL {
         {
             System.out.println(e);
         }
-        closeConnection(this.connect);
+        closeConnection(connect);
 
         return Linked_Productos;
     }  
@@ -799,7 +795,7 @@ public class MySQL {
         {
             System.out.println(e);
         }
-        closeConnection(this.connect);
+        closeConnection(connect);
 
         return Linked_Instrumentos_percucion;
     }
@@ -808,11 +804,14 @@ public class MySQL {
     {
         openConnection();
         try{
-            stmt = this.connect.prepareStatement("SELECT * FROM `bodega1`");
+            stmt = connect.prepareStatement("SELECT * FROM `bodega1`");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
                 Bodega bodega = new Bodega(rs.getInt("codigo"));
+                String nom = rs.getString("nombre");
+                int no1 = rs.getInt("no_ventas");
+                int no2 = rs.getInt("no_compras");
                 Linked_Bodegas.add(bodega);                
             }
             //crear los objetos bodega
@@ -822,7 +821,7 @@ public class MySQL {
         {
             System.out.println(e);
         }
-        closeConnection(this.connect);
+        closeConnection(connect);
 
         return Linked_Bodegas;
     }
@@ -831,7 +830,7 @@ public class MySQL {
     {
         openConnection();
         try{
-            stmt = this.connect.prepareStatement("SELECT * FROM `cantidad` INNER JOIN `producto` ON `cantidad`.`codigo_producto` = `producto`.`codigo` WHERE `producto`.`activo` = 1");
+            stmt = connect.prepareStatement("SELECT * FROM `cantidad` INNER JOIN `producto` ON `cantidad`.`codigo_producto` = `producto`.`codigo` WHERE `producto`.`activo` = 1");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
@@ -844,7 +843,7 @@ public class MySQL {
         {
             System.out.println(e);
         }
-        closeConnection(this.connect);
+        closeConnection(connect);
 
         return Linked_Cantidad;
     }
@@ -852,3 +851,4 @@ public class MySQL {
 
 
 }
+

@@ -1,5 +1,5 @@
 public class Producto{
-    int id; 
+    String id; 
     double precio; 
     String marca; 
     String modelo;  
@@ -7,9 +7,9 @@ public class Producto{
     String material;
     int peso; 
     int bodega; 
-    boolean activo; 
+    int activo; 
 
-    public Producto(int id, double precio, String mar, String mo, String n, String mat, int p, int b, boolean a){
+    public Producto(String id, double precio, String mar, String mo, String n, String mat, int p, int b, int a){
         this.id = id;
         this.precio = precio; 
         this.marca = mar;
@@ -21,7 +21,7 @@ public class Producto{
         this.activo = a; 
     }
     //getCampos() ------------------------
-    public int getId(){
+    public String getId(){
         return this.id; 
     }
     public double getPrecio(){
@@ -45,11 +45,11 @@ public class Producto{
     public int getBodega(){
         return this.bodega; 
     }
-    public boolean getActivo(){
+    public int getActivo(){
         return this.activo; 
     }
     //setCampos() -----------------------------
-    public void setId(int id){
+    public void setId(String id){
         this.id = id; 
     }
     public void setPrecio(double p){
@@ -73,7 +73,7 @@ public class Producto{
     public void setBodega(int b){
         this.bodega = b; 
     }
-    public void setActivo(boolean a){
+    public void setActivo(int a){
         this.activo = a; 
     }
 }

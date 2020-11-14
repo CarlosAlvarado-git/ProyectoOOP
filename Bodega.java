@@ -1,22 +1,23 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Bodega {
     static Cantidad cant; 
     static Producto pro;
     String nombre; //nombre de la bodega 
-    ArrayList<Cantidad> productos; 
+    LinkedList<Cantidad> productos = new LinkedList<Cantidad>(); 
     //Traslados
 
     public Bodega(String nombre){
         this.nombre = nombre; 
-        this.productos = new ArrayList<Cantidad>();  
+        //this.productos = new ArrayList<Cantidad>();  
     }
-    public int buscar(int id){
+    // No sé si lo vamos a usar 
+    public int buscar(String id){
         int direccion = -1; 
         for(int i = 0; i < productos.size() && direccion == -1; i++){
             cant = productos.get(i); 
             pro = cant.getProducto(); 
-            if (id == pro.getId()){
+            if (id.equals(pro.getId())){
                 direccion = i; 
             }
         }
@@ -26,7 +27,7 @@ public class Bodega {
         cant = new Cantidad(p, c);
         this.productos.add(cant); 
     }
-    public void Venta(int id, int unidades){
+    public void Venta(String id, int unidades){
         int direccion = buscar(id); 
         if(direccion == -1){
             System.out.println("El producto con id " + id + "no existe."); 
@@ -42,7 +43,7 @@ public class Bodega {
             }
         }
     }
-    public void Compra(int id, int unidades){
+    public void Compra(String id, int unidades){
         int direccion = buscar(id); 
         if(direccion == -1){
             System.out.println("El producto con id " + id + "no existe."); 

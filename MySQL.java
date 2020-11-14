@@ -13,9 +13,9 @@ public class MySQL {
     PreparedStatement stmt;
     PreparedStatement stmt2;
     public String stringuso = "";
-    public LinkedList<String[]> Linked_Productos = new LinkedList<String[]>();
+    public LinkedList<Producto> Linked_Productos = new LinkedList<Producto>();
     public LinkedList<String[]> Linked_Bodegas = new LinkedList<String[]>();
-    public LinkedList<String[]> Linked_Cantidad = new LinkedList<String[]>();
+    public LinkedList<Cantidad> Linked_Cantidad = new LinkedList<Cantidad>();
     public LinkedList<String[]> Linked_Instrumentos_cuerdas = new LinkedList<String[]>();
     public LinkedList<String[]> Linked_Instrumentos_viento = new LinkedList<String[]>();
     public LinkedList<String[]> Linked_Instrumentos_percucion = new LinkedList<String[]>();

@@ -12,6 +12,7 @@ public class AppBodega {
     static int NoBodegaCambio = 0;
     static String datos[][] = new String[100][3];
     static String encabezados[] = new String[3];
+    static Producto nuevoP;
     static LinkedList<Bodega> MisBodegas = new LinkedList<Bodega>();
     public static void main(String [] arg){
         //Creo mis bodegas y las lleno
@@ -126,21 +127,34 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                for(int y = 0; y < MisBodegas.get(0).getsizeProductos(); y++){
-                    for(int x = 0; x < 3; x++){
-                        if(x == 0)
-                        {
-                            datos[y][x] = MisBodegas.get(0).getIdProducto(y);
-                        }
-                        else if(x == 1)
-                        {
-                            datos[y][x] = MisBodegas.get(0).getNombreProducto(y);
-                        }
-                        else
-                        {
-                            datos[y][x] = MisBodegas.get(0).getCantidadProducto(y);
+                if(MisBodegas.get(NoBodega-1).getsizeProductos() == 0){
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
                         }
                     }
+                }
+                else{
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
+                            }
+                        }
+                    }
+                }
+                
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                    System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                 }
                 bodegasList.removeAllItems();
                 bodegasList.addItem(0);
@@ -172,21 +186,33 @@ public class AppBodega {
                 bodegasList.addItem(0);
                 bodegasList.addItem(1);
                 bodegasList.addItem(3);
-                for(int y = 0; y < MisBodegas.get(1).getsizeProductos(); y++){
-                    for(int x = 0; x < 3; x++){
-                        if(x == 0)
-                        {
-                            datos[y][x] = MisBodegas.get(1).getIdProducto(y);
-                        }
-                        else if(x == 1)
-                        {
-                            datos[y][x] = MisBodegas.get(1).getNombreProducto(y);
-                        }
-                        else
-                        {
-                            datos[y][x] = MisBodegas.get(1).getCantidadProducto(y);
+                if(MisBodegas.get(NoBodega-1).getsizeProductos() == 0){
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
                         }
                     }
+                }
+                else{
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
+                            }
+                        }
+                    }
+                }
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                    System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                 }
                 listado.removeAllItems();
                 listado.addItem(" ");
@@ -210,21 +236,33 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                for(int y = 0; y < MisBodegas.get(2).getsizeProductos(); y++){
-                    for(int x = 0; x < 3; x++){
-                        if(x == 0)
-                        {
-                            datos[y][x] = MisBodegas.get(2).getIdProducto(y);
-                        }
-                        else if(x == 1)
-                        {
-                            datos[y][x] = MisBodegas.get(2).getNombreProducto(y);
-                        }
-                        else
-                        {
-                            datos[y][x] = MisBodegas.get(2).getCantidadProducto(y);
+                if(MisBodegas.get(NoBodega-1).getsizeProductos() == 0){
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
                         }
                     }
+                }
+                else{
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
+                            }
+                        }
+                    }
+                }
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                    System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                 }
                 bodegasList.removeAllItems();
                 bodegasList.addItem(0);
@@ -394,9 +432,12 @@ public class AppBodega {
                             // alerta de vacios o 0
                         }
                         else{
-                            Producto nuevoP = new Producto(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n);
-                            //Cantidad nuevoC = new Cantidad(IdProducto_n, CantProducto_n, NoBodega);
-                            MisBodegas.get(NoBodega-1).newProducto(nuevoP, CantProducto_n);
+                            nuevoP = new Producto(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n);
+                            MisBodegas.get(NoBodega-1).nuevoProducto(nuevoP, CantProducto_n);
+                            System.out.println("-----------ANTES DEL CICLO------------");
+                            for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                                System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
+                            }
                             System.out.println("-----------------------");
                             for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
                                 for(int x = 0; x < 3; x++){
@@ -444,8 +485,7 @@ public class AppBodega {
                             Peso_.setVisible(false);
                             cantidades.setVisible(false);
                             Cancelar.setVisible(false);
-                        }
-                        
+                        }  
                     }  
                 });
             }

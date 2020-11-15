@@ -22,6 +22,7 @@ public class AppBodega {
         for(int i = 0; i < MiBaseDeDatos.Linked_Bodegas.size(); i++){
             MisBodegas.add(MiBaseDeDatos.Linked_Bodegas.get(i));
         }
+        
         for(int i = 0; i < MisBodegas.size(); i++){
             MisBodegas.get(i).LlenarBodega(MiBaseDeDatos.Linked_Cantidad,MiBaseDeDatos.Linked_Productos);
         }

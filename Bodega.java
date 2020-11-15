@@ -4,12 +4,14 @@ public class Bodega {
     static Cantidad cant; 
     //static Producto pro;
     int NoBodega; //nombre de la bodega 
-    LinkedList<Producto> Productos = new LinkedList<Producto>();// con id de la bodega
-    LinkedList<Cantidad> Cantidades = new LinkedList<Cantidad>();// con id de la bodega
+    LinkedList<Producto> Productos;// con id de la bodega
+    LinkedList<Cantidad> Cantidades;// con id de la bodega
     //Traslados
 
     public Bodega(int id){
         this.NoBodega = id; 
+        this.Productos = new LinkedList<Producto>();
+        this.Cantidades = new LinkedList<Cantidad>();
         //this.productos = new ArrayList<Cantidad>();  
     }
     public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Producto> ProMySQL){
@@ -23,7 +25,7 @@ public class Bodega {
     public int buscar(String id){
         int direccion = -1; 
         for(int i = 0; i < this.Cantidades.size() && direccion == -1; i++){
-            this.cant = this.Cantidades.get(i); 
+            cant = this.Cantidades.get(i); 
             if (id.equals(this.cant.getIdProducto())){
                 direccion = i; 
             }

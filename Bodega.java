@@ -33,26 +33,33 @@ public class Bodega {
         return direccion; 
     }
     public void nuevoProducto(Producto p, int c){// comprar producto nuevo
-        Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
-        //p.setBodega(this.NoBodega);
-        System.out.println("----------ANTES DE ASIGNAR-------------");
-        for(int i = 0; i < this.Productos.size();i++ ){
-            System.out.println(this.Productos.get(i).getId());
+        int bar = buscar(p.getId());
+        if(bar == -1){
+            Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
+            //p.setBodega(this.NoBodega);
+            System.out.println("----------ANTES DE ASIGNAR-------------");
+            for(int i = 0; i < this.Productos.size();i++ ){
+                System.out.println(this.Productos.get(i).getId());
+            }
+            System.out.println("-----------------------");
+            for(int i = 0; i < this.Cantidades.size();i++ ){
+                System.out.println(this.Cantidades.get(i).getIdProducto());
+            }
+            this.Cantidades.add(np); 
+            this.Productos.add(p);
+            System.out.println("-----------DESPUÉS DE ASIGNAR------------");
+            for(int i = 0; i < this.Productos.size();i++ ){
+                System.out.println(this.Productos.get(i).getId());
+            }
+            System.out.println("-----------------------");
+            for(int i = 0; i < this.Cantidades.size();i++ ){
+                System.out.println(this.Cantidades.get(i).getIdProducto());
+            }
         }
-        System.out.println("-----------------------");
-        for(int i = 0; i < this.Cantidades.size();i++ ){
-            System.out.println(this.Cantidades.get(i).getIdProducto());
+        else{
+            
         }
-        this.Cantidades.add(np); 
-        this.Productos.add(p);
-        System.out.println("-----------DESPUÉS DE ASIGNAR------------");
-        for(int i = 0; i < this.Productos.size();i++ ){
-            System.out.println(this.Productos.get(i).getId());
-        }
-        System.out.println("-----------------------");
-        for(int i = 0; i < this.Cantidades.size();i++ ){
-            System.out.println(this.Cantidades.get(i).getIdProducto());
-        }
+        
     }
     public void Venta(String id, int unidades){
         int direccion = buscar(id); 

@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class Bodega {
     static Cantidad cant; 
-    static Producto pro;
+    //static Producto pro;
     int NoBodega; //nombre de la bodega 
     LinkedList<Producto> Productos = new LinkedList<Producto>();// con id de la bodega
     LinkedList<Cantidad> Cantidades = new LinkedList<Cantidad>();// con id de la bodega
@@ -20,7 +20,6 @@ public class Bodega {
             }
         }
     }
-    // No sé si lo vamos a usar 
     public int buscar(String id){
         int direccion = -1; 
         for(int i = 0; i < this.Cantidades.size() && direccion == -1; i++){
@@ -32,9 +31,9 @@ public class Bodega {
         return direccion; 
     }
     public void newProducto(Producto p, int c){// comprar producto nuevo
-        this.cant = new Cantidad(p.getId(), c,this.NoBodega);
+        Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
         p.setBodega(this.NoBodega);
-        this.Cantidades.add(cant); 
+        this.Cantidades.add(np); 
         this.Productos.add(p);
     }
     public void Venta(String id, int unidades){
@@ -43,18 +42,19 @@ public class Bodega {
             System.out.println("El producto con id " + id + "no existe."); 
         }
         else{
-            this.cant = Cantidades.get(direccion); 
-            if (cant.getCantidad() < unidades){
+            this.cant = this.Cantidades.get(direccion); 
+            if (this.cant.getCantidad() < unidades){
                 System.out.println("No hay suficiente existencia para realizar la venta");
                 System.out.println("Existencia actual: " + cant.getCantidad());
             }
             else{
-                cant.changeCantidad(cant.getCantidad() - unidades);
+                this.cant.changeCantidad(cant.getCantidad() - unidades);
             }
         }
     }
     public void Compra(String id, int unidades){
         int direccion = buscar(id); 
+        cant = this.Cantidades.get(direccion);
         if(direccion == -1){
             System.out.println("El producto con id " + id + "no existe."); 
         }

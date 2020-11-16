@@ -4,20 +4,14 @@ public class Bodega {
     static Cantidad cant; 
     //static Producto pro;
     int NoBodega; //nombre de la bodega 
-    LinkedList<Percusion> PercusionProductos;//
-    LinkedList<Viento> VientoProductos;
-    LinkedList<Cuerdas> CuerdasProductos;
-    LinkedList<Cantidad> Cantidades;// con id de la bodega
+    LinkedList<Percusion> PercusionProductos = new LinkedList<Percusion>();//
+    LinkedList<Viento> VientoProductos = new LinkedList<Viento>();
+    LinkedList<Cuerdas> CuerdasProductos = new LinkedList<Cuerdas>();
+    LinkedList<Cantidad> Cantidades = new LinkedList<Cantidad>();
     //Traslados
 
     public Bodega(int id){
-        this.NoBodega = id; 
-        this.PercusionProductos = new LinkedList<Percusion>();
-        this.VientoProductos = new LinkedList<Viento>();
-        this.CuerdasProductos = new LinkedList<Cuerdas>();
-        //nuevas listas 
-        this.Cantidades = new LinkedList<Cantidad>();
-        //this.productos = new ArrayList<Cantidad>();  
+        this.NoBodega = id;  
     }
     public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Percusion> PerMySQL, LinkedList<Viento> VientoMySQL, LinkedList<Cuerdas> CuerdasMySQL){
         for(int i = 0; i < CanMySQL.size(); i++){
@@ -123,18 +117,53 @@ public class Bodega {
             cant.changeCantidad(cant.getCantidad() + unidades);
         }
     }
-    public void Movimiento(String id, int unidades, Bodega b){
-        int direccion = b.buscar(id); 
+    public void Movimiento(String id, int unidades, Bodega bNueva, Bodega bAnterior){
+        int direccion = bNueva.buscar(id); 
         if(direccion == -1){
-            
+            int buscarAnterior = 0;
+            int pos = 0;
+            for(int i = 0; i < bAnterior.PercusionProductos.size(); i++){
+                if(id.equals(bAnterior.PercusionProductos.get(i).getId())){
+                    buscarAnterior = 1;
+                    pos = i;
+                    break;
+                }
+            }
+            for(int i = 0; i < bAnterior.VientoProductos.size(); i++){
+                if(id.equals(bAnterior.VientoProductos.get(i).getId())){
+                    buscarAnterior = 2;
+                    pos = i;
+                    break;
+                }
+            }
+            for(int i = 0; i < bAnterior.CuerdasProductos.size(); i++){
+                if(id.equals(bAnterior.CuerdasProductos.get(i).getId())){
+                    buscarAnterior = 3;
+                    pos = i;
+                    break;
+                }
+            }
+            if(buscarAnterior == 1){
+                Percusion per = bNueva.retornarPercusion(bAnterior, pos);
+                Cantidad np = new Cantidad(per.getId(), unidades, bNueva.NoBodega);
+                bNueva.Cantidades.add(np);
+                bNueva.PercusionProductos.add(per);
+                //percusion
+            }
+            else if(buscarAnterior == 2){
+                //viento
+            }
+            else{
+                //cuerdas
+            }
         }
         else{
-            cant = b.Cantidades.get(direccion);
+            cant = bNueva.Cantidades.get(direccion);
             cant.changeCantidad(cant.getCantidad() + unidades);
         }
     }
     //traslados 
-    public void traslado(Srting id, int unidades, int BoNueva, LinkedList<Bodega> bodegass){
+    public void traslado(String id, int unidades, int BoNueva, LinkedList<Bodega> bodegass){
         int direccion = buscar(id);
         if(direccion == -1){
             //aviso
@@ -147,7 +176,7 @@ public class Bodega {
             }
             else{
                 cant.changeCantidad(cant.getCantidad() - unidades);
-                bodegass.get(BoNueva-1).Movimiento(id, unidades, bodegass.get(BoNueva));
+                bodegass.get(BoNueva-1).Movimiento(id, unidades, bodegass.get(BoNueva-1), this);
             }
         }
     }
@@ -232,4 +261,21 @@ public class Bodega {
         }
         return String.valueOf(this.Cantidades.get(pos).getCantidad());
     }
+    public Percusion retornarPercusion(Bodega b, int pos){
+        String id = b.getIdProductoPercusion(pos);
+        double pre = b.PercusionProductos.get(pos).getPrecio();
+        String mar = b.PercusionProductos.get(pos).getMarca();
+        String mode = b.PercusionProductos.get(pos).getModelo();
+        String nom = b.PercusionProductos.get(pos).getNombre();
+        String mat = b.PercusionProductos.get(pos).getMaterial();
+        int peso =  b.PercusionProductos.get(pos).getPeso();
+        String percu =  b.PercusionProductos.get(pos).getPercutor();
+        String vibra =  b.PercusionProductos.get(pos).getVibrante();
+        Percusion per = new Percusion(id, pre, mar, mode, nom, mat, peso, percu, vibra);
+        return per;
+    }
 }
+/**
+    FUNCIONES PARA RETORNAR LOS VALORES
+ */
+

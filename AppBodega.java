@@ -9,6 +9,7 @@ public class AppBodega {
     static String IdProducto = "";
     static int cantidadcomprada = 0;
     static int cantidadventa = 0;
+    static int cantidadbode = 0;
     static int NoBodegaCambio = 0;
     static String datos[][] = new String[1000][3];
     static String encabezados[] = new String[3];
@@ -347,22 +348,78 @@ public class AppBodega {
         moverE.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){
                 IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
-                cantidadventa = cantidades.getItemAt(cantidades.getSelectedIndex());
+                cantidadbode = cantidades.getItemAt(cantidades.getSelectedIndex());
                 NoBodegaCambio = bodegasList.getItemAt(bodegasList.getSelectedIndex());
-                if(IdProducto.equals(" ") || cantidadventa == 0 || NoBodegaCambio == 0)
+                if(IdProducto.equals(" ") || cantidadbode == 0 || NoBodegaCambio == 0)
                 {
                     JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
                 }
-                //proceso de valdar y hacer el query. 
-                BproducExist.setVisible(true);
-                BproducNuevo.setVisible(true);
-                VenderProduc.setVisible(true);
-                MoverProduc.setVisible(true);///// aqui nooooo
-                listado.setVisible(false);
-                cantidades.setVisible(false);
-                moverE.setVisible(false);
-                bodegasList.setVisible(false);
-                Cancelar.setVisible(false);
+                else{
+                    MisBodegas.get(NoBodega-1).traslado(IdProducto, cantidadbode, NoBodegaCambio, MisBodegas);
+                    int posig = 0;
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                            }
+                        }
+                    }
+                    posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                            }
+                        }
+                    }
+                    posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                            }
+                        }
+                    }
+                    //proceso de valdar y hacer el query. 
+                    tabladebodega.setFillsViewportHeight(true);
+                    //proceso de valdar y hacer el query. 
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    VenderProduc.setVisible(true);
+                    MoverProduc.setVisible(true);///// aqui nooooo
+                    listado.setVisible(false);
+                    cantidades.setVisible(false);
+                    moverE.setVisible(false);
+                    bodegasList.setVisible(false);
+                    Cancelar.setVisible(false);
+                }
             }  
         });
         PercusionBoton.setBounds(450, 300, 200, 30);
@@ -716,12 +773,13 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 || MisBodegas.get(NoBodega-1).getsizeViento() == 0 || MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
+                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 && MisBodegas.get(NoBodega-1).getsizeViento() == 0 && MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
                     for(int y = 0; y < 100; y++){
                         for(int x = 0; x < 3; x++){
                             datos[y][x] = "";
                         }
                     }
+                    System.out.println("No hay nada en bodega 1");
                 }
                 else{
                     int posig = 0;
@@ -776,7 +834,7 @@ public class AppBodega {
                         }
                     }
                 }
-                
+                tabladebodega.setFillsViewportHeight(true);
                 /*for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
                     System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                 }*/
@@ -805,12 +863,13 @@ public class AppBodega {
                 bodegasList.addItem(0);
                 bodegasList.addItem(1);
                 bodegasList.addItem(3);
-                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 || MisBodegas.get(NoBodega-1).getsizeViento() == 0 || MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
+                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 && MisBodegas.get(NoBodega-1).getsizeViento() == 0 && MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
                     for(int y = 0; y < 100; y++){
                         for(int x = 0; x < 3; x++){
                             datos[y][x] = "";
                         }
                     }
+                    System.out.println("No hay nada en bodega 2");
                 }
                 else{
                     int posig = 0;
@@ -864,6 +923,7 @@ public class AppBodega {
                             }
                         }
                     }
+                    tabladebodega.setFillsViewportHeight(true);
                 }
             } 
         });
@@ -880,12 +940,13 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 || MisBodegas.get(NoBodega-1).getsizeViento() == 0 || MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
+                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 && MisBodegas.get(NoBodega-1).getsizeViento() == 0 && MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
                     for(int y = 0; y < 100; y++){
                         for(int x = 0; x < 3; x++){
                             datos[y][x] = "";
                         }
                     }
+                    System.out.println("No hay nada en bodega 3");
                 }
                 else{
                     int posig = 0;
@@ -939,6 +1000,7 @@ public class AppBodega {
                             }
                         }
                     }
+                    tabladebodega.setFillsViewportHeight(true);
                 }
                 bodegasList.removeAllItems();
                 bodegasList.addItem(0);

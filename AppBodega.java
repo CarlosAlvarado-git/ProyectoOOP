@@ -302,7 +302,7 @@ public class AppBodega {
         });
         //-----------------------------------------------------------
         //---------Parte de pantalla de inicio-----------------------
-        pinicio.setLayout(new BorderLayout());
+        pinicio.setLayout(null);
         Bodega1.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 pdeBodegas.setVisible(true);

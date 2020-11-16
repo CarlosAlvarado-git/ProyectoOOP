@@ -5,9 +5,6 @@ public class Viento extends Producto {
         super(c, precio, mar, mo, n, mat, p);
         this.largo =  largo; 
     }
-    public void setBodega(int b){
-        super.bodega = b; 
-    }
     //getCampos()
     public int getLargo(){
         return this.largo; 

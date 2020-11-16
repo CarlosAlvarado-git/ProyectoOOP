@@ -13,11 +13,11 @@ public class MySQL {
     PreparedStatement stmt;
     PreparedStatement stmt2;
     public String stringuso = "";
-    public LinkedList<Producto> Linked_Productos = new LinkedList<Producto>();
+    public LinkedList<Producto> Linked_Productos = new LinkedList<Producto>();//no debería de existir
     public LinkedList<Bodega> Linked_Bodegas = new LinkedList<Bodega>();
     public LinkedList<Cantidad> Linked_Cantidad = new LinkedList<Cantidad>();
     //despues
-    public LinkedList<String[]> Linked_Instrumentos_cuerdas = new LinkedList<String[]>();
+    public LinkedList<String[]> Linked_Instrumentos_cuerdas = new LinkedList<String[]>();//estas son las claves junto a cantidad
     public LinkedList<String[]> Linked_Instrumentos_viento = new LinkedList<String[]>();
     public LinkedList<String[]> Linked_Instrumentos_percucion = new LinkedList<String[]>();
 

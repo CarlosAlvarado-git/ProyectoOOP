@@ -15,6 +15,9 @@ public class AppBodega {
     static Producto nuevoP;
     static LinkedList<Bodega> MisBodegas = new LinkedList<Bodega>();
     public static void main(String [] arg){
+        //variables principales
+        
+        //
         //Creo mis bodegas y las lleno
         MySQL MiBaseDeDatos = new MySQL();
         MiBaseDeDatos.cargarBodegas();
@@ -60,6 +63,15 @@ public class AppBodega {
         JButton Cancelar = new JButton("Cancelar");
         JButton VenderProduc = new JButton("Vender producto");
         JButton MoverProduc = new JButton("Mover producto a otra bodega.");
+        JComboBox<String> listado = new JComboBox<String>();
+        JComboBox<Integer> bodegasList = new JComboBox<Integer>();
+        JComboBox<Integer> cantidades = new JComboBox<Integer>();
+        cantidades.addItem(0);
+        for(int y = 1; y <= 100; y++){
+            cantidades.addItem(y); 
+        }
+        JButton ACTIVAR = new JButton("Activar");
+        JButton SalirBodegas = new JButton();
         //variable o instancia de la MySQL class
         
         //obtener los encabezados para las tablas con un ciclo y query
@@ -70,19 +82,96 @@ public class AppBodega {
         JScrollPane scrollPane = new JScrollPane(tabladebodega);
         JButton comprarE = new JButton("Realizar compra");
         JButton comprarN = new JButton("Realizar compra");
+        comprarN.addActionListener(new ActionListener(){  
+            public void actionPerformed(ActionEvent e){
+                //System.out.println("Boton click");
+                String IdProducto_n = Id_.getText();
+                String NomProducto_n = Nombre_.getText();
+                double PreProducto_n = 0.0;
+                if(Precio_.getText().equals("")){
+                    PreProducto_n = 0.0;
+                }
+                else{
+                    PreProducto_n = Double.valueOf(Precio_.getText());
+                }
+                String MarProducto_n = Marca_.getText();
+                String ModProducto_n = Modelo_.getText();
+                String MatProducto_n = Material_.getText();
+                int PesProducto_n = 0;
+                if(Peso_.getText().equals("")){
+                    // alertta
+                    PesProducto_n = 0;
+                }
+                else{
+                    PesProducto_n = Integer.valueOf(Peso_.getText());
+                }
+                int CantProducto_n = cantidades.getItemAt(cantidades.getSelectedIndex());
+                if(IdProducto_n.equals("") || NomProducto_n.equals("") || MarProducto_n.equals("")|| ModProducto_n.equals("") || MatProducto_n.equals("") || PreProducto_n == 0.0 || PesProducto_n == 0 || CantProducto_n == 0){
+                    // alerta de vacios o 0
+                }
+                else{
+                    nuevoP = new Producto(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n);
+                    MisBodegas.get(NoBodega-1).nuevoProducto(nuevoP, CantProducto_n);
+                    System.out.println("-----------ANTES DEL CICLO------------");
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                        System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
+                    }
+                    System.out.println("-----------------------");
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                                System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                                System.out.println(MisBodegas.get(NoBodega-1).getNombreProducto(y));
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
+                                System.out.println(MisBodegas.get(NoBodega-1).getCantidadProducto(y));
+                            }
+                        }
+                    }
+                    tabladebodega.setFillsViewportHeight(true);
+                    System.out.println("Nuevo-----------------------");
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                        System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
+                    }
+                    System.out.println("-----------------------");
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    VenderProduc.setVisible(true);
+                    comprarN.setVisible(false);
+                    Id_Label.setVisible(false);
+                    Nombre_Label.setVisible(false);
+                    Precio_Label.setVisible(false);
+                    Marca_Label.setVisible(false);
+                    Modelo_Label.setVisible(false);
+                    Material_Label.setVisible(false);
+                    Peso_Label.setVisible(false);
+                    Cantidad_Label.setVisible(false);
+                    Id_.setVisible(false);
+                    Nombre_.setVisible(false);
+                    Precio_.setVisible(false);
+                    Marca_.setVisible(false);
+                    Modelo_.setVisible(false);
+                    Material_.setVisible(false);
+                    Peso_.setVisible(false);
+                    cantidades.setVisible(false);
+                    Cancelar.setVisible(false);
+                } 
+            }  
+        });
         
         //LinkedList<String[]> Linked_Productos = new LinkedList<String[]>();
         //se recibe el linkedlist y se recorre y se hace addItem para agregarlo al listado. O en la variable productos[]
         //String productos[] = new String[100];
-        JComboBox<String> listado = new JComboBox<String>();
-        JComboBox<Integer> bodegasList = new JComboBox<Integer>();
-        JComboBox<Integer> cantidades = new JComboBox<Integer>();
-        cantidades.addItem(0);
-        for(int y = 1; y <= 100; y++){
-            cantidades.addItem(y); 
-        }
-        JButton ACTIVAR = new JButton("Activar");
-        JButton SalirBodegas = new JButton();
+        
         //---------- Modificación de paneles y frame
         app.getContentPane();
         contrasena.setLayout(null);
@@ -405,89 +494,7 @@ public class AppBodega {
                 cantidades.setVisible(true);
                 cantidades.setSelectedItem(0);
                 comprarN.setText("Realizar compra");
-                comprarN.addActionListener(new ActionListener(){  
-                    public void actionPerformed(ActionEvent e){
-                        String IdProducto_n = Id_.getText();
-                        String NomProducto_n = Nombre_.getText();
-                        double PreProducto_n = 0.0;
-                        if(Precio_.getText().equals("")){
-                            PreProducto_n = 0.0;
-                        }
-                        else{
-                            PreProducto_n = Double.valueOf(Precio_.getText());
-                        }
-                        String MarProducto_n = Marca_.getText();
-                        String ModProducto_n = Modelo_.getText();
-                        String MatProducto_n = Material_.getText();
-                        int PesProducto_n = 0;
-                        if(Peso_.getText().equals("")){
-                            // alertta
-                            PesProducto_n = 0;
-                        }
-                        else{
-                            PesProducto_n = Integer.valueOf(Peso_.getText());
-                        }
-                        int CantProducto_n = cantidades.getItemAt(cantidades.getSelectedIndex());
-                        if(IdProducto_n.equals("") || NomProducto_n.equals("") || MarProducto_n.equals("")|| ModProducto_n.equals("") || MatProducto_n.equals("") || PreProducto_n == 0.0 || PesProducto_n == 0 || CantProducto_n == 0){
-                            // alerta de vacios o 0
-                        }
-                        else{
-                            nuevoP = new Producto(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n);
-                            MisBodegas.get(NoBodega-1).nuevoProducto(nuevoP, CantProducto_n);
-                            System.out.println("-----------ANTES DEL CICLO------------");
-                            for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                                System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
-                            }
-                            System.out.println("-----------------------");
-                            for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                                for(int x = 0; x < 3; x++){
-                                    if(x == 0)
-                                    {
-                                        datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
-                                        System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
-                                    }
-                                    else if(x == 1)
-                                    {
-                                        datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
-                                        System.out.println(MisBodegas.get(NoBodega-1).getNombreProducto(y));
-                                    }
-                                    else
-                                    {
-                                        datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
-                                        System.out.println(MisBodegas.get(NoBodega-1).getCantidadProducto(y));
-                                    }
-                                }
-                            }
-                            System.out.println("Nuevo-----------------------");
-                            for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                                System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
-                            }
-                            System.out.println("-----------------------");
-                            BproducExist.setVisible(true);
-                            BproducNuevo.setVisible(true);
-                            MoverProduc.setVisible(true);
-                            VenderProduc.setVisible(true);
-                            comprarN.setVisible(false);
-                            Id_Label.setVisible(false);
-                            Nombre_Label.setVisible(false);
-                            Precio_Label.setVisible(false);
-                            Marca_Label.setVisible(false);
-                            Modelo_Label.setVisible(false);
-                            Material_Label.setVisible(false);
-                            Peso_Label.setVisible(false);
-                            Cantidad_Label.setVisible(false);
-                            Id_.setVisible(false);
-                            Nombre_.setVisible(false);
-                            Precio_.setVisible(false);
-                            Marca_.setVisible(false);
-                            Modelo_.setVisible(false);
-                            Material_.setVisible(false);
-                            Peso_.setVisible(false);
-                            cantidades.setVisible(false);
-                            Cancelar.setVisible(false);
-                        }  
-                    }  
-                });
+                
             }
         });
         VenderProduc.addActionListener(new ActionListener(){

@@ -9,9 +9,6 @@ public class Cuerdas extends Producto {
         this.resonancia = reso; 
         this.noCuerdas =  noCuerdas; 
     }
-    public void setBodega(int b){
-        super.bodega = b; 
-    }
     //getCampos()
     public String getTipoCuerdas(){
         return this.tipoCuerdas; 

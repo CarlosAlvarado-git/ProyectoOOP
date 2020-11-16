@@ -152,22 +152,19 @@ public class AppBodega {
                         System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                     }
                     System.out.println("-----------------------");*/
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
                         for(int x = 0; x < 3; x++){
                             if(x == 0)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
-                                //System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
                             }
                             else if(x == 1)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
-                               // System.out.println(MisBodegas.get(NoBodega-1).getNombreProducto(y));
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
                             }
                             else
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
-                                //System.out.println(MisBodegas.get(NoBodega-1).getCantidadProducto(y));
                             }
                         }
                     }
@@ -267,7 +264,7 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                if(MisBodegas.get(NoBodega-1).getsizeProductos() == 0){
+                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 /* || si tiene 0 en cuerdas y viento*/){
                     for(int y = 0; y < 100; y++){
                         for(int x = 0; x < 3; x++){
                             datos[y][x] = "";
@@ -275,27 +272,35 @@ public class AppBodega {
                     }
                 }
                 else{
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                    int posig = 0;
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
                             if(x == 0)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                                //System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                             }
                             else if(x == 1)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                               // System.out.println(MisBodegas.get(NoBodega-1).getNombreProducto(y));
                             }
                             else
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                                //System.out.println(MisBodegas.get(NoBodega-1).getCantidadProducto(y));
                             }
                         }
                     }
+                    posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    /*
+                        Otro ciclo donde la "y" den datos[y], cambiaria a ser posig, para continuar
+                    */
                 }
                 
-                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                /*for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
                     System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
-                }
+                }*/
                 bodegasList.removeAllItems();
                 bodegasList.addItem(0);
                 bodegasList.addItem(2);
@@ -681,9 +686,11 @@ public class AppBodega {
                 SalirBodegas.setVisible(true);
                 listado.removeAllItems();
                 listado.addItem(" ");
-                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                int posig = 0;
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                     listado.addItem(datos[y][0]);
                 }
+                /*otro for con el posing en la y de datos, para optener los de viendo  y cuerdas */
             }
         });
         Regresar.addActionListener(new ActionListener(){

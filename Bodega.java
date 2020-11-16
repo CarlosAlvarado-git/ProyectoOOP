@@ -33,8 +33,8 @@ public class Bodega {
         return direccion; 
     }
     public void nuevoProducto(Producto p, int c){// comprar producto nuevo
-        //int bar = buscar(p.getId());
-        //if(bar == -1){
+        int bar = buscar(p.getId());
+        if(bar == -1){
             Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
             p.setBodega(this.NoBodega);
             System.out.println("----------ANTES DE ASIGNAR-------------");
@@ -55,10 +55,10 @@ public class Bodega {
             for(int i = 0; i < this.Cantidades.size();i++ ){
                 System.out.println(this.Cantidades.get(i).getIdProducto());
             }
-        //}
-        //else{
+        }
+        else{
             
-       // }
+       }
         
     }
     public void Venta(String id, int unidades){

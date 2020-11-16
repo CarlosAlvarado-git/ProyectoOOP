@@ -27,6 +27,10 @@ public class AppBodega {
     static int CantProducto_n = 0;
     static String objetoPercutor = "";
     static String objetoVibrante = "";
+    static String tipoCuerda = "";
+    static int noCuerdas = 0;
+    static int resonancia = 0;
+    static int largo = 0;
     //
     public static void main(String [] arg){
         
@@ -62,6 +66,10 @@ public class AppBodega {
         JTextField Peso_ = new JTextField();
         JTextField Percutor_ = new JTextField();
         JTextField Vibrante_ = new JTextField();
+        JTextField NoCuerdas_ = new JTextField();
+        JTextField TipoCuerdas_ = new JTextField();
+        JTextField Resonancia_ = new JTextField();
+        JTextField Largo_ = new JTextField();
         JLabel Id_Label = new JLabel("ID del producto: ");
         JLabel Precio_Label = new JLabel("Precio del producto: ");
         JLabel Marca_Label = new JLabel("Marca del producto: ");
@@ -72,6 +80,10 @@ public class AppBodega {
         JLabel Cantidad_Label = new JLabel("Cantidad a comprar: ");
         JLabel Percutor_Label = new JLabel("Objeto percutor: ");
         JLabel Vibrante_Label = new JLabel("Objeto vibrante: ");
+        JLabel NoCuerdas_Label = new JLabel("Numero de cuerdas: ");
+        JLabel TipoCuerdas_Label = new JLabel("Tipo de cuerdas: ");
+        JLabel Resonancia_Label = new JLabel("Tipo de Resonancia (0 o 1): ");
+        JLabel Largo_Label = new JLabel("Largo del instrumento: ");
         //
         JButton iniciodesesion = new JButton("Iniciar Sesion");
         JButton Bodega1 = new JButton("Bodega 1"); 
@@ -89,6 +101,8 @@ public class AppBodega {
         JButton Cancelar = new JButton("Cancelar");
         JButton VenderProduc = new JButton("Vender producto");
         JButton PercusionBoton = new JButton("Producto de Percusion");
+        JButton CuerdasBoton = new JButton("Producto de Cuerdas");
+        JButton VientoBoton = new JButton("Proudcto de Viento");
         JButton MoverProduc = new JButton("Mover producto a otra bodega.");
         JComboBox<String> listado = new JComboBox<String>();
         JComboBox<Integer> bodegasList = new JComboBox<Integer>();
@@ -192,6 +206,8 @@ public class AppBodega {
                 else{
                     //
                     PercusionBoton.setVisible(true);
+                    CuerdasBoton.setVisible(true);
+                    VientoBoton.setVisible(true);
                     comprarN.setVisible(false);
                     Id_Label.setVisible(false);
                     Nombre_Label.setVisible(false);
@@ -240,7 +256,7 @@ public class AppBodega {
                 Cancelar.setVisible(false);
             }  
         });
-        PercusionBoton.setBounds(450, 300, 150, 30);
+        PercusionBoton.setBounds(450, 300, 200, 30);
         PercusionBoton.setVisible(false);
         PercusionBoton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -249,9 +265,41 @@ public class AppBodega {
                 Vibrante_.setVisible(true);
                 Vibrante_Label.setVisible(true);
                 PercusionBoton.setVisible(false);
+                CuerdasBoton.setVisible(false);
+                VientoBoton.setVisible(false);
                 compraFN.setVisible(true);
             }
         });
+        CuerdasBoton.setBounds(700, 300, 200, 30);
+        PercusionBoton.setVisible(false);
+
+        CuerdasBoton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                NoCuerdas_Label.setVisible(true);
+                TipoCuerdas_Label.setVisible(true);
+                Resonancia_Label.setVisible(true);
+                NoCuerdas_.setVisible(true);
+                TipoCuerdas_.setVisible(true);
+                Resonancia_.setVisible(true);
+                CuerdasBoton.setVisible(false);
+                PercusionBoton.setVisible(false);
+                VientoBoton.setVisible(false);
+                compraFN.setVisible(true);
+            }
+        });
+        VientoBoton.setBounds(950, 300, 200, 30);
+        VientoBoton.setVisible(false);
+        VientoBoton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                Largo_.setVisible(true);
+                Largo_Label.setVisible(true);
+                CuerdasBoton.setVisible(false);
+                PercusionBoton.setVisible(false);
+                VientoBoton.setVisible(false);
+                compraFN.setVisible(true);
+            }
+        });
+
         compraFN.setVisible(false);
         compraFN.setBounds(450, 500, 150, 30);
         compraFN.addActionListener(new ActionListener(){
@@ -331,8 +379,185 @@ public class AppBodega {
                         VenderProduc.setVisible(true);
                     }
                 }
-                else{
-
+                else if(TipoCuerdas_.isVisible()){
+                    tipoCuerda = TipoCuerdas_.getText();
+                    if (NoCuerdas_.getText().equals("")){
+                        noCuerdas = 0;
+                    }
+                    else{
+                        try{
+                            noCuerdas = Integer.valueOf(NoCuerdas_.getText());
+                        }
+                        catch(Exception ex){
+                            //aviso
+                        }
+                    }
+                    if (Resonancia_.getText().equals("")){
+                        resonancia = 0;
+                    }
+                    else{
+                        try{
+                            resonancia = Integer.valueOf(NoCuerdas_.getText());
+                        }
+                        catch(Exception ex){
+                            //aviso
+                        }
+                    }
+                    if(tipoCuerda.equals("") || noCuerdas == 0 || resonancia < 0 || resonancia > 1){
+                        //avisp
+                    }
+                    else{
+                        nuevoC = new Cuerdas(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, tipoCuerda, resonancia, noCuerdas);
+                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoC, CantProducto_n);
+                        int posig = 0;
+                        for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
+                            for(int x = 0; x < 3; x++){
+                                if(x == 0)
+                                {
+                                    datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                                }
+                                else if(x == 1)
+                                {
+                                    datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                                }
+                                else
+                                {
+                                    datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                                }
+                            }
+                        }
+                        posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                        for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                            for(int x = 0; x < 3; x++){
+                                if(x == 0)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                                }
+                                else if(x == 1)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                                }
+                                else
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                                }
+                            }
+                        }
+                        posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                        for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                            for(int x = 0; x < 3; x++){
+                                if(x == 0)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                                }
+                                else if(x == 1)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                                }
+                                else
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                                }
+                            }
+                        }
+                        //aqui los demas
+                        tabladebodega.setFillsViewportHeight(true);
+                        compraFN.setVisible(false);
+                        TipoCuerdas_.setVisible(false);
+                        TipoCuerdas_Label.setVisible(false);
+                        NoCuerdas_.setVisible(false);
+                        NoCuerdas_Label.setVisible(false);
+                        Resonancia_.setVisible(false);
+                        Resonancia_Label.setVisible(false);
+                        CuerdasBoton.setVisible(false);
+                        Cancelar.setVisible(false);
+                        BproducExist.setVisible(true);
+                        BproducNuevo.setVisible(true);
+                        MoverProduc.setVisible(true);
+                        VenderProduc.setVisible(true);
+                    }
+                }
+                else if(Largo_.isVisible()){
+                    if (Largo_.getText().equals("")){
+                        largo = 0;
+                    }
+                    else{
+                        try{
+                            largo = Integer.valueOf(Largo_.getText());
+                        }
+                        catch(Exception ex){
+                            //aviso
+                        }
+                    }
+                    if(largo == 0){
+                        //avisp
+                    }
+                    else{
+                        nuevoV = new Viento(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, largo);
+                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoV, CantProducto_n);
+                        int posig = 0;
+                        for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
+                            for(int x = 0; x < 3; x++){
+                                if(x == 0)
+                                {
+                                    datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                                }
+                                else if(x == 1)
+                                {
+                                    datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                                }
+                                else
+                                {
+                                    datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                                }
+                            }
+                        }
+                        posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                        for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                            for(int x = 0; x < 3; x++){
+                                if(x == 0)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                                }
+                                else if(x == 1)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                                }
+                                else
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                                }
+                            }
+                        }
+                        posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                        for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                            for(int x = 0; x < 3; x++){
+                                if(x == 0)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                                }
+                                else if(x == 1)
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                                }
+                                else
+                                {
+                                    datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                                }
+                            }
+                        }
+                        //aqui los demas
+                        tabladebodega.setFillsViewportHeight(true);
+                        compraFN.setVisible(false);
+                        Largo_.setVisible(false);
+                        Largo_Label.setVisible(false);
+                        VientoBoton.setVisible(false);
+                        Cancelar.setVisible(false);
+                        BproducExist.setVisible(true);
+                        BproducNuevo.setVisible(true);
+                        MoverProduc.setVisible(true);
+                        VenderProduc.setVisible(true);
+                    }
                 }
             }
         });
@@ -650,6 +875,10 @@ public class AppBodega {
         Cantidad_Label.setBounds(450,435,150,30);
         Percutor_Label.setBounds(450,400,150,30);
         Vibrante_Label.setBounds(450,435,150,30);
+        TipoCuerdas_Label.setBounds(450, 365, 150, 30);
+        NoCuerdas_Label.setBounds(450, 400, 150, 30);
+        Resonancia_Label.setBounds(450, 435, 150, 30);
+        Largo_Label.setBounds(450, 435, 150,30);
         Id_Label.setVisible(false);
         Nombre_Label.setVisible(false);
         Precio_Label.setVisible(false);
@@ -670,6 +899,10 @@ public class AppBodega {
         Peso_.setBounds(610,400,150,30);
         Percutor_.setBounds(610,400,150,30);
         Vibrante_.setBounds(610, 435, 150, 30);
+        TipoCuerdas_.setBounds(610, 365, 150, 30);
+        NoCuerdas_.setBounds(610, 400, 150, 30);
+        Resonancia_.setBounds(610, 435, 150, 30);
+        Largo_.setBounds(610,435,150,30);
         Id_.setVisible(false);
         Nombre_.setVisible(false);
         Precio_.setVisible(false);
@@ -679,6 +912,16 @@ public class AppBodega {
         Peso_.setVisible(false);
         Percutor_.setVisible(false);
         Vibrante_.setVisible(false);
+        TipoCuerdas_.setVisible(false);
+        TipoCuerdas_Label.setVisible(false);
+        NoCuerdas_.setVisible(false);
+        NoCuerdas_Label.setVisible(false);
+        Resonancia_.setVisible(false);
+        Resonancia_Label.setVisible(false);
+        CuerdasBoton.setVisible(false);
+        Largo_.setVisible(false);
+        Largo_Label.setVisible(false);
+        VientoBoton.setVisible(false);
         //
         BproducExist.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
@@ -740,6 +983,9 @@ public class AppBodega {
                 Peso_.setText("");
                 Vibrante_.setText("");
                 Percutor_.setText("");
+                TipoCuerdas_.setText("");
+                NoCuerdas_.setText("");
+                Resonancia_.setText("");
                 comprarN.setVisible(true);
                 BproducExist.setVisible(false);
                 BproducNuevo.setVisible(false);
@@ -881,6 +1127,38 @@ public class AppBodega {
                     Percutor_Label.setVisible(false);
                     Percutor_.setVisible(false);
                     PercusionBoton.setVisible(false);
+                    CuerdasBoton.setVisible(false);
+                    VientoBoton.setVisible(false);
+                }
+                else if(CuerdasBoton.isVisible()){
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    VenderProduc.setVisible(true);
+                    Cancelar.setVisible(false);
+                    Largo_.setVisible(false);
+                    Largo_Label.setVisible(false);
+                    CuerdasBoton.setVisible(false);
+                    PercusionBoton.setVisible(false);
+                    VientoBoton.setVisible(false);
+                }
+                else if(VientoBoton.isVisible()){
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    VenderProduc.setVisible(true);
+                    Cancelar.setVisible(false);
+                    TipoCuerdas_.setVisible(false);
+                    NoCuerdas_.setVisible(false);
+                    Resonancia_.setVisible(false);
+                    TipoCuerdas_Label.setVisible(false);
+                    NoCuerdas_Label.setVisible(false);
+                    Resonancia_Label.setVisible(false);
+                    Largo_.setVisible(false);
+                    Largo_Label.setVisible(false);
+                    CuerdasBoton.setVisible(false);
+                    PercusionBoton.setVisible(false);
+                    VientoBoton.setVisible(false);
                 }
                 else if(compraFN.isVisible()){
                     BproducExist.setVisible(true);
@@ -893,6 +1171,16 @@ public class AppBodega {
                     Percutor_Label.setVisible(false);
                     Percutor_.setVisible(false);
                     PercusionBoton.setVisible(false);
+                    CuerdasBoton.setVisible(false);
+                    VientoBoton.setVisible(false);
+                    TipoCuerdas_.setVisible(false);
+                    NoCuerdas_.setVisible(false);
+                    Resonancia_.setVisible(false);
+                    TipoCuerdas_Label.setVisible(false);
+                    NoCuerdas_Label.setVisible(false);
+                    Resonancia_Label.setVisible(false);
+                    Largo_.setVisible(false);
+                    Largo_Label.setVisible(false);
                     compraFN.setVisible(false);
                 }
             }
@@ -940,6 +1228,16 @@ public class AppBodega {
                 Vibrante_.setVisible(false);
                 Percutor_Label.setVisible(false);
                 Vibrante_Label.setVisible(false);
+                TipoCuerdas_.setVisible(false);
+                NoCuerdas_.setVisible(false);
+                Resonancia_.setVisible(false);
+                TipoCuerdas_Label.setVisible(false);
+                NoCuerdas_Label.setVisible(false);
+                Resonancia_Label.setVisible(false);
+                CuerdasBoton.setVisible(false);
+                Largo_.setVisible(false);
+                Largo_Label.setVisible(false);
+                VientoBoton.setVisible(false);
                 compraFN.setVisible(false);
             }
         });
@@ -987,6 +1285,8 @@ public class AppBodega {
         pinicio.add(Bodega3);
             //bodega
         pdeBodegas.add(scrollPane);pdeBodegas.add(Percutor_); pdeBodegas.add(Percutor_Label);pdeBodegas.add(Vibrante_); pdeBodegas.add(Vibrante_Label);
+        pdeBodegas.add(TipoCuerdas_);pdeBodegas.add(TipoCuerdas_Label);pdeBodegas.add(NoCuerdas_);pdeBodegas.add(NoCuerdas_Label);pdeBodegas.add(Resonancia_);pdeBodegas.add(Resonancia_Label);pdeBodegas.add(CuerdasBoton);
+        pdeBodegas.add(Largo_);pdeBodegas.add(Largo_Label);pdeBodegas.add(VientoBoton);
         pdeBodegas.add(Id_);pdeBodegas.add(Precio_);pdeBodegas.add(Marca_);pdeBodegas.add(Modelo_);pdeBodegas.add(Nombre_);
         pdeBodegas.add(Material_);pdeBodegas.add(Peso_);pdeBodegas.add(PercusionBoton);pdeBodegas.add(compraFN);
         pdeBodegas.add(Id_Label);pdeBodegas.add(Precio_Label);pdeBodegas.add(Marca_Label);pdeBodegas.add(Modelo_Label);pdeBodegas.add(Nombre_Label);
@@ -1003,6 +1303,4 @@ public class AppBodega {
         //
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
     }
-    
-
 }

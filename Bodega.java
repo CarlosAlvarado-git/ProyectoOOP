@@ -28,6 +28,7 @@ public class Bodega {
                 }
             }
         }
+        //agregrar los de cuerdas y vientos
     }
     public int buscar(String id){
         int direccion = -1; 
@@ -39,34 +40,30 @@ public class Bodega {
         }
         return direccion; 
     }
-    public void nuevoProducto(Producto p, int c){// comprar producto nuevo
+    public void nuevoProducto(Percusion p, int c){// comprar producto nuevo percusion
         int bar = buscar(p.getId());
         if(bar == -1){
             Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
             p.setBodega(this.NoBodega);
-            System.out.println("----------ANTES DE ASIGNAR-------------");
-            for(int i = 0; i < this.Productos.size();i++ ){
-                System.out.println(this.Productos.get(i).getId());
-            }
-            System.out.println("-----------------------");
-            for(int i = 0; i < this.Cantidades.size();i++ ){
-                System.out.println(this.Cantidades.get(i).getIdProducto());
-            }
             this.Cantidades.add(np); 
-            this.Productos.add(p);
-            System.out.println("-----------DESPUÉS DE ASIGNAR------------");
-            for(int i = 0; i < this.Productos.size();i++ ){
-                System.out.println(this.Productos.get(i).getId());
-            }
-            System.out.println("-----------------------");
-            for(int i = 0; i < this.Cantidades.size();i++ ){
-                System.out.println(this.Cantidades.get(i).getIdProducto());
-            }
+            this.PercusionProductos.add(p);
         }
         else{
-            
+            //aviso
        }
         
+    }
+    public void nuevoProducto(Cuerdas p, int c){
+        int bar = buscar(p.getId());
+        if(bar == -1){
+            Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
+            p.setBodega(this.NoBodega);
+            this.Cantidades.add(np); 
+            //this.PercusionProductos.add(p); el de cuerdas
+        }
+        else{
+            //aviso
+       }
     }
     public void Venta(String id, int unidades){
         int direccion = buscar(id); 
@@ -99,7 +96,7 @@ public class Bodega {
     public void traslado(int unidades){
         System.out.println("0"); 
     }
-
+    //-----------------
     public int getsizePerscusion()
     {
         return this.PercusionProductos.size();
@@ -126,5 +123,6 @@ public class Bodega {
         }
         return String.valueOf(this.Cantidades.get(pos).getCantidad());
     }
+    //otras iguales solo que con viento y cuerdas
 
 }

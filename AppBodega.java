@@ -62,6 +62,7 @@ public class AppBodega {
         JButton BproducExist = new JButton("Comprar productos existente");
         JButton Cancelar = new JButton("Cancelar");
         JButton VenderProduc = new JButton("Vender producto");
+        JButton PercusionBoton = new JButton("Producto de Percusion");
         JButton MoverProduc = new JButton("Mover producto a otra bodega.");
         JComboBox<String> listado = new JComboBox<String>();
         JComboBox<Integer> bodegasList = new JComboBox<Integer>();
@@ -81,7 +82,7 @@ public class AppBodega {
         encabezados[2] = "Cantidad";
         JTable tabladebodega = new JTable(datos, encabezados);
         JScrollPane scrollPane = new JScrollPane(tabladebodega);
-        JButton comprarN = new JButton("Realizar compra");
+        JButton comprarN = new JButton("Avanzar");
         JButton comprarE = new JButton("Realizar compra");
         JButton venderE = new JButton("Realizar venta");
         venderE.setVisible(false);
@@ -145,39 +146,8 @@ public class AppBodega {
                     // alerta de vacios o 0
                 }
                 else{
-                    nuevoP = new Producto(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n);
-                    MisBodegas.get(NoBodega-1).nuevoProducto(nuevoP, CantProducto_n);
-                    /*System.out.println("-----------ANTES DEL CICLO------------");
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                        System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
-                    }
-                    System.out.println("-----------------------");*/
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                        for(int x = 0; x < 3; x++){
-                            if(x == 0)
-                            {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
-                            }
-                            else if(x == 1)
-                            {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
-                            }
-                            else
-                            {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
-                            }
-                        }
-                    }
-                    tabladebodega.setFillsViewportHeight(true);
-                   /* System.out.println("Nuevo-----------------------");
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                        System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
-                    }
-                    System.out.println("-----------------------");*/
-                    BproducExist.setVisible(true);
-                    BproducNuevo.setVisible(true);
-                    MoverProduc.setVisible(true);
-                    VenderProduc.setVisible(true);
+                    //
+                    
                     comprarN.setVisible(false);
                     Id_Label.setVisible(false);
                     Nombre_Label.setVisible(false);
@@ -195,7 +165,36 @@ public class AppBodega {
                     Material_.setVisible(false);
                     Peso_.setVisible(false);
                     cantidades.setVisible(false);
+                    // despues de desaparecer todo, mostramos 3 botones, uno de percusion....
+                    // si le da a percusion, dos label y dos text
+                    //boton de realizar compra nuevo
+                    nuevoP = new Producto(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n);
+                    MisBodegas.get(NoBodega-1).nuevoProductoPercusion(nuevoP, CantProducto_n);
+                    int posig = 0;
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                            }
+                        }
+                    }
+                    posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    //aqui los demas
+                    tabladebodega.setFillsViewportHeight(true);
                     Cancelar.setVisible(false);
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    VenderProduc.setVisible(true);
                 } 
             }  
         });
@@ -219,6 +218,13 @@ public class AppBodega {
                 bodegasList.setVisible(false);
                 Cancelar.setVisible(false);
             }  
+        });
+        PercusionBoton.setBounds(450, 300, 150, 30);
+        PercusionBoton.setVisible(false);
+        PercusionBoton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                
+            }
         });
         //---------- Modificación de paneles y frame
         app.getContentPane();
@@ -525,7 +531,6 @@ public class AppBodega {
                 cantidades.setBounds(610, 435, 150, 30);
                 cantidades.setVisible(true);
                 cantidades.setSelectedItem(0);
-                comprarN.setText("Realizar compra");
             }
         });
         VenderProduc.addActionListener(new ActionListener(){

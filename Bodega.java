@@ -5,17 +5,22 @@ public class Bodega {
     //static Producto pro;
     int NoBodega; //nombre de la bodega 
     LinkedList<Percusion> PercusionProductos;//
+    LinkedList<Viento> VientoProductos;
+    LinkedList<Cuerdas> CuerdasProductos;
 
     LinkedList<Cantidad> Cantidades;// con id de la bodega
     //Traslados
 
     public Bodega(int id){
         this.NoBodega = id; 
-        this.PercusionProductos = new LinkedList<Producto>();
+        this.PercusionProductos = new LinkedList<Percusion>();
+        this.VientoProductos = new LinkedList<Viento>();
+        this.CuerdasProductos = new LinkedList<Cuerdas>();
+        //nuevas listas 
         this.Cantidades = new LinkedList<Cantidad>();
         //this.productos = new ArrayList<Cantidad>();  
     }
-    public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Percusion> PerMySQL){
+    public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Percusion> PerMySQL, LinkedList<Viento> VientoMySQL, LinkedList<Cuerdas> CuerdasMySQL){
         for(int i = 0; i < CanMySQL.size(); i++){
             if(CanMySQL.get(i).getBodega() == this.NoBodega){
                 this.Cantidades.add(CanMySQL.get(i));
@@ -28,18 +33,34 @@ public class Bodega {
                 }
             }
         }
-        //agregrar los de cuerdas y vientos
+        for(int i = 0; i < VientoMySQL.size(); i++){
+            for(int x = 0; x < this.Cantidades.size(); x++){
+                if(VientoMySQL.get(i).getId().equals(this.Cantidades.get(x).getIdProducto())){
+                    this.VientoProductos.add(VientoMySQL.get(i));
+                }
+            }
+        }
+        for(int i = 0; i < CuerdasMySQL.size(); i++){
+            for(int x = 0; x < this.Cantidades.size(); x++){
+                if(CuerdasMySQL.get(i).getId().equals(this.Cantidades.get(x).getIdProducto())){
+                    this.CuerdasProductos.add(CuerdasMySQL.get(i));
+                }
+            }
+        }
     }
     public int buscar(String id){
         int direccion = -1; 
         for(int i = 0; i < this.Cantidades.size() && direccion == -1; i++){
             cant = this.Cantidades.get(i); 
-            if (id.equals(this.cant.getIdProducto())){
+            if (id.equals(cant.getIdProducto())){
                 direccion = i; 
             }
         }
         return direccion; 
     }
+    /*
+        Esta es la sección para comprar produtos
+    */
     public void nuevoProducto(Percusion p, int c){// comprar producto nuevo percusion
         int bar = buscar(p.getId());
         if(bar == -1){
@@ -59,7 +80,19 @@ public class Bodega {
             Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
             p.setBodega(this.NoBodega);
             this.Cantidades.add(np); 
-            //this.PercusionProductos.add(p); el de cuerdas
+            this.CuerdasProductos.add(p); 
+        }
+        else{
+            //aviso
+       }
+    }
+    public void nuevoProducto(Viento p, int c){
+        int bar = buscar(p.getId());
+        if(bar == -1){
+            Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
+            p.setBodega(this.NoBodega);
+            this.Cantidades.add(np); 
+            this.VientoProductos.add(p);
         }
         else{
             //aviso
@@ -71,13 +104,13 @@ public class Bodega {
             System.out.println("El producto con id " + id + "no existe."); 
         }
         else{
-            this.cant = this.Cantidades.get(direccion); 
-            if (this.cant.getCantidad() < unidades){
+            cant = this.Cantidades.get(direccion); 
+            if (cant.getCantidad() < unidades){
                 System.out.println("No hay suficiente existencia para realizar la venta");
                 System.out.println("Existencia actual: " + cant.getCantidad());
             }
             else{
-                this.cant.changeCantidad(cant.getCantidad() - unidades);
+                cant.changeCantidad(cant.getCantidad() - unidades);
             }
         }
     }
@@ -96,7 +129,10 @@ public class Bodega {
     public void traslado(int unidades){
         System.out.println("0"); 
     }
-    //-----------------
+    /*
+        GETS POR PRODUCTO XD
+    */
+    // GET's PARA PERCUSION
     public int getsizePerscusion()
     {
         return this.PercusionProductos.size();
@@ -111,7 +147,6 @@ public class Bodega {
     {
         return this.PercusionProductos.get(i).getNombre();
     }
-
     public String getCantidadProductoPerscusion(int i)
     {
         int pos = 0;
@@ -123,6 +158,56 @@ public class Bodega {
         }
         return String.valueOf(this.Cantidades.get(pos).getCantidad());
     }
-    //otras iguales solo que con viento y cuerdas
+    // GET's PARA CUERDAS
+    public int getsizeCuerdas()
+    {
+        return this.CuerdasProductos.size();
+    }
 
+    public String getIdProductoCuerdas(int i)
+    {
+        return this.CuerdasProductos.get(i).getId();
+    }
+
+    public String getNombreProductoCuerdas(int i)
+    {
+        return this.CuerdasProductos.get(i).getNombre();
+    }
+    public String getCantidadProductoCuerdas(int i)
+    {
+        int pos = 0;
+        for(int x = 0; x < this.Cantidades.size(); x++){
+            if(this.Cantidades.get(x).getIdProducto().equals(this.CuerdasProductos.get(i).getId())){
+                pos = x;
+                break;
+            }
+        }
+        return String.valueOf(this.Cantidades.get(pos).getCantidad());
+    }
+    // GET's PARA VIENTO
+    public int getsizeViento()
+    {
+        return this.VientoProductos.size();
+    }
+
+    public String getIdProductoViento(int i)
+    {
+        return this.VientoProductos.get(i).getId();
+    }
+
+    public String getNombreProductoViento(int i)
+    {
+        return this.VientoProductos.get(i).getNombre();
+    }
+    public String getCantidadProductoViento(int i)
+    {
+        int pos = 0;
+        for(int x = 0; x < this.Cantidades.size(); x++){
+            if(this.Cantidades.get(x).getIdProducto().equals(this.VientoProductos.get(i).getId())){
+                pos = x;
+                break;
+            }
+        }
+        return String.valueOf(this.Cantidades.get(pos).getCantidad());
+    }
 }

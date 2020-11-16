@@ -12,7 +12,9 @@ public class AppBodega {
     static int NoBodegaCambio = 0;
     static String datos[][] = new String[1000][3];
     static String encabezados[] = new String[3];
-    static Producto nuevoP;
+    static Percusion nuevoP;
+    static Viento nuevoV;
+    static Cuerdas nuevoC; 
     static LinkedList<Bodega> MisBodegas = new LinkedList<Bodega>();
     public static void main(String [] arg){
         //variables principales
@@ -22,13 +24,16 @@ public class AppBodega {
         MySQL MiBaseDeDatos = new MySQL();
         MiBaseDeDatos.cargarBodegas();
         MiBaseDeDatos.cargarIntrumento_percucion();
+        MiBaseDeDatos.cargarIntrumento_viento();
+        MiBaseDeDatos.cargarIntrumento_cuerdas();
+        //cargar los otros intrumentos 
         MiBaseDeDatos.cargarCantidad();
         for(int i = 0; i < MiBaseDeDatos.Linked_Bodegas.size(); i++){
             MisBodegas.add(MiBaseDeDatos.Linked_Bodegas.get(i));
         }
         
         for(int i = 0; i < MisBodegas.size(); i++){
-            MisBodegas.get(i).LlenarBodega(MiBaseDeDatos.Linked_Cantidad,MiBaseDeDatos.Linked_Instrumentos_percucion);
+            MisBodegas.get(i).LlenarBodega(MiBaseDeDatos.Linked_Cantidad, MiBaseDeDatos.Linked_Instrumentos_percucion, MiBaseDeDatos.Linked_Instrumentos_viento, MiBaseDeDatos.Linked_Instrumentos_cuerdas);
         }
         //Creacion de todas las variables
         JFrame app = new JFrame("Control de Bodegas");
@@ -168,8 +173,8 @@ public class AppBodega {
                     // despues de desaparecer todo, mostramos 3 botones, uno de percusion....
                     // si le da a percusion, dos label y dos text
                     //boton de realizar compra nuevo
-                    nuevoP = new Producto(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n);
-                    MisBodegas.get(NoBodega-1).nuevoProductoPercusion(nuevoP, CantProducto_n);
+                    nuevoP = new Percusion(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, "", "");
+                    MisBodegas.get(NoBodega-1).nuevoProducto(nuevoP, CantProducto_n);
                     int posig = 0;
                     for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
@@ -188,6 +193,39 @@ public class AppBodega {
                         }
                     }
                     posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                            }
+                        }
+                    }
+                    posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                            }
+                        }
+                    }
                     //aqui los demas
                     tabladebodega.setFillsViewportHeight(true);
                     Cancelar.setVisible(false);
@@ -270,7 +308,7 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 /* || si tiene 0 en cuerdas y viento*/){
+                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 || MisBodegas.get(NoBodega-1).getsizeViento() == 0 || MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
                     for(int y = 0; y < 100; y++){
                         for(int x = 0; x < 3; x++){
                             datos[y][x] = "";
@@ -284,24 +322,51 @@ public class AppBodega {
                             if(x == 0)
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
-                                //System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                             }
                             else if(x == 1)
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
-                               // System.out.println(MisBodegas.get(NoBodega-1).getNombreProducto(y));
                             }
                             else
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
-                                //System.out.println(MisBodegas.get(NoBodega-1).getCantidadProducto(y));
                             }
                         }
                     }
                     posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
-                    /*
-                        Otro ciclo donde la "y" den datos[y], cambiaria a ser posig, para continuar
-                    */
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                            }
+                        }
+                    }
+                    posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                            }
+                        }
+                    }
                 }
                 
                 /*for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
@@ -333,7 +398,7 @@ public class AppBodega {
                 bodegasList.addItem(0);
                 bodegasList.addItem(1);
                 bodegasList.addItem(3);
-                if(MisBodegas.get(NoBodega-1).getsizeProductos() == 0){
+                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 || MisBodegas.get(NoBodega-1).getsizeViento() == 0 || MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
                     for(int y = 0; y < 100; y++){
                         for(int x = 0; x < 3; x++){
                             datos[y][x] = "";
@@ -341,28 +406,59 @@ public class AppBodega {
                     }
                 }
                 else{
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                    int posig = 0;
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
                             if(x == 0)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
                             }
                             else if(x == 1)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
                             }
                             else
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                            }
+                        }
+                    }
+                    posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                            }
+                        }
+                    }
+                    posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
                             }
                         }
                     }
                 }
-                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                    System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
-                }
-                
-            }  
+            } 
         });
         Bodega3 = new JMenuItem("Bodega 3");
         Bodega3.addActionListener(new ActionListener(){  
@@ -378,7 +474,7 @@ public class AppBodega {
                     Utilizando NoBodega. Luego recorrer la tabla y  añadir por medio de un 
                     ciclo los valores que tenga cada uno en la variable de datos. con el MySQL
                 */
-                if(MisBodegas.get(NoBodega-1).getsizeProductos() == 0){
+                if(MisBodegas.get(NoBodega-1).getsizePerscusion() == 0 || MisBodegas.get(NoBodega-1).getsizeViento() == 0 || MisBodegas.get(NoBodega-1).getsizeCuerdas() == 0){
                     for(int y = 0; y < 100; y++){
                         for(int x = 0; x < 3; x++){
                             datos[y][x] = "";
@@ -386,25 +482,57 @@ public class AppBodega {
                     }
                 }
                 else{
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                    int posig = 0;
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
                             if(x == 0)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
                             }
                             else if(x == 1)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
                             }
                             else
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
                             }
                         }
                     }
-                }
-                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
-                    System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
+                    posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                            }
+                        }
+                    }
+                    posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                            }
+                        }
+                    }
                 }
                 bodegasList.removeAllItems();
                 bodegasList.addItem(0);
@@ -477,8 +605,16 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){ 
                 listado.removeAllItems();
                 listado.addItem(" ");
-                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                     listado.addItem(datos[y][0]);
+                }
+                int posig = MisBodegas.get(NoBodega-1).getsizePerscusion(); 
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                    listado.addItem(datos[y + posig][0]);
+                }
+                posig = posig + MisBodegas.get(NoBodega-1).getsizeViento(); 
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                    listado.addItem(datos[y + posig][0]);
                 }
                 listado.setVisible(true);
                 listado.setBounds(745, 190, 130, 30);
@@ -537,8 +673,16 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){
                 listado.removeAllItems();
                 listado.addItem(" ");
-                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                     listado.addItem(datos[y][0]);
+                }
+                int posig = MisBodegas.get(NoBodega-1).getsizePerscusion(); 
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                    listado.addItem(datos[y + posig][0]);
+                }
+                posig = posig + MisBodegas.get(NoBodega-1).getsizeViento(); 
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                    listado.addItem(datos[y + posig][0]);
                 }
                 listado.setVisible(true);
                 listado.setSelectedItem(" ");
@@ -558,8 +702,16 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){
                 listado.removeAllItems();
                 listado.addItem(" ");
-                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                     listado.addItem(datos[y][0]);
+                }
+                int posig = MisBodegas.get(NoBodega-1).getsizePerscusion(); 
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                    listado.addItem(datos[y + posig][0]);
+                }
+                posig = posig + MisBodegas.get(NoBodega-1).getsizeViento(); 
+                for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                    listado.addItem(datos[y + posig][0]);
                 }
                 listado.setVisible(true);
                 listado.setSelectedItem(" ");

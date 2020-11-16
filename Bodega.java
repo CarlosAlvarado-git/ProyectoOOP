@@ -101,13 +101,13 @@ public class Bodega {
     public void Venta(String id, int unidades){
         int direccion = buscar(id); 
         if(direccion == -1){
-            System.out.println("El producto con id " + id + "no existe."); 
+            //aviso
         }
         else{
             cant = this.Cantidades.get(direccion); 
             if (cant.getCantidad() < unidades){
-                System.out.println("No hay suficiente existencia para realizar la venta");
-                System.out.println("Existencia actual: " + cant.getCantidad());
+                //aviso
+                //System.out.println("Existencia actual: " + cant.getCantidad());
             }
             else{
                 cant.changeCantidad(cant.getCantidad() - unidades);
@@ -116,18 +116,41 @@ public class Bodega {
     }
     public void Compra(String id, int unidades){
         int direccion = buscar(id); 
-        cant = this.Cantidades.get(direccion);
         if(direccion == -1){
-            System.out.println("El producto con id " + id + "no existe."); 
+            //aviso
         }
         else{
+            cant = this.Cantidades.get(direccion);
             cant.changeCantidad(cant.getCantidad() + unidades);
-            System.out.println("Compra realizada con éxito.");
+        }
+    }
+    public void Movimiento(String id, int unidades, Bodega b){
+        int direccion = b.buscar(id); 
+        if(direccion == -1){
+            
+        }
+        else{
+            cant = b.Cantidades.get(direccion);
+            cant.changeCantidad(cant.getCantidad() + unidades);
         }
     }
     //traslados 
-    public void traslado(int unidades){
-        System.out.println("0"); 
+    public void traslado(Srting id, int unidades, int BoNueva, LinkedList<Bodega> bodegass){
+        int direccion = buscar(id);
+        if(direccion == -1){
+            //aviso
+        }
+        else{
+            cant = this.Cantidades.get(direccion); 
+            if (cant.getCantidad() < unidades){
+                //aviso
+                //System.out.println("Existencia actual: " + cant.getCantidad());
+            }
+            else{
+                cant.changeCantidad(cant.getCantidad() - unidades);
+                bodegass.get(BoNueva-1).Movimiento(id, unidades, bodegass.get(BoNueva));
+            }
+        }
     }
     /*
         GETS POR PRODUCTO XD

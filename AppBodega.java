@@ -132,38 +132,147 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){
                 IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                 cantidadventa = cantidades.getItemAt(cantidades.getSelectedIndex());
-                if(IdProducto.equals("") || cantidadventa == 0)
+                if(IdProducto.equals(" ") || cantidadventa == 0)
                 {
                     JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
+                }else{
+                    MisBodegas.get(NoBodega-1).Venta(IdProducto, cantidadventa);
+                    int posig = 0;
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                            }
+                        }
+                    }
+                    posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                            }
+                        }
+                    }
+                    posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                            }
+                        }
+                    }
+                    tabladebodega.setFillsViewportHeight(true);
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    VenderProduc.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    listado.setVisible(false);
+                    cantidades.setVisible(false);
+                    venderE.setVisible(false);
+                    Cancelar.setVisible(false);
                 }
-                //proceso de valdar y hacer el query. 
-                BproducExist.setVisible(true);
-                BproducNuevo.setVisible(true);
-                VenderProduc.setVisible(true);
-                MoverProduc.setVisible(true);///// aqui nooooo
-                listado.setVisible(false);
-                cantidades.setVisible(false);
-                venderE.setVisible(false);
-                Cancelar.setVisible(false);
             }  
         });
         comprarE.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){
                 IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                 cantidadcomprada = cantidades.getItemAt(cantidades.getSelectedIndex());
-                if(IdProducto.equals("") || cantidadcomprada == 0)
+                if(IdProducto.equals(" ") || cantidadcomprada == 0)
                 {
                     JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
                 }
-                //proceso de valdar y hacer el query. 
-                BproducExist.setVisible(true);
-                BproducNuevo.setVisible(true);
-                VenderProduc.setVisible(true);
-                MoverProduc.setVisible(true);
-                listado.setVisible(false);
-                cantidades.setVisible(false);
-                comprarE.setVisible(false);
-                Cancelar.setVisible(false);
+                else{
+                    MisBodegas.get(NoBodega-1).Compra(IdProducto, cantidadcomprada);
+                    int posig = 0;
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                            }
+                            else
+                            {
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                            }
+                        }
+                    }
+                    posig = MisBodegas.get(NoBodega-1).getsizePerscusion();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeViento(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoViento(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoViento(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoViento(y);
+                            }
+                        }
+                    }
+                    posig = posig + MisBodegas.get(NoBodega-1).getsizeViento();
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeCuerdas(); y++){
+                        for(int x = 0; x < 3; x++){
+                            if(x == 0)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getIdProductoCuerdas(y);
+                            }
+                            else if(x == 1)
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getNombreProductoCuerdas(y);
+                            }
+                            else
+                            {
+                                datos[y + posig][x] = MisBodegas.get(NoBodega-1).getCantidadProductoCuerdas(y);
+                            }
+                        }
+                    }
+                    //proceso de valdar y hacer el query. 
+                    tabladebodega.setFillsViewportHeight(true);
+                    BproducExist.setVisible(true);
+                    BproducNuevo.setVisible(true);
+                    VenderProduc.setVisible(true);
+                    MoverProduc.setVisible(true);
+                    listado.setVisible(false);
+                    cantidades.setVisible(false);
+                    comprarE.setVisible(false);
+                    Cancelar.setVisible(false);
+                }
+                
             }  
         });
         comprarN.addActionListener(new ActionListener(){  
@@ -240,7 +349,7 @@ public class AppBodega {
                 IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                 cantidadventa = cantidades.getItemAt(cantidades.getSelectedIndex());
                 NoBodegaCambio = bodegasList.getItemAt(bodegasList.getSelectedIndex());
-                if(IdProducto.equals("") || cantidadventa == 0 || NoBodegaCambio == 0)
+                if(IdProducto.equals(" ") || cantidadventa == 0 || NoBodegaCambio == 0)
                 {
                     JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
                 }
@@ -393,11 +502,11 @@ public class AppBodega {
                         }
                     }
                     if (Resonancia_.getText().equals("")){
-                        resonancia = 0;
+                        resonancia = 2;
                     }
                     else{
                         try{
-                            resonancia = Integer.valueOf(NoCuerdas_.getText());
+                            resonancia = Integer.valueOf(Resonancia_.getText());
                         }
                         catch(Exception ex){
                             //aviso

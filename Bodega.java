@@ -7,7 +7,6 @@ public class Bodega {
     LinkedList<Percusion> PercusionProductos;//
     LinkedList<Viento> VientoProductos;
     LinkedList<Cuerdas> CuerdasProductos;
-
     LinkedList<Cantidad> Cantidades;// con id de la bodega
     //Traslados
 

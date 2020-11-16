@@ -1,9 +1,9 @@
 public class Cuerdas extends Producto {
     String tipoCuerdas; 
-    boolean resonancia; 
+    int resonancia; 
     int noCuerdas; 
 
-    public Cuerdas(String c, double precio, String mar, String mo, String n, String mat, int p, String tiCuerda, boolean reso, int noCuerdas){
+    public Cuerdas(String c, double precio, String mar, String mo, String n, String mat, int p, String tiCuerda, int reso, int noCuerdas){
         super(c, precio, mar, mo, n, mat, p); 
         this.tipoCuerdas = tiCuerda; 
         this.resonancia = reso; 
@@ -13,7 +13,7 @@ public class Cuerdas extends Producto {
     public String getTipoCuerdas(){
         return this.tipoCuerdas; 
     }
-    public boolean getResonancia(){
+    public int getResonancia(){
         return this.resonancia; 
     }
     public int getNoCuerdas(){
@@ -23,7 +23,7 @@ public class Cuerdas extends Producto {
     public void setTipoCuerdas(String tipo){
         this.tipoCuerdas = tipo; 
     }
-    public void setResonancia(boolean re){
+    public void setResonancia(int re){
         this.resonancia = re; 
     }
     public void setNoCuerdas(int numero){

@@ -60,9 +60,15 @@ public class AppBodega {
         JLabel Cantidad_Label = new JLabel("Cantidad a comprar: ");
         //
         JButton iniciodesesion = new JButton("Iniciar Sesion");
-        JMenuBar barradeMenuBar = new JMenuBar();
-        JMenu TodasLasBodegas = new JMenu("Bodegas");
-        JMenuItem Bodega1, Bodega2, Bodega3;
+        JButton Bodega1 = new JButton("Bodega 1"); 
+        JButton Bodega2 = new JButton("Bodega 2");
+        JButton Bodega3 = new JButton("Bodega 3");
+        Bodega1.setVisible(false);
+        Bodega1.setBounds(0,0,620,410);
+        Bodega2.setVisible(false);
+        Bodega2.setBounds(620,0,620,410);
+        Bodega3.setVisible(false);
+        Bodega3.setBounds(0,410,1240,410);
         JButton BproducNuevo = new JButton("Comprar un producto nuevo");
         JButton BproducExist = new JButton("Comprar productos existente");
         JButton Cancelar = new JButton("Cancelar");
@@ -286,15 +292,17 @@ public class AppBodega {
                     //mensaje 
                 }
                 else{
-                    contrasena.setVisible(false); 
-                    pinicio.setVisible(true);
+                    contrasena.setVisible(false);
+                    Bodega1.setVisible(true);
+                    Bodega2.setVisible(true);
+                    Bodega3.setVisible(true); 
+                    pinicio.setVisible(true); 
                 }
             }  
         });
         //-----------------------------------------------------------
         //---------Parte de pantalla de inicio-----------------------
         pinicio.setLayout(new BorderLayout());
-        Bodega1 = new JMenuItem("Bodega 1");
         Bodega1.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 pdeBodegas.setVisible(true);
@@ -380,7 +388,6 @@ public class AppBodega {
                 
             }  
         });
-        Bodega2 = new JMenuItem("Bodega 2");
         Bodega2.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 pdeBodegas.setVisible(true);
@@ -460,7 +467,6 @@ public class AppBodega {
                 }
             } 
         });
-        Bodega3 = new JMenuItem("Bodega 3");
         Bodega3.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 pdeBodegas.setVisible(true);
@@ -541,8 +547,7 @@ public class AppBodega {
                 
             }  
         });
-        TodasLasBodegas.add(Bodega1);TodasLasBodegas.add(Bodega2);TodasLasBodegas.add(Bodega3);
-        barradeMenuBar.add(TodasLasBodegas);
+        
         //-----------------------------------------------------------
         //---------------parte de bodegas----------------------------
         scrollPane.setBounds(0,0,400,400);
@@ -891,7 +896,9 @@ public class AppBodega {
         //-----------------------------------------------------------
         //--------------------agrego las cosas a los paneles---------
         contrasena.add(usuario); contrasena.add(contrase); contrasena.add(iniciodesesion);
-        pinicio.add(barradeMenuBar, BorderLayout.NORTH);
+        pinicio.add(Bodega1);
+        pinicio.add(Bodega2);
+        pinicio.add(Bodega3);
             //bodega
         pdeBodegas.add(scrollPane);
         pdeBodegas.add(Id_);pdeBodegas.add(Precio_);pdeBodegas.add(Marca_);pdeBodegas.add(Modelo_);pdeBodegas.add(Nombre_);

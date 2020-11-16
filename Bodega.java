@@ -23,7 +23,7 @@ public class Bodega {
         }
         for(int i = 0; i < PerMySQL.size(); i++){
             for(int x = 0; x < this.Cantidades.size(); x++){
-                if(PerMySQL.get(i).getId().equals(this.Cantidades.get(x).getIdProducto)){
+                if(PerMySQL.get(i).getId().equals(this.Cantidades.get(x).getIdProducto())){
                     this.PercusionProductos.add(PerMySQL.get(i));
                 }
             }
@@ -100,25 +100,31 @@ public class Bodega {
         System.out.println("0"); 
     }
 
-    public int getsizeProductos()
+    public int getsizePerscusion()
     {
-        return this.Productos.size();
+        return this.PercusionProductos.size();
     }
 
-    public String getIdProducto(int i)
+    public String getIdProductoPercusion(int i)
     {
-        return this.Cantidades.get(i).getIdProducto();
+        return this.PercusionProductos.get(i).getId();
     }
 
-    /*public String getNombreProducto(int i)
+    public String getNombreProductoPercusion(int i)
     {
+        return this.PercusionProductos.get(i).getNombre();
+    }
 
-        return this.Productos.get(i).getNombre();
-    }*/
-
-    public String getCantidadProducto(int i)
+    public String getCantidadProductoPerscusion(int i)
     {
-        return String.valueOf(this.Cantidades.get(i).getCantidad());
+        int pos = 0;
+        for(int x = 0; x < this.Cantidades.size(); x++){
+            if(this.Cantidades.get(x).getIdProducto().equals(this.PercusionProductos.get(i).getId())){
+                pos = x;
+                break;
+            }
+        }
+        return String.valueOf(this.Cantidades.get(pos).getCantidad());
     }
 
 }

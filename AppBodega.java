@@ -10,7 +10,7 @@ public class AppBodega {
     static int cantidadcomprada = 0;
     static int cantidadventa = 0;
     static int NoBodegaCambio = 0;
-    static String datos[][] = new String[100][3];
+    static String datos[][] = new String[1000][3];
     static String encabezados[] = new String[3];
     static Producto nuevoP;
     static LinkedList<Bodega> MisBodegas = new LinkedList<Bodega>();
@@ -152,16 +152,16 @@ public class AppBodega {
                         System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                     }
                     System.out.println("-----------------------");*/
-                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
+                    for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
                             if(x == 0)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
                                 //System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                             }
                             else if(x == 1)
                             {
-                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProducto(y);
+                                datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
                                // System.out.println(MisBodegas.get(NoBodega-1).getNombreProducto(y));
                             }
                             else

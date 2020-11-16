@@ -4,21 +4,28 @@ public class Bodega {
     static Cantidad cant; 
     //static Producto pro;
     int NoBodega; //nombre de la bodega 
-    LinkedList<Producto> Productos;// con id de la bodega
+    LinkedList<Percusion> PercusionProductos;//
+
     LinkedList<Cantidad> Cantidades;// con id de la bodega
     //Traslados
 
     public Bodega(int id){
         this.NoBodega = id; 
-        this.Productos = new LinkedList<Producto>();
+        this.PercusionProductos = new LinkedList<Producto>();
         this.Cantidades = new LinkedList<Cantidad>();
         //this.productos = new ArrayList<Cantidad>();  
     }
-    public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Producto> ProMySQL){
+    public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Percusion> PerMySQL){
         for(int i = 0; i < CanMySQL.size(); i++){
             if(CanMySQL.get(i).getBodega() == this.NoBodega){
                 this.Cantidades.add(CanMySQL.get(i));
-                this.Productos.add(ProMySQL.get(i));
+            }
+        }
+        for(int i = 0; i < PerMySQL.size(); i++){
+            for(int x = 0; x < this.Cantidades.size(); x++){
+                if(PerMySQL.get(i).getId().equals(this.Cantidades.get(x).getIdProducto)){
+                    this.PercusionProductos.add(PerMySQL.get(i));
+                }
             }
         }
     }
@@ -100,17 +107,18 @@ public class Bodega {
 
     public String getIdProducto(int i)
     {
-        return Productos.get(i).getId();
+        return this.Cantidades.get(i).getIdProducto();
     }
 
-    public String getNombreProducto(int i)
+    /*public String getNombreProducto(int i)
     {
-        return Productos.get(i).getNombre();
-    }
+
+        return this.Productos.get(i).getNombre();
+    }*/
 
     public String getCantidadProducto(int i)
     {
-        return String.valueOf(Cantidades.get(i).getCantidad());
+        return String.valueOf(this.Cantidades.get(i).getCantidad());
     }
 
 }

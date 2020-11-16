@@ -103,6 +103,10 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){
                 IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                 cantidadventa = cantidades.getItemAt(cantidades.getSelectedIndex());
+                if(IdProducto.equals("") || cantidadventa == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
+                }
                 //proceso de valdar y hacer el query. 
                 BproducExist.setVisible(true);
                 BproducNuevo.setVisible(true);
@@ -118,6 +122,10 @@ public class AppBodega {
             public void actionPerformed(ActionEvent e){
                 IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                 cantidadcomprada = cantidades.getItemAt(cantidades.getSelectedIndex());
+                if(IdProducto.equals("") || cantidadcomprada == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
+                }
                 //proceso de valdar y hacer el query. 
                 BproducExist.setVisible(true);
                 BproducNuevo.setVisible(true);
@@ -139,7 +147,13 @@ public class AppBodega {
                     PreProducto_n = 0.0;
                 }
                 else{
-                    PreProducto_n = Double.valueOf(Precio_.getText());
+
+                    try {
+                        PreProducto_n = Double.valueOf(Precio_.getText());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Error, el precio del producto tiene que ser un numero");
+                    }
+
                 }
                 String MarProducto_n = Marca_.getText();
                 String ModProducto_n = Modelo_.getText();
@@ -150,11 +164,15 @@ public class AppBodega {
                     PesProducto_n = 0;
                 }
                 else{
-                    PesProducto_n = Integer.valueOf(Peso_.getText());
+                    try {
+                        PesProducto_n = Integer.valueOf(Peso_.getText());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Error, el peso del producto tiene que ser un numero");
+                    }
                 }
                 int CantProducto_n = cantidades.getItemAt(cantidades.getSelectedIndex());
                 if(IdProducto_n.equals("") || NomProducto_n.equals("") || MarProducto_n.equals("")|| ModProducto_n.equals("") || MatProducto_n.equals("") || PreProducto_n == 0.0 || PesProducto_n == 0 || CantProducto_n == 0){
-                    // alerta de vacios o 0
+                    JOptionPane.showMessageDialog(null, "Tiene que llenar todos los campos de manera correcta");
                 }
                 else{
                     //
@@ -251,6 +269,10 @@ public class AppBodega {
                 IdProducto = "" + listado.getItemAt(listado.getSelectedIndex());
                 cantidadventa = cantidades.getItemAt(cantidades.getSelectedIndex());
                 NoBodegaCambio = bodegasList.getItemAt(bodegasList.getSelectedIndex());
+                if(IdProducto.equals("") || cantidadventa == 0 || NoBodegaCambio == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
+                }
                 //proceso de valdar y hacer el query. 
                 BproducExist.setVisible(true);
                 BproducNuevo.setVisible(true);
@@ -289,7 +311,7 @@ public class AppBodega {
                 usu = usuario.getText();
                 contra = contrase.getText(); 
                 if(usu.equals("") || contra.equals("")){
-                    //mensaje 
+                    JOptionPane.showMessageDialog(null, "No puede dejar los campos vacios");
                 }
                 else{
                     contrasena.setVisible(false);

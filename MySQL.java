@@ -17,9 +17,9 @@ public class MySQL {
     public LinkedList<Bodega> Linked_Bodegas = new LinkedList<Bodega>();
     public LinkedList<Cantidad> Linked_Cantidad = new LinkedList<Cantidad>();
     //despues
-    public LinkedList<String[]> Linked_Instrumentos_cuerdas = new LinkedList<String[]>();//estas son las claves junto a cantidad
-    public LinkedList<String[]> Linked_Instrumentos_viento = new LinkedList<String[]>();
-    public LinkedList<String[]> Linked_Instrumentos_percucion = new LinkedList<String[]>();
+    public LinkedList<Cuerdas> Linked_Instrumentos_cuerdas = new LinkedList<Cuerdas>();//estas son las claves junto a cantidad
+    public LinkedList<Viento> Linked_Instrumentos_viento = new LinkedList<Viento>();
+    public LinkedList<Percusion> Linked_Instrumentos_percucion = new LinkedList<Percusion>();
 
     public Connection openConnection() {
         try {
@@ -719,7 +719,7 @@ public class MySQL {
         return Linked_Productos;
     }  
 
-    public LinkedList<String[]> cargarIntrumento_cuerdas() //si
+    public LinkedList<Cuerdas> cargarIntrumento_cuerdas() //si
     {
         openConnection();
         try{
@@ -727,16 +727,23 @@ public class MySQL {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                String[] instrumentos_cuerdas = new String[5];
-                instrumentos_cuerdas[0] = rs.getString("codigo");
-                instrumentos_cuerdas[1] = String.valueOf(rs.getInt("codigo_producto"));
-                instrumentos_cuerdas[2] = rs.getString("tipo_cuerda");
-                stmt2 = connect.prepareStatement("SELECT * FROM `resonancia` INNER JOIN `instrumento_cuerda` ON `resonancia`.`codigo_instrumento_cuerda` = `instrumento_cuerda`.`codigo` WHERE `resonancia`.`codigo` = '"+ instrumentos_cuerdas[0]+"'");
+                int codigo = rs.getInt("codigo");
+                String tipo_cuerda = rs.getString("tipo_cuerda");
+                int cantidad_cuerdas = rs.getInt("cantidad_cuerdas");
+                String codigo_producto = rs.getString("codigo_producto");
+                Double precio = rs.getDouble("precio");
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                String nombre = rs.getString("nombre");
+                String tipo_material = rs.getString("tipo_material");
+                int peso = rs.getInt("peso");
+                System.out.println(codigo);
+                stmt2 = connect.prepareStatement("SELECT * FROM `resonancia` INNER JOIN `instrumento_cuerda` ON `resonancia`.`codigo_instrumento_cuerda` = `instrumento_cuerda`.`codigo` WHERE `resonancia`.`codigo` = '"+codigo+"'");
                 ResultSet rs2 = stmt2.executeQuery();
                 rs2.next();
-                instrumentos_cuerdas[3] = String.valueOf(rs2.getInt("no_resonancia"));
-                instrumentos_cuerdas[4] = rs.getString("cantidad_cuerdas");
-                Linked_Instrumentos_cuerdas.add(instrumentos_cuerdas);                
+                int no_resonancia = rs2.getInt("no_resonancia");
+                Cuerdas c = new Cuerdas(codigo_producto, precio, marca, modelo, nombre, tipo_material, peso, tipo_cuerda, no_resonancia, cantidad_cuerdas);
+                Linked_Instrumentos_cuerdas.add(c);
             }
             stmt.close();
         }
@@ -748,8 +755,9 @@ public class MySQL {
 
         return Linked_Instrumentos_cuerdas;
     }  
+    
 
-    public LinkedList<String[]> cargarIntrumento_viento() //si
+    public LinkedList<Viento> cargarIntrumento_viento() //si
     {
         openConnection();
         try{
@@ -757,11 +765,16 @@ public class MySQL {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                String[] instrumentos_viento = new String[3];
-                instrumentos_viento[0] = rs.getString("codigo");
-                instrumentos_viento[1] = String.valueOf(rs.getInt("codigo_producto"));
-                instrumentos_viento[2] = rs.getString("largo");
-                Linked_Instrumentos_viento.add(instrumentos_viento);                
+                int largo = rs.getInt("largo");
+                String codigo_producto = rs.getString("codigo_producto");
+                Double precio = rs.getDouble("precio");
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                String nombre = rs.getString("nombre");
+                String tipo_material = rs.getString("tipo_material");
+                int peso = rs.getInt("peso");
+                Viento v = new Viento(codigo_producto, precio, marca, modelo, nombre, tipo_material, peso, largo);
+                Linked_Instrumentos_viento.add(v);
             }
             stmt.close();
         }
@@ -774,7 +787,7 @@ public class MySQL {
         return Linked_Instrumentos_viento;
     }
 
-    public LinkedList<String[]> cargarIntrumento_percucion() //si
+    public LinkedList<Percusion> cargarIntrumento_percucion() //si
     {
         openConnection();
         try{
@@ -782,12 +795,17 @@ public class MySQL {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                String[] instrumentos_percucion = new String[4];
-                instrumentos_percucion[0] = rs.getString("codigo");
-                instrumentos_percucion[1] = String.valueOf(rs.getInt("codigo_producto"));
-                instrumentos_percucion[2] = rs.getString("elemento_percutor");
-                instrumentos_percucion[3] = rs.getString("elemento_vibrante");
-                Linked_Instrumentos_percucion.add(instrumentos_percucion);                
+                String elemento_percutor = rs.getString("elemento_percutor");
+                String elemento_vibrante = rs.getString("elemento_vibrante");
+                String codigo_producto = rs.getString("codigo_producto");
+                Double precio = rs.getDouble("precio");
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                String nombre = rs.getString("nombre");
+                String tipo_material = rs.getString("tipo_material");
+                int peso = rs.getInt("peso");   
+                Percusion p = new Percusion(codigo_producto, precio, marca, modelo, nombre, tipo_material, peso, elemento_percutor, elemento_vibrante);
+                Linked_Instrumentos_percucion.add(p);
             }
             stmt.close();
         }

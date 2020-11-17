@@ -743,7 +743,7 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"', '"+marca+"','"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `instrumento_percusion` (`codigo`, `codigo_producto`, `elemento_percutor`, `elemento_vibrante`) VALUES (NULL, '"+id+"', '"+percutor+"', '"+vibrante+"')");
             stmt.executeUpdate();
@@ -775,9 +775,9 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"','"+marca+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
-            stmt = connect.prepareStatement("INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `resonancia`, `cantidad_cuerdas`) VALUES (NULL, '"+id+"', '"+tipoCuerda+"', '"+resonancia+"', '"+cantidad+"')");
+            stmt = connect.prepareStatement("INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `resonancia`, `cantidad_cuerdas`) VALUES (NULL, '"+id+"', '"+tipoCuerda+"', '"+resonancia+"', '"+noCuerdas+"')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+noBodega+"', '"+id+"', '"+cantidad+"')");
             stmt.executeUpdate();
@@ -789,6 +789,45 @@ public class MySQL {
         closeConnection(connect);
     }
 
+    public void escribirInstrumento_Viento(Viento v, Cantidad c){
+        openConnection();
+        try{
+
+            String id = v.getId();
+            double precio = v.getPrecio();
+            String marca = v.getMarca();
+            String modelo = v.getModelo();
+            String nombre = v.getNombre();
+            String material = v.getMaterial();
+            int largo = v.getLargo();
+            int peso = v.getPeso();
+            int cantidad = c.getCantidad();
+            int noBodega = c.getBodega();
+
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"','"+marca+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("INSERT INTO `instrumento_viento` (`codigo`, `codigo_producto`, `largo`) VALUES (NULL, '"+id+"', '"+largo+"')");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+noBodega+"', '"+id+"', '"+cantidad+"')");
+            stmt.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public void actualizarCantidad(Cantidad c, int nuevaCantidad){
+        openConnection();
+        try{
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
 
     public LinkedList<Cuerdas> cargarIntrumento_cuerdas() //si
     {

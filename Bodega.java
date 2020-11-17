@@ -155,14 +155,14 @@ public class Bodega {
                 Viento vien = bNueva.retornarVientos(bAnterior, pos);
                 Cantidad np = new Cantidad(vien.getId(), unidades, bNueva.NoBodega);
                 bNueva.Cantidades.add(np);
-                bNueva.VientoProductos.add(per);
+                bNueva.VientoProductos.add(vien);
             }
             else{
                 //cuerdas
                 Cuerdas cuer = bNueva.retornarCuerdas(bAnterior, pos);
                 Cantidad np = new Cantidad(cuer.getId(), unidades, bNueva.NoBodega);
                 bNueva.Cantidades.add(np);
-                bNueva.CuerdasProductos.add(per);
+                bNueva.CuerdasProductos.add(cuer);
             }
         }
         else{

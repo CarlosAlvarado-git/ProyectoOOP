@@ -821,7 +821,8 @@ public class MySQL {
     public void actualizarCantidad(Cantidad c, int nuevaCantidad){
         openConnection();
         try{
-
+            stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+nuevaCantidad+"' WHERE `cantidad`.`codigo_Producto` = '"+c.getIdProducto()+"'");
+            stmt.executeUpdate();
         }
         catch(Exception e){
             System.out.println(e);

@@ -4,14 +4,21 @@ public class Bodega {
     static Cantidad cant; 
     //static Producto pro;
     int NoBodega; //nombre de la bodega 
+    int noVENTAS;
+    int noCOMPRAS;
     LinkedList<Percusion> PercusionProductos = new LinkedList<Percusion>();//
     LinkedList<Viento> VientoProductos = new LinkedList<Viento>();
     LinkedList<Cuerdas> CuerdasProductos = new LinkedList<Cuerdas>();
     LinkedList<Cantidad> Cantidades = new LinkedList<Cantidad>();
     //Traslados
 
-    public Bodega(int id){
-        this.NoBodega = id;  
+    public Bodega(int id, int v, int c){
+        this.NoBodega = id; 
+        this.noCOMPRAS = c;
+        this.noVENTAS = v; 
+    }
+    public int getNoBodega(){
+        return this.NoBodega;
     }
     public void LlenarBodega(LinkedList<Cantidad> CanMySQL, LinkedList<Percusion> PerMySQL, LinkedList<Viento> VientoMySQL, LinkedList<Cuerdas> CuerdasMySQL){
         for(int i = 0; i < CanMySQL.size(); i++){
@@ -54,44 +61,53 @@ public class Bodega {
     /*
         Esta es la sección para comprar produtos
     */
-    public void nuevoProducto(Percusion p, int c){// comprar producto nuevo percusion
+    public void nuevoProducto(Percusion p, int c, MySQL db){// comprar producto nuevo percusion
         int bar = buscar(p.getId());
         if(bar == -1){
             Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
             p.setBodega(this.NoBodega);
             this.Cantidades.add(np); 
             this.PercusionProductos.add(p);
+            db.escribirInstrumento_Percusion(p,np);
+            this.noCOMPRAS = this.noCOMPRAS + c;
+            db.escribirBodegas(this);
         }
         else{
             //aviso
        }
         
     }
-    public void nuevoProducto(Cuerdas p, int c){
+    public void nuevoProducto(Cuerdas p, int c, MySQL db){
         int bar = buscar(p.getId());
         if(bar == -1){
             Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
             p.setBodega(this.NoBodega);
             this.Cantidades.add(np); 
-            this.CuerdasProductos.add(p); 
+            this.CuerdasProductos.add(p);
+            db.escribirInstrumento_Cuerda(p,np); 
+            this.noCOMPRAS = this.noCOMPRAS + c;
+            db.escribirBodegas(this);
         }
         else{
             //aviso
        }
     }
-    public void nuevoProducto(Viento p, int c){
+    public void nuevoProducto(Viento p, int c, MySQL db){
         int bar = buscar(p.getId());
         if(bar == -1){
             Cantidad np = new Cantidad(p.getId(), c,this.NoBodega);
             p.setBodega(this.NoBodega);
             this.Cantidades.add(np); 
             this.VientoProductos.add(p);
+            db.escribirInstrumento_Viento(p,np);
+            this.noCOMPRAS = this.noCOMPRAS + c;
+            db.escribirBodegas(this);
         }
         else{
             //aviso
        }
     }
-    public void Venta(String id, int unidades){
+    public void Venta(String id, int unidades, MySQL db){
         int direccion = buscar(id); 
         if(direccion == -1){
             //aviso
@@ -104,10 +120,13 @@ public class Bodega {
             }
             else{
                 cant.changeCantidad(cant.getCantidad() - unidades);
+                this.noVENTAS = this.noVENTAS + unidades;
+                db.escribirBodegas(this);
+                db.actualizarCantidad(cant, 1);
             }
         }
     }
-    public void Compra(String id, int unidades){
+    public void Compra(String id, int unidades, MySQL db){
         int direccion = buscar(id); 
         if(direccion == -1){
             //aviso
@@ -115,9 +134,12 @@ public class Bodega {
         else{
             cant = this.Cantidades.get(direccion);
             cant.changeCantidad(cant.getCantidad() + unidades);
+            this.noCOMPRAS = this.noCOMPRAS + unidades;
+            db.escribirBodegas(this);
+            db.actualizarCantidad(cant, 1);
         }
     }
-    public void Movimiento(String id, int unidades, Bodega bNueva, Bodega bAnterior){
+    public void Movimiento(String id, int unidades, Bodega bNueva, Bodega bAnterior, MySQL db){
         int direccion = bNueva.buscar(id); 
         if(direccion == -1){
             int buscarAnterior = 0;
@@ -148,6 +170,7 @@ public class Bodega {
                 Cantidad np = new Cantidad(per.getId(), unidades, bNueva.NoBodega);
                 bNueva.Cantidades.add(np);
                 bNueva.PercusionProductos.add(per);
+                db.actualizarCantidad(np, 0);
                 //percusion
             }
             else if(buscarAnterior == 2){
@@ -156,6 +179,7 @@ public class Bodega {
                 Cantidad np = new Cantidad(vien.getId(), unidades, bNueva.NoBodega);
                 bNueva.Cantidades.add(np);
                 bNueva.VientoProductos.add(vien);
+                db.actualizarCantidad(np, 0);
             }
             else{
                 //cuerdas
@@ -163,15 +187,17 @@ public class Bodega {
                 Cantidad np = new Cantidad(cuer.getId(), unidades, bNueva.NoBodega);
                 bNueva.Cantidades.add(np);
                 bNueva.CuerdasProductos.add(cuer);
+                db.actualizarCantidad(np, 0);
             }
         }
         else{
             cant = bNueva.Cantidades.get(direccion);
             cant.changeCantidad(cant.getCantidad() + unidades);
+            db.actualizarCantidad(cant, 0);
         }
     }
     //traslados 
-    public void traslado(String id, int unidades, int BoNueva, LinkedList<Bodega> bodegass){
+    public void traslado(String id, int unidades, int BoNueva, LinkedList<Bodega> bodegass, MySQL db){
         int direccion = buscar(id);
         if(direccion == -1){
             //aviso
@@ -184,11 +210,17 @@ public class Bodega {
             }
             else{
                 cant.changeCantidad(cant.getCantidad() - unidades);
-                bodegass.get(BoNueva-1).Movimiento(id, unidades, bodegass.get(BoNueva-1), this);
+                db.actualizarCantidad(cant, 1);
+                bodegass.get(BoNueva-1).Movimiento(id, unidades, bodegass.get(BoNueva-1), this, db);
             }
         }
     }
-
+    public int getVentas(){
+        return this.noVENTAS;
+    }
+    public int getCompras(){
+        return this.noCOMPRAS;
+    }
     /*
         GETS POR PRODUCTO XD
     */

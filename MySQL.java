@@ -725,7 +725,21 @@ public class MySQL {
         return Linked_Productos;
     }  
 */
+    public void escribirBodegas(Bodega b){
+        openConnection();
+        try{
+            int Noventas = b.getVentas();
+            int Novcompras = b.getCompras();
+            int num = b.getNoBodega();
+            stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_compras` = '"+Novcompras+"' WHERE `bodega1`.`codigo` = '"+num+"' ");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_ventas` = '"+Noventas+"' WHERE `bodega1`.`codigo` = '"+num+"'");
+            stmt.executeUpdate();
+        }   
+        catch(Exception e){
 
+        }
+    }
     public void escribirInstrumento_Percusion(Percusion p, Cantidad c)
     {
         openConnection();
@@ -743,7 +757,7 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ("+id+"', '"+precio+"','"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('"+id+"', '"+precio+"','"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `instrumento_percusion` (`codigo`, `codigo_producto`, `elemento_percutor`, `elemento_vibrante`) VALUES (NULL, '"+id+"', '"+percutor+"', '"+vibrante+"')");
             stmt.executeUpdate();
@@ -775,7 +789,7 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ("+id+"','"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('"+id+"','"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `resonancia`, `cantidad_cuerdas`) VALUES (NULL, '"+id+"', '"+tipoCuerda+"', '"+resonancia+"', '"+noCuerdas+"')");
             stmt.executeUpdate();
@@ -804,7 +818,7 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ("+id+"','"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('"+id+"','"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `instrumento_viento` (`codigo`, `codigo_producto`, `largo`) VALUES (NULL, '"+id+"', '"+largo+"')");
             stmt.executeUpdate();
@@ -818,11 +832,18 @@ public class MySQL {
         closeConnection(connect);
     }
 
-    public void actualizarCantidad(Cantidad c, int nuevaCantidad){
+    public void actualizarCantidad(Cantidad c, int bar){
         openConnection();
         try{
-            stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+nuevaCantidad+"' WHERE `cantidad`.`codigo_Producto` = '"+c.getIdProducto()+"'");
+            if(bar == 1){
+                stmt = connect.prepareStatement("UPDATE `cantidad` SET `cantidad` = '"+c.getCantidad()+"' WHERE `cantidad`.`codigo_Producto` = '"+c.getIdProducto()+"' AND `cantidad`.`codigo_bodega` = '"+c.getBodega()+"'");
+                stmt.executeUpdate();
+            }
+            else{
+                stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+c.getBodega()+"', '"+c.getIdProducto()+"', '"+c.getCantidad()+"')");
             stmt.executeUpdate();
+            }
+            
         }
         catch(Exception e){
             System.out.println(e);
@@ -933,10 +954,8 @@ public class MySQL {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                Bodega bodega = new Bodega(rs.getInt("codigo"));
+                Bodega bodega = new Bodega(rs.getInt("codigo"), rs.getInt("no_ventas"), rs.getInt("no_compras"));
                 String nom = rs.getString("nombre");
-                int no1 = rs.getInt("no_ventas");
-                int no2 = rs.getInt("no_compras");
                 Linked_Bodegas.add(bodega);                
             }
             //crear los objetos bodega

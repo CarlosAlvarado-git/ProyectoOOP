@@ -11,7 +11,7 @@ public class AppBodega {
     static int cantidadventa = 0;
     static int cantidadbode = 0;
     static int NoBodegaCambio = 0;
-    static String datos[][] = new String[1000][3];
+    static String datos[][] = new String[10000][3];
     static String encabezados[] = new String[3];
     static Percusion nuevoP;
     static Viento nuevoV;
@@ -46,7 +46,6 @@ public class AppBodega {
         for(int i = 0; i < MiBaseDeDatos.Linked_Bodegas.size(); i++){
             MisBodegas.add(MiBaseDeDatos.Linked_Bodegas.get(i));
         }
-        
         for(int i = 0; i < MisBodegas.size(); i++){
             MisBodegas.get(i).LlenarBodega(MiBaseDeDatos.Linked_Cantidad, MiBaseDeDatos.Linked_Instrumentos_percucion, MiBaseDeDatos.Linked_Instrumentos_viento, MiBaseDeDatos.Linked_Instrumentos_cuerdas);
         }
@@ -137,7 +136,12 @@ public class AppBodega {
                 {
                     JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
                 }else{
-                    MisBodegas.get(NoBodega-1).Venta(IdProducto, cantidadventa);
+                    MisBodegas.get(NoBodega-1).Venta(IdProducto, cantidadventa, MiBaseDeDatos);
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
+                        }
+                    }
                     int posig = 0;
                     for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
@@ -210,7 +214,12 @@ public class AppBodega {
                     JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
                 }
                 else{
-                    MisBodegas.get(NoBodega-1).Compra(IdProducto, cantidadcomprada);
+                    MisBodegas.get(NoBodega-1).Compra(IdProducto, cantidadcomprada, MiBaseDeDatos);
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
+                        }
+                    }
                     int posig = 0;
                     for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
@@ -355,7 +364,12 @@ public class AppBodega {
                     JOptionPane.showMessageDialog(null, "Error, no puede dejar los campos vacios");
                 }
                 else{
-                    MisBodegas.get(NoBodega-1).traslado(IdProducto, cantidadbode, NoBodegaCambio, MisBodegas);
+                    MisBodegas.get(NoBodega-1).traslado(IdProducto, cantidadbode, NoBodegaCambio, MisBodegas, MiBaseDeDatos);
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
+                        }
+                    }
                     int posig = 0;
                     for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
@@ -478,7 +492,12 @@ public class AppBodega {
                     }
                     else{
                         nuevoP = new Percusion(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, objetoPercutor, objetoVibrante);
-                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoP, CantProducto_n);
+                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoP, CantProducto_n, MiBaseDeDatos);
+                        for(int y = 0; y < 100; y++){
+                            for(int x = 0; x < 3; x++){
+                                datos[y][x] = "";
+                            }
+                        }
                         int posig = 0;
                         for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                             for(int x = 0; x < 3; x++){
@@ -574,7 +593,7 @@ public class AppBodega {
                     }
                     else{
                         nuevoC = new Cuerdas(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, tipoCuerda, resonancia, noCuerdas);
-                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoC, CantProducto_n);
+                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoC, CantProducto_n, MiBaseDeDatos);
                         int posig = 0;
                         for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                             for(int x = 0; x < 3; x++){
@@ -660,7 +679,7 @@ public class AppBodega {
                     }
                     else{
                         nuevoV = new Viento(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, largo);
-                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoV, CantProducto_n);
+                        MisBodegas.get(NoBodega-1).nuevoProducto(nuevoV, CantProducto_n, MiBaseDeDatos);
                         int posig = 0;
                         for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                             for(int x = 0; x < 3; x++){
@@ -780,25 +799,28 @@ public class AppBodega {
                         }
                     }
                     System.out.println("No hay nada en bodega 1");
+                    tabladebodega.setFillsViewportHeight(true);
                 }
                 else{
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
+                        }
+                    }
                     int posig = 0;
                     for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
                             if(x == 0)
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
-                                System.out.println("id: " + MisBodegas.get(NoBodega-1).getIdProductoPercusion(y));
                             }
                             else if(x == 1)
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
-                                System.out.println("id: " + MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y));
                             }
                             else
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
-                                System.out.println("id: " + MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y));
                             }
                         }
                     }
@@ -836,8 +858,9 @@ public class AppBodega {
                             }
                         }
                     }
+                    tabladebodega.setFillsViewportHeight(true);
                 }
-                tabladebodega.setFillsViewportHeight(true);
+                
                 /*for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizeProductos(); y++){
                     System.out.println(MisBodegas.get(NoBodega-1).getIdProducto(y));
                 }*/
@@ -873,8 +896,14 @@ public class AppBodega {
                         }
                     }
                     System.out.println("No hay nada en bodega 2");
+                    tabladebodega.setFillsViewportHeight(true);
                 }
                 else{
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
+                        }
+                    }
                     int posig = 0;
                     for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
@@ -928,6 +957,7 @@ public class AppBodega {
                     }
                     tabladebodega.setFillsViewportHeight(true);
                 }
+                
             } 
         });
         Bodega3.addActionListener(new ActionListener(){  
@@ -950,8 +980,14 @@ public class AppBodega {
                         }
                     }
                     System.out.println("No hay nada en bodega 3");
+                    tabladebodega.setFillsViewportHeight(true);
                 }
                 else{
+                    for(int y = 0; y < 100; y++){
+                        for(int x = 0; x < 3; x++){
+                            datos[y][x] = "";
+                        }
+                    }
                     int posig = 0;
                     for(int y = 0; y < MisBodegas.get(NoBodega-1).getsizePerscusion(); y++){
                         for(int x = 0; x < 3; x++){
@@ -1005,6 +1041,7 @@ public class AppBodega {
                     }
                     tabladebodega.setFillsViewportHeight(true);
                 }
+                
                 bodegasList.removeAllItems();
                 bodegasList.addItem(0);
                 bodegasList.addItem(1);

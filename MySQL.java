@@ -743,7 +743,7 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"', '"+marca+"','"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ("+id+"', '"+precio+"','"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `instrumento_percusion` (`codigo`, `codigo_producto`, `elemento_percutor`, `elemento_vibrante`) VALUES (NULL, '"+id+"', '"+percutor+"', '"+vibrante+"')");
             stmt.executeUpdate();
@@ -775,7 +775,7 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"','"+marca+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ("+id+"','"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `resonancia`, `cantidad_cuerdas`) VALUES (NULL, '"+id+"', '"+tipoCuerda+"', '"+resonancia+"', '"+noCuerdas+"')");
             stmt.executeUpdate();
@@ -804,7 +804,7 @@ public class MySQL {
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
-            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"','"+marca+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ("+id+"','"+precio+"', '"+marca+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
             stmt.executeUpdate();
             stmt = connect.prepareStatement("INSERT INTO `instrumento_viento` (`codigo`, `codigo_producto`, `largo`) VALUES (NULL, '"+id+"', '"+largo+"')");
             stmt.executeUpdate();

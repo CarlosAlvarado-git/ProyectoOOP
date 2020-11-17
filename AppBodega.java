@@ -788,14 +788,17 @@ public class AppBodega {
                             if(x == 0)
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getIdProductoPercusion(y);
+                                System.out.println("id: " + MisBodegas.get(NoBodega-1).getIdProductoPercusion(y));
                             }
                             else if(x == 1)
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y);
+                                System.out.println("id: " + MisBodegas.get(NoBodega-1).getNombreProductoPercusion(y));
                             }
                             else
                             {
                                 datos[y][x] = MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y);
+                                System.out.println("id: " + MisBodegas.get(NoBodega-1).getCantidadProductoPerscusion(y));
                             }
                         }
                     }

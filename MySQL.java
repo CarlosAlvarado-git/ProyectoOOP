@@ -13,7 +13,7 @@ public class MySQL {
     PreparedStatement stmt;
     PreparedStatement stmt2;
     public String stringuso = "";
-    public LinkedList<Producto> Linked_Productos = new LinkedList<Producto>();//no debería de existir
+    //public LinkedList<Producto> Linked_Productos = new LinkedList<Producto>();//no debería de existir
     public LinkedList<Bodega> Linked_Bodegas = new LinkedList<Bodega>();
     public LinkedList<Cantidad> Linked_Cantidad = new LinkedList<Cantidad>();
     //despues
@@ -42,6 +42,7 @@ public class MySQL {
         return condicion;
     }
 
+    /*
     public void crear_bodega(String nombre) //si
     {
         openConnection();
@@ -56,7 +57,9 @@ public class MySQL {
         }
         closeConnection(connect);
     }
+    */
 
+    /*
     public void crear_producto(String codigo, double precio, String marca, String modelo, String nombre, String tipo_material, int peso) //si
     {
         openConnection();
@@ -71,7 +74,8 @@ public class MySQL {
         }
         closeConnection(connect);
     }
-
+    */
+/*
     public void crear_instrumento_cuerda(String codigo_producto, String tipo_cuerda, int cantidad_cuerda, int no_resonancia) //si
     {
         openConnection();
@@ -128,7 +132,9 @@ public class MySQL {
         }
         closeConnection(connect);
     }
+    */
 
+    /*
     public void asignar_producto(int codigo_bodega, String codigo_producto, int cantidad) //si
     {
         int compras_existentes =0;
@@ -718,6 +724,71 @@ public class MySQL {
 
         return Linked_Productos;
     }  
+*/
+
+    public void escribirInstrumento_Percusion(Percusion p, Cantidad c)
+    {
+        openConnection();
+        try{
+
+            String id = p.getId();
+            double precio = p.getPrecio();
+            String marca = p.getMarca();
+            String modelo = p.getModelo();
+            String nombre = p.getNombre();
+            String material = p.getMaterial();
+            String percutor = p.getPercutor();
+            String vibrante = p.getVibrante();
+            int peso = p.getPeso();
+            int cantidad = c.getCantidad();
+            int noBodega = c.getBodega();
+
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("INSERT INTO `instrumento_percusion` (`codigo`, `codigo_producto`, `elemento_percutor`, `elemento_vibrante`) VALUES (NULL, '"+id+"', '"+percutor+"', '"+vibrante+"')");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+noBodega+"', '"+id+"', '"+cantidad+"')");
+            stmt.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
+    public void escribirInstrumento_Cuerda(Cuerdas p, Cantidad c)
+    {
+        openConnection();
+        try{
+
+            String id = p.getId();
+            double precio = p.getPrecio();
+            String marca = p.getMarca();
+            String modelo = p.getModelo();
+            String nombre = p.getNombre();
+            String material = p.getMaterial();
+            String tipoCuerda = p.getTipoCuerdas();
+            int  resonancia = p.getResonancia();
+            int noCuerdas = p.getNoCuerdas();
+            int peso = p.getPeso();
+            int cantidad = c.getCantidad();
+            int noBodega = c.getBodega();
+
+            stmt = connect.prepareStatement("INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES ('', '"+id+"', '"+precio+"', '"+modelo+"', '"+nombre+"', '"+material+"', '"+peso+"', '1')");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `resonancia`, `cantidad_cuerdas`) VALUES (NULL, '"+id+"', '"+tipoCuerda+"', '"+resonancia+"', '"+cantidad+"')");
+            stmt.executeUpdate();
+            stmt = connect.prepareStatement("INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES (NULL, '"+noBodega+"', '"+id+"', '"+cantidad+"')");
+            stmt.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        closeConnection(connect);
+    }
+
 
     public LinkedList<Cuerdas> cargarIntrumento_cuerdas() //si
     {
@@ -729,6 +800,7 @@ public class MySQL {
             {
                 int codigo = rs.getInt("codigo");
                 String tipo_cuerda = rs.getString("tipo_cuerda");
+                int no_resonancia = rs.getInt("resonancia");
                 int cantidad_cuerdas = rs.getInt("cantidad_cuerdas");
                 String codigo_producto = rs.getString("codigo_producto");
                 Double precio = rs.getDouble("precio");
@@ -736,12 +808,7 @@ public class MySQL {
                 String modelo = rs.getString("modelo");
                 String nombre = rs.getString("nombre");
                 String tipo_material = rs.getString("tipo_material");
-                int peso = rs.getInt("peso");
-                System.out.println(codigo);
-                stmt2 = connect.prepareStatement("SELECT * FROM `resonancia` INNER JOIN `instrumento_cuerda` ON `resonancia`.`codigo_instrumento_cuerda` = `instrumento_cuerda`.`codigo` WHERE `resonancia`.`codigo` = '"+codigo+"'");
-                ResultSet rs2 = stmt2.executeQuery();
-                rs2.next();
-                int no_resonancia = rs2.getInt("no_resonancia");
+                int peso = rs.getInt("peso");           
                 Cuerdas c = new Cuerdas(codigo_producto, precio, marca, modelo, nombre, tipo_material, peso, tipo_cuerda, no_resonancia, cantidad_cuerdas);
                 Linked_Instrumentos_cuerdas.add(c);
             }

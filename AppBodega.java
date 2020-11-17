@@ -84,18 +84,23 @@ public class AppBodega {
         JLabel TipoCuerdas_Label = new JLabel("Tipo de cuerdas: ");
         JLabel Resonancia_Label = new JLabel("Tipo de Resonancia (0 o 1): ");
         JLabel Largo_Label = new JLabel("Largo del instrumento: ");
+        JLabel Usuario_Label = new JLabel("Usuario");
+        JLabel Contrasena_Label = new JLabel("Contrasena");
         //
         JButton iniciodesesion = new JButton("Iniciar Sesion");
+        JButton cerrarsesion = new JButton("Cerrar Sesion");
         JButton Bodega1 = new JButton("Bodega 1"); 
         JButton Bodega2 = new JButton("Bodega 2");
         JButton Bodega3 = new JButton("Bodega 3");
         JButton compraFN = new JButton("Realiza compra");
         Bodega1.setVisible(false);
-        Bodega1.setBounds(0,0,620,410);
+        Bodega1.setBounds(0,40,620,350);
         Bodega2.setVisible(false);
-        Bodega2.setBounds(620,0,620,410);
+        Bodega2.setBounds(620,40,620,350);
         Bodega3.setVisible(false);
-        Bodega3.setBounds(0,410,1240,410);
+        Bodega3.setBounds(0,390,1240,350);
+        cerrarsesion.setVisible(false);
+        cerrarsesion.setBounds(0,0,1240,40);
         JButton BproducNuevo = new JButton("Comprar un producto nuevo");
         JButton BproducExist = new JButton("Comprar productos existente");
         JButton Cancelar = new JButton("Cancelar");
@@ -760,6 +765,8 @@ public class AppBodega {
         usuario.setBounds(500,100, 200, 30);
         contrase.setBounds(500,150, 200, 30);
         iniciodesesion.setBounds(500,200,200,30);
+        Usuario_Label.setBounds(400,100,85,30);
+        Contrasena_Label.setBounds(400,150,85,30);
         iniciodesesion.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
                 usu = usuario.getText();
@@ -772,12 +779,24 @@ public class AppBodega {
                     Bodega1.setVisible(true);
                     Bodega2.setVisible(true);
                     Bodega3.setVisible(true); 
+                    cerrarsesion.setVisible(true);
                     pinicio.setVisible(true); 
                 }
             }  
         });
         //-----------------------------------------------------------
         //---------Parte de pantalla de inicio-----------------------
+
+        cerrarsesion.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                pinicio.setVisible(false);
+                contrasena.setVisible(true);
+                usuario.setText("");
+                contrase.setText("");
+            }
+        });
+
+        
         pinicio.setLayout(null);
         Bodega1.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){ 
@@ -1490,10 +1509,11 @@ public class AppBodega {
         });
         //-----------------------------------------------------------
         //--------------------agrego las cosas a los paneles---------
-        contrasena.add(usuario); contrasena.add(contrase); contrasena.add(iniciodesesion);
+        contrasena.add(usuario); contrasena.add(contrase); contrasena.add(iniciodesesion);contrasena.add(Usuario_Label);contrasena.add(Contrasena_Label);
         pinicio.add(Bodega1);
         pinicio.add(Bodega2);
         pinicio.add(Bodega3);
+        pinicio.add(cerrarsesion);
             //bodega
         pdeBodegas.add(scrollPane);pdeBodegas.add(Percutor_); pdeBodegas.add(Percutor_Label);pdeBodegas.add(Vibrante_); pdeBodegas.add(Vibrante_Label);
         pdeBodegas.add(TipoCuerdas_);pdeBodegas.add(TipoCuerdas_Label);pdeBodegas.add(NoCuerdas_);pdeBodegas.add(NoCuerdas_Label);pdeBodegas.add(Resonancia_);pdeBodegas.add(Resonancia_Label);pdeBodegas.add(CuerdasBoton);

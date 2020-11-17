@@ -269,6 +269,7 @@ public class Bodega {
         String nom = b.PercusionProductos.get(pos).getNombre();
         String mat = b.PercusionProductos.get(pos).getMaterial();
         int peso =  b.PercusionProductos.get(pos).getPeso();
+        //
         String percu =  b.PercusionProductos.get(pos).getPercutor();
         String vibra =  b.PercusionProductos.get(pos).getVibrante();
         Percusion per = new Percusion(id, pre, mar, mode, nom, mat, peso, percu, vibra);

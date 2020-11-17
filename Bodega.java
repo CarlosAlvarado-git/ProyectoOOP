@@ -152,9 +152,17 @@ public class Bodega {
             }
             else if(buscarAnterior == 2){
                 //viento
+                Viento vien = bNueva.retornarVientos(bAnterior, pos);
+                Cantidad np = new Cantidad(vien.getId(), unidades, bNueva.NoBodega);
+                bNueva.Cantidades.add(np);
+                bNueva.VientoProductos.add(per);
             }
             else{
                 //cuerdas
+                Cuerdas cuer = bNueva.retornarCuerdas(bAnterior, pos);
+                Cantidad np = new Cantidad(cuer.getId(), unidades, bNueva.NoBodega);
+                bNueva.Cantidades.add(np);
+                bNueva.CuerdasProductos.add(per);
             }
         }
         else{
@@ -180,6 +188,7 @@ public class Bodega {
             }
         }
     }
+
     /*
         GETS POR PRODUCTO XD
     */
@@ -274,6 +283,38 @@ public class Bodega {
         String vibra =  b.PercusionProductos.get(pos).getVibrante();
         Percusion per = new Percusion(id, pre, mar, mode, nom, mat, peso, percu, vibra);
         return per;
+    }
+
+    
+    public Viento retornarVientos(Bodega b, int pos){
+        String id = b.getIdProductoViento(pos);
+        double pre = b.VientoProductos.get(pos).getPrecio();
+        String mar = b.VientoProductos.get(pos).getMarca();
+        String mode = b.VientoProductos.get(pos).getModelo();
+        String nom = b.VientoProductos.get(pos).getNombre();
+        String mat = b.VientoProductos.get(pos).getMaterial();
+        int peso =  b.VientoProductos.get(pos).getPeso();
+        //
+        int largo =  b.VientoProductos.get(pos).getLargo();
+        Viento vien = new Viento(id, pre, mar, mode, nom, mat, peso, largo);
+        return vien;
+    }
+
+    
+    public Cuerdas retornarCuerdas(Bodega b, int pos){
+        String id = b.getIdProductoCuerdas(pos);
+        double pre = b.CuerdasProductos.get(pos).getPrecio();
+        String mar = b.CuerdasProductos.get(pos).getMarca();
+        String mode = b.CuerdasProductos.get(pos).getModelo();
+        String nom = b.CuerdasProductos.get(pos).getNombre();
+        String mat = b.CuerdasProductos.get(pos).getMaterial();
+        int peso =  b.CuerdasProductos.get(pos).getPeso();
+        //
+        String tipoCuerda =  b.CuerdasProductos.get(pos).getTipoCuerdas();
+        int resonancia =  b.CuerdasProductos.get(pos).getResonancia();
+        int nCuerdas =  b.CuerdasProductos.get(pos).getNoCuerdas();
+        Cuerdas cuerd = new Cuerdas(id, pre, mar, mode, nom, mat, peso, tipoCuerda, resonancia, nCuerdas);
+        return cuerd;
     }
 }
 /**

@@ -3,14 +3,14 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+//JBDC es una appi para conectarnos con base de datos desde java
 public class MySQL {
-    public final String DB = "proyectooop";
+    public final String DB = "proyectooop"; //Final valores que queremos que se mantenga constantes y que no se puedan cambiar durante la ejecucion del programa 
     public final String URL = "jdbc:mysql://localhost:3306/" + DB;
     public final String USER = "root";
     public final String PASS = "";
-    public Connection connect;
-    PreparedStatement stmt;
+    public Connection connect; //Establecer conexiones con la base de datos
+    PreparedStatement stmt; //Para ejecutar las sentencias SQL y enviarlas a la base de datos
     PreparedStatement stmt2;
     public String stringuso = "";
     //public LinkedList<Producto> Linked_Productos = new LinkedList<Producto>();//no debería de existir
@@ -23,9 +23,9 @@ public class MySQL {
 
     public Connection openConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection(URL, USER, PASS);
-        } catch (ClassNotFoundException | SQLException ex) {
+            Class.forName("com.mysql.cj.jdbc.Driver"); //precargar las calses de JBDC (DriverManager, Connection, Preparedstatement, ResultSet)
+            connect = DriverManager.getConnection(URL, USER, PASS);  //Necesitamos enviarle la URL de la base de datos, el usuario y la contraseña 
+        } catch (ClassNotFoundException | SQLException ex) { //ClassNotFoundException es una excepción de tiempo de ejecución que se lanza cuando una aplicación intenta cargar una clase y no se encuentra en la ruta del classpath
             System.out.println("error " + ex.getMessage());
         }
         return connect;
@@ -37,7 +37,7 @@ public class MySQL {
             connect.close();
             condicion = true;
         } catch (SQLException ex) {
-            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);  //La clase Logger de Java permite crear mensajes para el seguimiento o registro de la ejecución de una aplicación. y el level.server nos sirve para asignarle el nivel de importancia del mensaje
         }
         return condicion;
     }
@@ -731,8 +731,8 @@ public class MySQL {
             int Noventas = b.getVentas();
             int Novcompras = b.getCompras();
             int num = b.getNoBodega();
-            stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_compras` = '"+Novcompras+"' WHERE `bodega1`.`codigo` = '"+num+"' ");
-            stmt.executeUpdate();
+            stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_compras` = '"+Novcompras+"' WHERE `bodega1`.`codigo` = '"+num+"' "); 
+            stmt.executeUpdate(); ////Para ejecutar las sentencias SQL y enviarlas a la base de datos
             stmt = connect.prepareStatement("UPDATE `bodega1` SET `no_ventas` = '"+Noventas+"' WHERE `bodega1`.`codigo` = '"+num+"'");
             stmt.executeUpdate();
         }   
@@ -890,7 +890,7 @@ public class MySQL {
         openConnection();
         try{
             stmt = connect.prepareStatement("SELECT * FROM `instrumento_viento` INNER JOIN `producto` ON `instrumento_viento`.`codigo_producto` = `producto`.`codigo` WHERE `producto`.`activo` = 1");
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery(); //Ejecuta las sentencias SQL y retorna un result set (resultado de la consulta)
             while(rs.next())
             {
                 int largo = rs.getInt("largo");

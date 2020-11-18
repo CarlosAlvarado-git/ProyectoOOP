@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2020 a las 04:24:51
+-- Tiempo de generación: 18-11-2020 a las 23:11:46
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -39,9 +39,9 @@ CREATE TABLE `bodega1` (
 --
 
 INSERT INTO `bodega1` (`codigo`, `nombre`, `no_ventas`, `no_compras`) VALUES
-(1, 'bodega1', 7, 81),
-(2, 'bodega2', 0, 40),
-(3, 'bodega3', 14, 0);
+(1, 'bodega1', 0, 0),
+(2, 'bodega2', 0, 0),
+(3, 'bodega3', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -55,20 +55,6 @@ CREATE TABLE `cantidad` (
   `codigo_producto` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `cantidad`
---
-
-INSERT INTO `cantidad` (`codigo`, `codigo_bodega`, `codigo_producto`, `cantidad`) VALUES
-(9, 1, '1', 14),
-(10, 1, 'eldos', 16),
-(11, 2, 'el1enb2', 50),
-(12, 2, 'el2enb2', 76),
-(13, 2, 'el3enb2', 22),
-(14, 3, '1', 0),
-(15, 2, '1', 45),
-(16, 3, '1', 5);
 
 -- --------------------------------------------------------
 
@@ -84,13 +70,6 @@ CREATE TABLE `instrumento_cuerda` (
   `cantidad_cuerdas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `instrumento_cuerda`
---
-
-INSERT INTO `instrumento_cuerda` (`codigo`, `codigo_producto`, `tipo_cuerda`, `resonancia`, `cantidad_cuerdas`) VALUES
-(2, 'el1enb2', 'acero', 0, 6);
-
 -- --------------------------------------------------------
 
 --
@@ -104,15 +83,6 @@ CREATE TABLE `instrumento_percusion` (
   `elemento_vibrante` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `instrumento_percusion`
---
-
-INSERT INTO `instrumento_percusion` (`codigo`, `codigo_producto`, `elemento_percutor`, `elemento_vibrante`) VALUES
-(1, '1', 'percutor1', 'vibrante1'),
-(2, 'eldos', 'percu1', 'vibra1'),
-(3, 'el3enb2', 'percutor en b2', 'vibrante en b2');
-
 -- --------------------------------------------------------
 
 --
@@ -124,13 +94,6 @@ CREATE TABLE `instrumento_viento` (
   `codigo_producto` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
   `largo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `instrumento_viento`
---
-
-INSERT INTO `instrumento_viento` (`codigo`, `codigo_producto`, `largo`) VALUES
-(2, 'el2enb2', 5);
 
 -- --------------------------------------------------------
 
@@ -148,17 +111,6 @@ CREATE TABLE `producto` (
   `peso` int(11) NOT NULL,
   `activo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `producto`
---
-
-INSERT INTO `producto` (`codigo`, `precio`, `marca`, `modelo`, `nombre`, `tipo_material`, `peso`, `activo`) VALUES
-('1', 12, 'marca1', 'modelo1', 'nombre1', 'material1', 13, 1),
-('el1enb2', 124, 'marc2', 'mod2', 'cuerdas en b2', 'mat2', 789, 1),
-('el2enb2', 12056, 'marcaen2', 'modeloen2', 'viento en b2', 'materialen2', 1000, 1),
-('el3enb2', 456, 'marcaenb2per', 'modeloenb2per', 'percusion en b2', 'materialenb2per', 456, 1),
-('eldos', 120, 'marca', 'modelo', 'desde java', 'materia', 121, 1);
 
 --
 -- Índices para tablas volcadas
@@ -219,25 +171,25 @@ ALTER TABLE `bodega1`
 -- AUTO_INCREMENT de la tabla `cantidad`
 --
 ALTER TABLE `cantidad`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `instrumento_cuerda`
 --
 ALTER TABLE `instrumento_cuerda`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `instrumento_percusion`
 --
 ALTER TABLE `instrumento_percusion`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `instrumento_viento`
 --
 ALTER TABLE `instrumento_viento`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

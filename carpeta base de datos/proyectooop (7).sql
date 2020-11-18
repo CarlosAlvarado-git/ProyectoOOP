@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2020 a las 23:11:46
+-- Tiempo de generación: 18-11-2020 a las 23:27:50
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -108,7 +108,7 @@ CREATE TABLE `producto` (
   `modelo` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `tipo_material` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `peso` int(11) NOT NULL,
+  `peso` double NOT NULL,
   `activo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 

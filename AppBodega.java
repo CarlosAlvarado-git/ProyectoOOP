@@ -485,6 +485,7 @@ public class AppBodega {
         VientoBoton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 Largo_.setVisible(true);
+                Largo_.setText("");
                 Largo_Label.setVisible(true);
                 CuerdasBoton.setVisible(false);
                 PercusionBoton.setVisible(false);

@@ -309,7 +309,7 @@ public class Bodega {
         String mode = b.PercusionProductos.get(pos).getModelo();
         String nom = b.PercusionProductos.get(pos).getNombre();
         String mat = b.PercusionProductos.get(pos).getMaterial();
-        int peso =  b.PercusionProductos.get(pos).getPeso();
+        double peso =  b.PercusionProductos.get(pos).getPeso();
         //
         String percu =  b.PercusionProductos.get(pos).getPercutor();
         String vibra =  b.PercusionProductos.get(pos).getVibrante();
@@ -325,7 +325,7 @@ public class Bodega {
         String mode = b.VientoProductos.get(pos).getModelo();
         String nom = b.VientoProductos.get(pos).getNombre();
         String mat = b.VientoProductos.get(pos).getMaterial();
-        int peso =  b.VientoProductos.get(pos).getPeso();
+        double peso =  b.VientoProductos.get(pos).getPeso();
         //
         int largo =  b.VientoProductos.get(pos).getLargo();
         Viento vien = new Viento(id, pre, mar, mode, nom, mat, peso, largo);
@@ -340,7 +340,7 @@ public class Bodega {
         String mode = b.CuerdasProductos.get(pos).getModelo();
         String nom = b.CuerdasProductos.get(pos).getNombre();
         String mat = b.CuerdasProductos.get(pos).getMaterial();
-        int peso =  b.CuerdasProductos.get(pos).getPeso();
+        double peso =  b.CuerdasProductos.get(pos).getPeso();
         //
         String tipoCuerda =  b.CuerdasProductos.get(pos).getTipoCuerdas();
         int resonancia =  b.CuerdasProductos.get(pos).getResonancia();

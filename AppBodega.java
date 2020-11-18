@@ -34,7 +34,6 @@ public class AppBodega {
     static int largo = 0;
     //
     public static void main(String [] arg){
-        
         //Creo mis bodegas y las lleno
         MySQL MiBaseDeDatos = new MySQL();
         MiBaseDeDatos.cargarBodegas();
@@ -86,6 +85,9 @@ public class AppBodega {
         JLabel Largo_Label = new JLabel("Largo del instrumento: ");
         JLabel Usuario_Label = new JLabel("Usuario");
         JLabel Contrasena_Label = new JLabel("Contrasena");
+        JLabel Id_N_Label = new JLabel("ID producto:");
+        JLabel Cantidad_N_Label = new JLabel("Cantidades:");
+        JLabel Bodega_N_Label = new JLabel("Bodegas:");
         //
         JButton iniciodesesion = new JButton("Iniciar Sesion");
         JButton cerrarsesion = new JButton("Cerrar Sesion");
@@ -94,11 +96,11 @@ public class AppBodega {
         JButton Bodega3 = new JButton("Bodega 3");
         JButton compraFN = new JButton("Realiza compra");
         Bodega1.setVisible(false);
-        Bodega1.setBounds(0,40,620,350);
+        Bodega1.setBounds(0,40,620,370);
         Bodega2.setVisible(false);
-        Bodega2.setBounds(620,40,620,350);
+        Bodega2.setBounds(620,40,620,370);
         Bodega3.setVisible(false);
-        Bodega3.setBounds(0,390,1240,350);
+        Bodega3.setBounds(0,410,1240,370);
         cerrarsesion.setVisible(false);
         cerrarsesion.setBounds(0,0,1240,40);
         JButton BproducNuevo = new JButton("Comprar un producto nuevo");
@@ -203,6 +205,8 @@ public class AppBodega {
                     BproducNuevo.setVisible(true);
                     VenderProduc.setVisible(true);
                     MoverProduc.setVisible(true);
+                    Id_N_Label.setVisible(false);
+                    Cantidad_N_Label.setVisible(false);
                     listado.setVisible(false);
                     cantidades.setVisible(false);
                     venderE.setVisible(false);
@@ -282,6 +286,8 @@ public class AppBodega {
                     BproducNuevo.setVisible(true);
                     VenderProduc.setVisible(true);
                     MoverProduc.setVisible(true);
+                    Id_N_Label.setVisible(false);
+                    Cantidad_N_Label.setVisible(false);
                     listado.setVisible(false);
                     cantidades.setVisible(false);
                     comprarE.setVisible(false);
@@ -433,6 +439,9 @@ public class AppBodega {
                     BproducNuevo.setVisible(true);
                     VenderProduc.setVisible(true);
                     MoverProduc.setVisible(true);///// aqui nooooo
+                    Id_N_Label.setVisible(false);
+                    Cantidad_N_Label.setVisible(false);
+                    Bodega_N_Label.setVisible(false);
                     listado.setVisible(false);
                     cantidades.setVisible(false);
                     moverE.setVisible(false);
@@ -764,6 +773,8 @@ public class AppBodega {
         //-------Parte de botones de incio de sesión----------------
         usuario.setBounds(500,100, 200, 30);
         contrase.setBounds(500,150, 200, 30);
+        usuario.setVisible(false);
+        contrase.setVisible(false);
         iniciodesesion.setBounds(500,200,200,30);
         Usuario_Label.setBounds(400,100,85,30);
         Contrasena_Label.setBounds(400,150,85,30);
@@ -776,10 +787,16 @@ public class AppBodega {
                 }
                 else{
                     contrasena.setVisible(false);
+                    usuario.setVisible(false);
+                    contrase.setVisible(false);
+                    Usuario_Label.setVisible(false);
+                    Contrasena_Label.setVisible(false);
+                    app.setContentPane(pinicio);
                     Bodega1.setVisible(true);
                     Bodega2.setVisible(true);
                     Bodega3.setVisible(true); 
                     cerrarsesion.setVisible(true);
+                    cerrarsesion.setText("Cerrar sesion: Usuario: "+ usu);
                     pinicio.setVisible(true); 
                 }
             }  
@@ -789,10 +806,16 @@ public class AppBodega {
 
         cerrarsesion.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                app.setContentPane(contrasena);
                 pinicio.setVisible(false);
                 contrasena.setVisible(true);
+                usuario.setVisible(true);
+                contrase.setVisible(true);
+                Usuario_Label.setVisible(true);
+                Contrasena_Label.setVisible(true);
                 usuario.setText("");
                 contrase.setText("");
+
             }
         });
 
@@ -1083,14 +1106,20 @@ public class AppBodega {
         BproducNuevo.setVisible(false);
         MoverProduc.setVisible(false);
         VenderProduc.setVisible(false);
+        Id_N_Label.setVisible(false);
+        Cantidad_N_Label.setVisible(false);
+        Bodega_N_Label.setVisible(false);
         listado.setVisible(false);
         bodegasList.setVisible(false);
         cantidades.setVisible(false);
         comprarN.setVisible(false);
         comprarE.setVisible(false);
+        Cantidad_N_Label.setBounds(878, 165, 130, 30);
         bodegasList.setBounds(1008,190,150,30);
         comprarE.setBounds(1008, 190, 150, 30);
         listado.setBounds(745, 190, 130, 30);
+        Id_N_Label.setBounds(745, 165, 130, 30);
+        Bodega_N_Label.setBounds(1008, 165, 150, 30);
         comprarN.setBounds(450, 500, 150, 30);
 
         
@@ -1174,6 +1203,8 @@ public class AppBodega {
                 cantidades.setBounds(878, 190, 130, 30);
                 cantidades.setVisible(true);
                 cantidades.setSelectedItem(0);
+                Id_N_Label.setVisible(true);
+                Cantidad_N_Label.setVisible(true);
                 comprarE.setVisible(true);
                 BproducExist.setVisible(false);
                 BproducNuevo.setVisible(false);
@@ -1246,6 +1277,8 @@ public class AppBodega {
                 cantidades.setBounds(878, 190, 130, 30);
                 cantidades.setVisible(true);
                 cantidades.setSelectedItem(0);
+                Id_N_Label.setVisible(true);
+                Cantidad_N_Label.setVisible(true);
                 venderE.setVisible(true);
                 BproducExist.setVisible(false);
                 BproducNuevo.setVisible(false);
@@ -1274,6 +1307,9 @@ public class AppBodega {
                 listado.setSelectedItem(" ");
                 bodegasList.setSelectedItem(0);
                 bodegasList.setVisible(true);
+                Id_N_Label.setVisible(true);
+                Cantidad_N_Label.setVisible(true);
+                Bodega_N_Label.setVisible(true);
                 cantidades.setBounds(878, 190, 130, 30);
                 cantidades.setVisible(true);
                 cantidades.setSelectedItem(0);
@@ -1299,6 +1335,9 @@ public class AppBodega {
                     MoverProduc.setVisible(true);
                     VenderProduc.setVisible(true);
                     Cancelar.setVisible(false);
+                    Id_N_Label.setVisible(false);
+                    Cantidad_N_Label.setVisible(false);
+                    Bodega_N_Label.setVisible(false);
                 }
                 else if(comprarN.isVisible()){
                     comprarN.setVisible(false);
@@ -1334,6 +1373,9 @@ public class AppBodega {
                     MoverProduc.setVisible(true);
                     VenderProduc.setVisible(true);
                     Cancelar.setVisible(false);
+                    Id_N_Label.setVisible(false);
+                    Cantidad_N_Label.setVisible(false);
+                    Bodega_N_Label.setVisible(false);
                 }
                 else if(moverE.isVisible()){
                     moverE.setVisible(false);
@@ -1345,6 +1387,9 @@ public class AppBodega {
                     MoverProduc.setVisible(true);
                     VenderProduc.setVisible(true);
                     Cancelar.setVisible(false);
+                    Id_N_Label.setVisible(false);
+                    Cantidad_N_Label.setVisible(false);
+                    Bodega_N_Label.setVisible(false);
                 }
                 else if(PercusionBoton.isVisible()){
                     BproducExist.setVisible(true);
@@ -1444,6 +1489,9 @@ public class AppBodega {
                 Material_Label.setVisible(false);
                 Peso_Label.setVisible(false);
                 Cantidad_Label.setVisible(false);
+                Id_N_Label.setVisible(false);
+                Cantidad_N_Label.setVisible(false);
+                Bodega_N_Label.setVisible(false);
                 Id_.setVisible(false);
                 Nombre_.setVisible(false);
                 Precio_.setVisible(false);
@@ -1521,7 +1569,7 @@ public class AppBodega {
         pdeBodegas.add(Id_);pdeBodegas.add(Precio_);pdeBodegas.add(Marca_);pdeBodegas.add(Modelo_);pdeBodegas.add(Nombre_);
         pdeBodegas.add(Material_);pdeBodegas.add(Peso_);pdeBodegas.add(PercusionBoton);pdeBodegas.add(compraFN);
         pdeBodegas.add(Id_Label);pdeBodegas.add(Precio_Label);pdeBodegas.add(Marca_Label);pdeBodegas.add(Modelo_Label);pdeBodegas.add(Nombre_Label);
-        pdeBodegas.add(Material_Label);pdeBodegas.add(Peso_Label);pdeBodegas.add(Cantidad_Label);
+        pdeBodegas.add(Material_Label);pdeBodegas.add(Peso_Label);pdeBodegas.add(Cantidad_Label);pdeBodegas.add(Id_N_Label);pdeBodegas.add(Cantidad_N_Label);pdeBodegas.add(Bodega_N_Label);
         pdeBodegas.add(ACTIVAR, BorderLayout.CENTER);pdeBodegas.add(Regresar, BorderLayout.CENTER);pdeBodegas.add(bodegasList);pdeBodegas.add(venderE);pdeBodegas.add(moverE);
         pdeBodegas.add(SalirBodegas);pdeBodegas.add(cantidades);pdeBodegas.add(Cancelar);pdeBodegas.add(MoverProduc);pdeBodegas.add(VenderProduc);
         pdeBodegas.add(listado);pdeBodegas.add(BproducNuevo);pdeBodegas.add(BproducExist);pdeBodegas.add(comprarE);pdeBodegas.add(comprarN);
@@ -1531,6 +1579,11 @@ public class AppBodega {
         app.add(pinicio); app.add(pdeBodegas); app.add(contrasena);
         app.setSize(contrasena.getWidth(),contrasena.getHeight());   
         app.setVisible(true);
+        contrasena.setVisible(true);
+        usuario.setVisible(true);
+        contrase.setVisible(true);
+        Usuario_Label.setVisible(true);
+        Contrasena_Label.setVisible(true);
         //
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
     }

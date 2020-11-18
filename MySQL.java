@@ -753,7 +753,7 @@ public class MySQL {
             String material = p.getMaterial();
             String percutor = p.getPercutor();
             String vibrante = p.getVibrante();
-            int peso = p.getPeso();
+            double peso = p.getPeso();
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
@@ -785,7 +785,7 @@ public class MySQL {
             String tipoCuerda = p.getTipoCuerdas();
             int  resonancia = p.getResonancia();
             int noCuerdas = p.getNoCuerdas();
-            int peso = p.getPeso();
+            double peso = p.getPeso();
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
@@ -814,7 +814,7 @@ public class MySQL {
             String nombre = v.getNombre();
             String material = v.getMaterial();
             int largo = v.getLargo();
-            int peso = v.getPeso();
+            double peso = v.getPeso();
             int cantidad = c.getCantidad();
             int noBodega = c.getBodega();
 
@@ -869,7 +869,7 @@ public class MySQL {
                 String modelo = rs.getString("modelo");
                 String nombre = rs.getString("nombre");
                 String tipo_material = rs.getString("tipo_material");
-                int peso = rs.getInt("peso");           
+                double peso = rs.getDouble("peso");           
                 Cuerdas c = new Cuerdas(codigo_producto, precio, marca, modelo, nombre, tipo_material, peso, tipo_cuerda, no_resonancia, cantidad_cuerdas);
                 Linked_Instrumentos_cuerdas.add(c);
             }
@@ -900,7 +900,7 @@ public class MySQL {
                 String modelo = rs.getString("modelo");
                 String nombre = rs.getString("nombre");
                 String tipo_material = rs.getString("tipo_material");
-                int peso = rs.getInt("peso");
+                double peso = rs.getDouble("peso");
                 Viento v = new Viento(codigo_producto, precio, marca, modelo, nombre, tipo_material, peso, largo);
                 Linked_Instrumentos_viento.add(v);
             }
@@ -931,7 +931,7 @@ public class MySQL {
                 String modelo = rs.getString("modelo");
                 String nombre = rs.getString("nombre");
                 String tipo_material = rs.getString("tipo_material");
-                int peso = rs.getInt("peso");   
+                double peso = rs.getDouble("peso");   
                 Percusion p = new Percusion(codigo_producto, precio, marca, modelo, nombre, tipo_material, peso, elemento_percutor, elemento_vibrante);
                 Linked_Instrumentos_percucion.add(p);
             }

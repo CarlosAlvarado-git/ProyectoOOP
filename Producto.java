@@ -5,11 +5,10 @@ public class Producto{
     String modelo;  
     String nombre; 
     String material;
-    int peso; 
+    double peso; 
     int bodega; 
-    int activo; 
 
-    public Producto(String id, double precio, String mar, String mo, String n, String mat, int p){
+    public Producto(String id, double precio, String mar, String mo, String n, String mat, double p){
         this.id = id;
         this.precio = precio; 
         this.marca = mar;
@@ -37,14 +36,11 @@ public class Producto{
     public String getMaterial(){
         return this.material; 
     }
-    public int getPeso(){
+    public double getPeso(){
         return this.peso; 
     }
     public int getBodega(){
         return this.bodega; 
-    }
-    public int getActivo(){
-        return this.activo; 
     }
     //setCampos() -----------------------------
     public void setId(String id){
@@ -65,13 +61,10 @@ public class Producto{
     public void setMaterial(String m){
         this.material = m; 
     }
-    public void setPeso(int p){
+    public void setPeso(double p){
         this.peso = p; 
     }
     public void setBodega(int b){
         this.bodega = b; 
-    }
-    public void setActivo(int a){
-        this.activo = a; 
     }
 }

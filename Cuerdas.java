@@ -3,7 +3,7 @@ public class Cuerdas extends Producto {
     int resonancia; 
     int noCuerdas; 
 
-    public Cuerdas(String c, double precio, String mar, String mo, String n, String mat, int p, String tiCuerda, int reso, int noCuerdas){
+    public Cuerdas(String c, double precio, String mar, String mo, String n, String mat, double p, String tiCuerda, int reso, int noCuerdas){
         super(c, precio, mar, mo, n, mat, p); 
         this.tipoCuerdas = tiCuerda; 
         this.resonancia = reso; 

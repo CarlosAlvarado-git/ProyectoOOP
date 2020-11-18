@@ -24,7 +24,7 @@ public class AppBodega {
     static String MarProducto_n = "";
     static String ModProducto_n = "";
     static String MatProducto_n = "";
-    static int PesProducto_n = 0;
+    static double PesProducto_n = 0.0;
     static int CantProducto_n = 0;
     static String objetoPercutor = "";
     static String objetoVibrante = "";
@@ -317,14 +317,13 @@ public class AppBodega {
                 MarProducto_n = Marca_.getText();
                 ModProducto_n = Modelo_.getText();
                 MatProducto_n = Material_.getText();
-                PesProducto_n = 0;
                 if(Peso_.getText().equals("")){
                     // alertta
-                    PesProducto_n = 0;
+                    PesProducto_n = 0.0;
                 }
                 else{
                     try {
-                        PesProducto_n = Integer.valueOf(Peso_.getText());
+                        PesProducto_n = Double.valueOf(Peso_.getText());
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Error, el peso del producto tiene que ser un numero");
                     }

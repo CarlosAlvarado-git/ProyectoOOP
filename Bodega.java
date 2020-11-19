@@ -348,6 +348,10 @@ public class Bodega {
         Cuerdas cuerd = new Cuerdas(id, pre, mar, mode, nom, mat, peso, tipoCuerda, resonancia, nCuerdas);
         return cuerd;
     }
+
+    public int getSizeCantidades(){
+        return this.Cantidades.size();
+    }
 }
 /**
     FUNCIONES PARA RETORNAR LOS VALORES

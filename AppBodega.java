@@ -498,7 +498,16 @@ public class AppBodega {
         compraFN.setBounds(450, 500, 150, 30);
         compraFN.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if(Percutor_.isVisible()){
+                int bandera = 0, bEncontrada = 0;
+                for (int i = 0; i < MisBodegas.size(); i++){
+                    for (int x = 0; x < MisBodegas.get(i).getSizeCantidades(); x++){
+                        if (IdProducto_n.equals(MisBodegas.get(i).Cantidades.get(x).getIdProducto())){
+                            bandera = 1;
+                            bEncontrada = i;
+                        }
+                    }
+                }
+                if(Percutor_.isVisible() && bandera == 0){
                     objetoPercutor = Percutor_.getText();
                     objetoVibrante = Vibrante_.getText();
                     if(objetoPercutor.equals("") || objetoVibrante.equals("")){
@@ -578,7 +587,7 @@ public class AppBodega {
                         VenderProduc.setVisible(true);
                     }
                 }
-                else if(TipoCuerdas_.isVisible()){
+                else if(TipoCuerdas_.isVisible() && bandera == 0){
                     tipoCuerda = TipoCuerdas_.getText();
                     if (NoCuerdas_.getText().equals("")){
                         noCuerdas = 0;
@@ -676,7 +685,7 @@ public class AppBodega {
                         VenderProduc.setVisible(true);
                     }
                 }
-                else if(Largo_.isVisible()){
+                else if(Largo_.isVisible() && bandera == 0){
                     if (Largo_.getText().equals("")){
                         largo = 0;
                     }
@@ -757,6 +766,9 @@ public class AppBodega {
                         MoverProduc.setVisible(true);
                         VenderProduc.setVisible(true);
                     }
+                }
+                else{
+                    //aviso
                 }
             }
         });

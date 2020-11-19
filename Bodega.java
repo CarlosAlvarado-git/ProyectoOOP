@@ -1,4 +1,7 @@
 import java.util.LinkedList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 public class Bodega {
     static Cantidad cant; 
@@ -72,9 +75,6 @@ public class Bodega {
             this.noCOMPRAS = this.noCOMPRAS + c;
             db.escribirBodegas(this);
         }
-        else{
-            //aviso
-       }
         
     }
     public void nuevoProducto(Cuerdas p, int c, MySQL db){
@@ -88,9 +88,6 @@ public class Bodega {
             this.noCOMPRAS = this.noCOMPRAS + c;
             db.escribirBodegas(this);
         }
-        else{
-            //aviso
-       }
     }
     public void nuevoProducto(Viento p, int c, MySQL db){
         int bar = buscar(p.getId());
@@ -103,41 +100,32 @@ public class Bodega {
             this.noCOMPRAS = this.noCOMPRAS + c;
             db.escribirBodegas(this);
         }
-        else{
-            //aviso
-       }
     }
     public void Venta(String id, int unidades, MySQL db){
         int direccion = buscar(id); 
-        if(direccion == -1){
-            //aviso
+
+        cant = this.Cantidades.get(direccion); 
+        if (cant.getCantidad() < unidades){
+ 
+            //System.out.println("Existencia actual: " + cant.getCantidad());
+            JOptionPane.showMessageDialog(null, "La cantidad que se desea vender es mayor a la cantidad que se tiene");
         }
         else{
-            cant = this.Cantidades.get(direccion); 
-            if (cant.getCantidad() < unidades){
-                //aviso
-                //System.out.println("Existencia actual: " + cant.getCantidad());
-            }
-            else{
-                cant.changeCantidad(cant.getCantidad() - unidades);
-                this.noVENTAS = this.noVENTAS + unidades;
-                db.escribirBodegas(this);
-                db.actualizarCantidad(cant, 1);
-            }
-        }
-    }
-    public void Compra(String id, int unidades, MySQL db){
-        int direccion = buscar(id); 
-        if(direccion == -1){
-            //aviso
-        }
-        else{
-            cant = this.Cantidades.get(direccion);
-            cant.changeCantidad(cant.getCantidad() + unidades);
-            this.noCOMPRAS = this.noCOMPRAS + unidades;
+            cant.changeCantidad(cant.getCantidad() - unidades);
+            this.noVENTAS = this.noVENTAS + unidades;
             db.escribirBodegas(this);
             db.actualizarCantidad(cant, 1);
         }
+        
+    }
+    public void Compra(String id, int unidades, MySQL db){
+        int direccion = buscar(id); 
+        cant = this.Cantidades.get(direccion);
+        cant.changeCantidad(cant.getCantidad() + unidades);
+        this.noCOMPRAS = this.noCOMPRAS + unidades;
+        db.escribirBodegas(this);
+        db.actualizarCantidad(cant, 1);
+        
     }
     public void Movimiento(String id, int unidades, Bodega bNueva, Bodega bAnterior, MySQL db){
         int direccion = bNueva.buscar(id); 
@@ -199,21 +187,18 @@ public class Bodega {
     //traslados 
     public void traslado(String id, int unidades, int BoNueva, LinkedList<Bodega> bodegass, MySQL db){
         int direccion = buscar(id);
-        if(direccion == -1){
-            //aviso
+        cant = this.Cantidades.get(direccion); 
+        if (cant.getCantidad() < unidades){
+            
+            //System.out.println("Existencia actual: " + cant.getCantidad());
+            JOptionPane.showMessageDialog(null, "La cantidad que se desea trasladar mas a la cantidad que se tiene");
         }
         else{
-            cant = this.Cantidades.get(direccion); 
-            if (cant.getCantidad() < unidades){
-                //aviso
-                //System.out.println("Existencia actual: " + cant.getCantidad());
-            }
-            else{
-                cant.changeCantidad(cant.getCantidad() - unidades);
-                db.actualizarCantidad(cant, 1);
-                bodegass.get(BoNueva-1).Movimiento(id, unidades, bodegass.get(BoNueva-1), this, db);
-            }
+            cant.changeCantidad(cant.getCantidad() - unidades);
+            db.actualizarCantidad(cant, 1);
+            bodegass.get(BoNueva-1).Movimiento(id, unidades, bodegass.get(BoNueva-1), this, db);
         }
+    
     }
     public int getVentas(){
         return this.noVENTAS;

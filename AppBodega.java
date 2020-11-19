@@ -504,14 +504,19 @@ public class AppBodega {
                         if (IdProducto_n.equals(MisBodegas.get(i).Cantidades.get(x).getIdProducto())){
                             bandera = 1;
                             bEncontrada = i;
+                            break;
                         }
+                    }
+                    if(bEncontrada != 0)
+                    {
+                        break;
                     }
                 }
                 if(Percutor_.isVisible() && bandera == 0){
                     objetoPercutor = Percutor_.getText();
                     objetoVibrante = Vibrante_.getText();
                     if(objetoPercutor.equals("") || objetoVibrante.equals("")){
-                        //avisp
+                        JOptionPane.showMessageDialog(null, "Error, los campos no pueden estar vacios");
                     }
                     else{
                         nuevoP = new Percusion(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, objetoPercutor, objetoVibrante);
@@ -597,7 +602,7 @@ public class AppBodega {
                             noCuerdas = Integer.valueOf(NoCuerdas_.getText());
                         }
                         catch(Exception ex){
-                            //aviso
+                            JOptionPane.showMessageDialog(null, ex);
                         }
                     }
                     if (Resonancia_.getText().equals("")){
@@ -608,11 +613,11 @@ public class AppBodega {
                             resonancia = Integer.valueOf(Resonancia_.getText());
                         }
                         catch(Exception ex){
-                            //aviso
+                            JOptionPane.showMessageDialog(null, ex);
                         }
                     }
                     if(tipoCuerda.equals("") || noCuerdas == 0 || resonancia < 0 || resonancia > 1){
-                        //avisp
+                        JOptionPane.showMessageDialog(null, "Error, no puede dejar campos vacios");
                     }
                     else{
                         nuevoC = new Cuerdas(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, tipoCuerda, resonancia, noCuerdas);
@@ -694,11 +699,11 @@ public class AppBodega {
                             largo = Integer.valueOf(Largo_.getText());
                         }
                         catch(Exception ex){
-                            //aviso
+                            JOptionPane.showMessageDialog(null, ex);
                         }
                     }
                     if(largo == 0){
-                        //avisp
+                        JOptionPane.showMessageDialog(null, "Error, el largo no puede ser 0");
                     }
                     else{
                         nuevoV = new Viento(IdProducto_n, PreProducto_n, MarProducto_n, ModProducto_n, NomProducto_n, MatProducto_n, PesProducto_n, largo);
@@ -768,7 +773,7 @@ public class AppBodega {
                     }
                 }
                 else{
-                    //aviso
+                    JOptionPane.showMessageDialog(null, "Error, no puede crear un producto con el mismo ID en otra bodega, utilice la funcion de mover, el ID se encontro en la bodega: " + bEncontrada);
                 }
             }
         });

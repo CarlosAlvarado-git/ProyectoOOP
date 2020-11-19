@@ -70,19 +70,19 @@ public class AppBodega {
         JTextField Resonancia_ = new JTextField();
         JTextField Largo_ = new JTextField();
         JLabel Id_Label = new JLabel("ID del producto: ");
-        JLabel Precio_Label = new JLabel("Precio del producto: ");
+        JLabel Precio_Label = new JLabel("Precio del producto ($): ");
         JLabel Marca_Label = new JLabel("Marca del producto: ");
         JLabel Modelo_Label = new JLabel("Modelo del producto: ");
         JLabel Nombre_Label = new JLabel("Nombre del producto: ");
         JLabel Material_Label = new JLabel("Material del producto: ");
-        JLabel Peso_Label = new JLabel("Peso del producto: ");
+        JLabel Peso_Label = new JLabel("Peso del producto (Lb): ");
         JLabel Cantidad_Label = new JLabel("Cantidad a comprar: ");
         JLabel Percutor_Label = new JLabel("Objeto percutor: ");
         JLabel Vibrante_Label = new JLabel("Objeto vibrante: ");
         JLabel NoCuerdas_Label = new JLabel("Numero de cuerdas: ");
         JLabel TipoCuerdas_Label = new JLabel("Tipo de cuerdas: ");
         JLabel Resonancia_Label = new JLabel("Tipo de Resonancia (0 o 1): ");
-        JLabel Largo_Label = new JLabel("Largo del instrumento: ");
+        JLabel Largo_Label = new JLabel("Largo del instrumento (cm): ");
         JLabel Usuario_Label = new JLabel("Usuario");
         JLabel Contrasena_Label = new JLabel("Contrasena");
         JLabel Id_N_Label = new JLabel("ID producto:");
@@ -773,7 +773,7 @@ public class AppBodega {
                     }
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Error, no puede crear un producto con el mismo ID en otra bodega, utilice la funcion de mover, el ID se encontro en la bodega: " + bEncontrada);
+                    JOptionPane.showMessageDialog(null, "Error, no puede crear un producto con el mismo ID en otra bodega, utilice la funcion de mover, el ID se encontro en la bodega: " + (bEncontrada+1));
                 }
             }
         });
@@ -1143,18 +1143,18 @@ public class AppBodega {
         //label
         Id_Label.setBounds(450,190,150,30);
         Nombre_Label.setBounds(450,225,150,30);
-        Precio_Label.setBounds(450,260,150,30);
+        Precio_Label.setBounds(445,260,150,30);
         Marca_Label.setBounds(450,295,150,30);
         Modelo_Label.setBounds(450,330,150,30);
         Material_Label.setBounds(450,365,150,30);
-        Peso_Label.setBounds(450,400,150,30);
+        Peso_Label.setBounds(445,400,150,30);
         Cantidad_Label.setBounds(450,435,150,30);
         Percutor_Label.setBounds(450,400,150,30);
         Vibrante_Label.setBounds(450,435,150,30);
         TipoCuerdas_Label.setBounds(450, 365, 150, 30);
         NoCuerdas_Label.setBounds(450, 400, 150, 30);
-        Resonancia_Label.setBounds(450, 435, 150, 30);
-        Largo_Label.setBounds(450, 435, 150,30);
+        Resonancia_Label.setBounds(445, 435, 150, 30);
+        Largo_Label.setBounds(445, 435, 150,30);
         Id_Label.setVisible(false);
         Nombre_Label.setVisible(false);
         Precio_Label.setVisible(false);
